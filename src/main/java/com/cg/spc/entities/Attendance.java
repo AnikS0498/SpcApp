@@ -1,3 +1,7 @@
+package com.cg.spc.entities;
+import java.time.LocalDate;
+
+import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 @Entity
