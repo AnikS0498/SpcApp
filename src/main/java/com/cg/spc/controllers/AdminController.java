@@ -28,30 +28,30 @@ public class AdminController {
 	@Autowired
 	private ITeacherService teacherService;
 
-	@PostMapping("/addParent")
+	@PostMapping("/parent/add")
 	public Parent addParentDetails(@RequestBody Parent parent) {
 		return parentService.addParentDetails(parent);
 	}
 	
-	@PutMapping("/updateParent")
+	@PutMapping("/parent/update")
 	public Parent updateParentDetails(@RequestBody Parent parent)
 	{
 		return parentService.updateParentDetails(parent);
 	}
 	
-	@PostMapping("/addStudent")
+	@PostMapping("/student/add")
 	public Student addStudentDetails(@RequestBody Student student)
 	{
 		return studentService.addStudent(student);
 	}
 	
-	@PutMapping("/updateStudent")
-	public int updateStudentDetails(@RequestBody Student student,@RequestParam int parentId)
+	@PutMapping("/student/update")
+	public int updateStudentDetails(@RequestBody Student student, @RequestParam int parentId)
 	{
 		return studentService.updateStudent(parentId, student);
 	}
 	
-	@PostMapping("/addTeacher")
+	@PostMapping("/teacher/add")
 	public Teacher addTeacherDetails(@RequestBody Teacher teacher)
 	{
 		return teacherService.addTeacher(teacher);
