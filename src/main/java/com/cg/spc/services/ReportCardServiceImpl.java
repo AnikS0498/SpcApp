@@ -1,13 +1,13 @@
 package com.cg.spc.services;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.cg.spc.entities.ReportCard;
 import com.cg.spc.repositories.IReportCardRepository;
 
 @Service
-public class ReportCardImpl  implements IReportCard{
+public class ReportCardServiceImpl  implements IReportCardService{
 
 	@Autowired
 	private IReportCardRepository reportCardRepository;

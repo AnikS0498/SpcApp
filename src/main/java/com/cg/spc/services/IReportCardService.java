@@ -1,8 +1,9 @@
 package com.cg.spc.services;
 
+
 import com.cg.spc.entities.ReportCard;
 
-public interface IReportCard {
+public interface IReportCardService {
 	
 	public ReportCard addDetails(ReportCard reportCard);
 	public ReportCard getDetailsById(int id);
