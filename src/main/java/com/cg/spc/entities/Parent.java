@@ -1,7 +1,6 @@
 package com.cg.spc.entities;
 
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +15,7 @@ public class Parent {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "parent")
 	private List<Student> student;
 	
 	@Column
@@ -25,15 +24,19 @@ public class Parent {
 	@Column
 	private String contact;
 	
+	@OneToMany(mappedBy = "parent")
+	private List<Concern> concern;
+	
 	public Parent() {
 		super();
 	}
 
-	public Parent(List<Student> student, String name, String contact) {
+	public Parent(List<Student> student, String name, String contact, List<Concern> concern) {
 		super();
 		this.student = student;
 		this.name = name;
 		this.contact = contact;
+		this.concern = concern;
 	}
 
 	public int getId() {
@@ -68,11 +71,18 @@ public class Parent {
 		this.contact = contact;
 	}
 
+	public List<Concern> getConcern() {
+		return concern;
+	}
+
+	public void setConcern(List<Concern> concern) {
+		this.concern = concern;
+	}
+
 	@Override
 	public String toString() {
-		return "Parent [id=" + id + ", name=" + name + ", contact=" + contact + "]";
+		return "Parent [id=" + id + ", student=" + student + ", name=" + name + ", contact=" + contact + ", concern="
+				+ concern + "]";
 	}
-	
-	
-	
+
 }

@@ -1,10 +1,14 @@
 package com.cg.spc.entities;
 
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Standard {
@@ -16,19 +20,34 @@ public class Standard {
 	@Column
 	private String grade;
 	
+	@OneToMany
+	private List<Student> studentList; 
+	
+	@OneToOne(mappedBy = "standard")
 	private Teacher classTeacher;
+	
+	@ManyToMany(mappedBy = "standardList")
+	private List<Teacher> subjectTeachers;
+	
+	@ManyToMany
+	private List<Exam> examList;
 	
 	@Column
 	private int classStrength;
+	
 	
 	public Standard() {
 		super();
 	}
 
-	public Standard(String grade, Teacher classTeacher, int classStrength) {
+	public Standard(String grade, List<Student> studentList, Teacher classTeacher, List<Teacher> subjectTeachers,
+			List<Exam> examList, int classStrength) {
 		super();
 		this.grade = grade;
+		this.studentList = studentList;
 		this.classTeacher = classTeacher;
+		this.subjectTeachers = subjectTeachers;
+		this.examList = examList;
 		this.classStrength = classStrength;
 	}
 
@@ -48,12 +67,36 @@ public class Standard {
 		this.grade = grade;
 	}
 
+	public List<Student> getStudentList() {
+		return studentList;
+	}
+
+	public void setStudentList(List<Student> studentList) {
+		this.studentList = studentList;
+	}
+
 	public Teacher getClassTeacher() {
 		return classTeacher;
 	}
 
 	public void setClassTeacher(Teacher classTeacher) {
 		this.classTeacher = classTeacher;
+	}
+
+	public List<Teacher> getSubjectTeachers() {
+		return subjectTeachers;
+	}
+
+	public void setSubjectTeachers(List<Teacher> subjectTeachers) {
+		this.subjectTeachers = subjectTeachers;
+	}
+
+	public List<Exam> getExamList() {
+		return examList;
+	}
+
+	public void setExamList(List<Exam> examList) {
+		this.examList = examList;
 	}
 
 	public int getClassStrength() {
@@ -66,10 +109,9 @@ public class Standard {
 
 	@Override
 	public String toString() {
-		return "Standard [id=" + id + ", grade=" + grade + ", classTeacher=" + classTeacher + ", classStrength="
+		return "Standard [id=" + id + ", grade=" + grade + ", studentList=" + studentList + ", classTeacher="
+				+ classTeacher + ", subjectTeachers=" + subjectTeachers + ", examList=" + examList + ", classStrength="
 				+ classStrength + "]";
 	}
-	
-	
-	
+
 }

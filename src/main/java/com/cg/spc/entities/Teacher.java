@@ -1,35 +1,46 @@
 package com.cg.spc.entities;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+
 
 @Entity
 public class Teacher {
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.AUTO)
-	
 	private int id;
-	@Column(length=25)
 	
+	@Column(length=25)
 	private String name;
 	
+	@OneToOne
 	private Standard standard;
+	@ManyToMany
+	private List<Standard> standardList;
 	
+	@Enumerated(EnumType.STRING)
 	private Subject subject;
 	
 	public Teacher() {
 		super();
 		
 	}
-	
-	public Teacher(String name, Standard standard, Subject subject) {
+
+	public Teacher(String name, Standard standard, List<Standard> standardList, Subject subject) {
 		super();
 		this.name = name;
 		this.standard = standard;
+		this.standardList = standardList;
 		this.subject = subject;
 	}
 
@@ -57,6 +68,14 @@ public class Teacher {
 		this.standard = standard;
 	}
 
+	public List<Standard> getStandardList() {
+		return standardList;
+	}
+
+	public void setStandardList(List<Standard> standardList) {
+		this.standardList = standardList;
+	}
+
 	public Subject getSubject() {
 		return subject;
 	}
@@ -67,11 +86,8 @@ public class Teacher {
 
 	@Override
 	public String toString() {
-		return "Teacher [id=" + id + ", name=" + name + "]";
+		return "Teacher [id=" + id + ", name=" + name + ", standard=" + standard + ", standardList=" + standardList
+				+ ", subject=" + subject + "]";
 	}
-
-	
-	
-	
 	
 }

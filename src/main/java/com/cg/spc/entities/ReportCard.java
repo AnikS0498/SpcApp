@@ -1,7 +1,7 @@
 package com.cg.spc.entities;
 
 import java.util.Map;
-
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,28 +12,26 @@ import javax.persistence.OneToOne;
 @Entity
 public class ReportCard {
 	
-	
-	/*-id : int
-	-Map<subjectId(Subject) , marks(int)>
-	-student : Student (OneToOne) uni
-	-isAttempted : boolean*/
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	
 	@ElementCollection
 	private Map <Subject,Integer> marksheet;
+	
 	@OneToOne
 	private Student student;
+	
+	@Column(length = 5)
 	private boolean isAttempted;
 	
 	public ReportCard() {
-		
-	}
-	
-	public ReportCard(int id, Map<Subject, Integer> marksheet, Student student, boolean isAttempted) {
 		super();
-		this.id = id;
+	}
+
+	public ReportCard(Map<Subject, Integer> marksheet, Student student, boolean isAttempted) {
+
+		super();
 		this.marksheet = marksheet;
 		this.student = student;
 		this.isAttempted = isAttempted;
@@ -73,8 +71,8 @@ public class ReportCard {
 
 	@Override
 	public String toString() {
-		return "ReportCard [id=" + id + ", isAttempted=" + isAttempted + "]";
+		return "ReportCard [id=" + id + ", marksheet=" + marksheet + ", student=" + student + ", isAttempted="
+				+ isAttempted + "]";
 	}
-	
 
 }
