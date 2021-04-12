@@ -1,11 +1,14 @@
 package com.cg.spc.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cg.spc.entities.Standard;
 import com.cg.spc.entities.Teacher;
+import com.cg.spc.repositories.IStandardRepository;
 import com.cg.spc.repositories.ITeacherRepository;
 
 @Service
@@ -13,6 +16,9 @@ public class TeacherServiceImpl implements ITeacherService{
 
 	@Autowired
 	private ITeacherRepository teacherRepository;
+	
+	@Autowired
+	private IStandardRepository standardRepository;
 	
 	@Override
 	public List<Teacher> getAllTeachers() {
@@ -32,7 +38,15 @@ public class TeacherServiceImpl implements ITeacherService{
 	}
 
 	@Override
-	public Teacher updateTeacher(Teacher teacher) {
+	public Teacher updateTeacher(Teacher teacher,List<Integer> standardIdList,int standardId) {
+		List<Standard> standardList = new ArrayList<Standard>();
+		for (Integer id : standardIdList) {
+			Standard standard = standardRepository.findById(id).get();
+			standardList.add(standard);
+		}
+		teacher.setStandardList(standardList);
+		Standard standard = standardRepository.findById(standardId).get();
+		teacher.setStandard(standard);
 		return teacherRepository.save(teacher);
 	}
 

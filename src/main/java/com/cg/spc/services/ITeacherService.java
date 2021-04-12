@@ -9,7 +9,7 @@ public interface ITeacherService {
 	public List<Teacher> getAllTeachers();
 	public Teacher getTeacherById(int id);
 	public Teacher deleteTeacherById(int id);
-	public Teacher updateTeacher(Teacher teacher);
+	public Teacher updateTeacher(Teacher teacher,List<Integer> standardIdList,int standardId);
 	public Teacher addTeacher(Teacher teacher);
 	
 }

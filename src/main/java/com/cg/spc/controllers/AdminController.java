@@ -1,5 +1,7 @@
 package com.cg.spc.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -8,9 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.cg.spc.entities.Parent;
+import com.cg.spc.entities.Standard;
 import com.cg.spc.entities.Student;
 import com.cg.spc.entities.Teacher;
 import com.cg.spc.services.IParentService;
+import com.cg.spc.services.IStandardService;
 import com.cg.spc.services.IStudentService;
 import com.cg.spc.services.ITeacherService;
 
@@ -27,6 +31,9 @@ public class AdminController {
 	
 	@Autowired
 	private ITeacherService teacherService;
+	
+	@Autowired
+	private IStandardService standardService;
 
 	@PostMapping("/parent/add")
 	public Parent addParentDetails(@RequestBody Parent parent) {
@@ -57,6 +64,22 @@ public class AdminController {
 		return teacherService.addTeacher(teacher);
 	}
 	
+	@PutMapping("/teacher/update")
+	public Teacher updateTeacherDetails(@RequestBody Teacher teacher,@RequestParam List<Integer> standardIdList,@RequestParam int standardId) {
+		
+		return teacherService.updateTeacher(teacher, standardIdList, standardId);
+	}
 	
-
+	@PostMapping("/standard/add")
+	public Standard addStandardDetails(@RequestBody Standard standard)
+	{
+		return standardService.addDetails(standard);
+	}
+	
+	@PutMapping("/standard/update")
+	public Standard updateStandardDetails(@RequestBody Standard standard,@RequestParam List<Integer> examIdList)
+	{
+		return standardService.updateDetails(standard, examIdList);
+	}
+	
 }
