@@ -3,14 +3,16 @@ package com.cg.spc.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cg.spc.entities.Exam;
 import com.cg.spc.repositories.IExamRepository;
 
+@Service
 public class ExamServiceImpl implements IExamService {
 
 	@Autowired
-	IExamRepository examRepository;
+	private IExamRepository examRepository;
 	
 	@Override
 	public Exam addExam(Exam exam) {

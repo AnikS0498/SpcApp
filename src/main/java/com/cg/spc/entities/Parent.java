@@ -1,6 +1,8 @@
 package com.cg.spc.entities;
 
 import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +17,7 @@ public class Parent {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
-	@OneToMany(mappedBy = "parent")
+	@OneToMany(mappedBy = "parent",cascade = CascadeType.ALL)
 	private List<Student> student;
 	
 	@Column

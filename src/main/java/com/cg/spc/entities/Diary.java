@@ -2,6 +2,7 @@ package com.cg.spc.entities;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +17,7 @@ public class Diary {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
-	@OneToOne(mappedBy = "diary")
+	@OneToOne(mappedBy = "diary",cascade = CascadeType.ALL)
 	private Student student;
 
 	@Column

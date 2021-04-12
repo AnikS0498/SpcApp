@@ -1,5 +1,6 @@
 package com.cg.spc.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +14,7 @@ public class Fee {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
-	@OneToOne(mappedBy = "fee")
+	@OneToOne(mappedBy = "fee",cascade = CascadeType.ALL)
 	private Student student;
 	
 	private double feeDue;

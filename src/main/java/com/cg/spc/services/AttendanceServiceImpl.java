@@ -1,10 +1,12 @@
 package com.cg.spc.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cg.spc.entities.Attendance;
 import com.cg.spc.repositories.IAttendanceRepository;
 
+@Service
 public class AttendanceServiceImpl implements IAttendanceService{
 
 	@Autowired

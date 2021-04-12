@@ -1,10 +1,12 @@
 package com.cg.spc.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cg.spc.entities.Standard;
 import com.cg.spc.repositories.IStandardRepository;
 
+@Service
 public class StandardServiceImpl implements IStandardService{
 
 	@Autowired

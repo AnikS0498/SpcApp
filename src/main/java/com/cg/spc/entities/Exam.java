@@ -3,45 +3,65 @@ package com.cg.spc.entities;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 @Entity
 public class Exam {
-
-	private LocalDate date;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+	
+	@Column
+	private LocalDate examDate;
 
 	@Enumerated(EnumType.STRING)
 	private Subject subject;
 
-	@ManyToMany(mappedBy = "examList")
+	@ManyToMany(mappedBy = "examList",cascade = CascadeType.ALL)
 	private List<Standard> standard;
-
+	
+	@Column
 	private String duration;
-
+	
+	@Column
 	private int marks;
 
 	public Exam() {
 		super();
 	}
 
-	public Exam(LocalDate date, Subject subject, List<Standard> standard, String duration, int marks) {
+	public Exam(LocalDate examDate, Subject subject, List<Standard> standard, String duration, int marks) {
 		super();
-		this.date = date;
+		this.examDate = examDate;
 		this.subject = subject;
 		this.standard = standard;
 		this.duration = duration;
 		this.marks = marks;
 	}
 
-	public LocalDate getDate() {
-		return date;
+	public int getId() {
+		return id;
 	}
 
-	public void setDate(LocalDate date) {
-		this.date = date;
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public LocalDate getExamDate() {
+		return examDate;
+	}
+
+	public void setExamDate(LocalDate examDate) {
+		this.examDate = examDate;
 	}
 
 	public Subject getSubject() {
@@ -78,8 +98,9 @@ public class Exam {
 
 	@Override
 	public String toString() {
-		return "Exam [date=" + date + ", subject=" + subject + ", standard=" + standard + ", duration=" + duration
-				+ ", marks=" + marks + "]";
+		return "Exam [id=" + id + ", examDate=" + examDate + ", subject=" + subject + ", standard=" + standard
+				+ ", duration=" + duration + ", marks=" + marks + "]";
 	}
 
+	
 }

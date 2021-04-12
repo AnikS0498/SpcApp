@@ -32,6 +32,7 @@ public class Student {
 	
 	@OneToOne
 	private Fee fee;
+	
 	public Student() {
 		super();
 		

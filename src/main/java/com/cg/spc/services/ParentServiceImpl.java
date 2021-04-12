@@ -2,12 +2,18 @@ package com.cg.spc.services;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import com.cg.spc.entities.Parent;
 import com.cg.spc.repositories.IParentRepository;
 
-public class ParentServiceImpl implements IParentService{
 
+@Service
+public class ParentServiceImpl implements IParentService{
+	
+	@Autowired
 	private IParentRepository parentRepository;
+	
 	
 	@Override
 	public List<Parent> getAllParent() {
@@ -31,8 +37,10 @@ public class ParentServiceImpl implements IParentService{
 		return parent;
 	}
 
+	
 	@Override
-	public Parent updateParentDetails(Parent parent) {
+	public Parent updateParentDetails(Parent parent)
+	{
 		return parentRepository.save(parent);
 	}
 

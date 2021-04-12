@@ -3,14 +3,16 @@ package com.cg.spc.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cg.spc.entities.Teacher;
 import com.cg.spc.repositories.ITeacherRepository;
 
+@Service
 public class TeacherServiceImpl implements ITeacherService{
 
 	@Autowired
-	ITeacherRepository teacherRepository;
+	private ITeacherRepository teacherRepository;
 	
 	@Override
 	public List<Teacher> getAllTeachers() {

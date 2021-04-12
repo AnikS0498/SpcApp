@@ -3,14 +3,16 @@ package com.cg.spc.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cg.spc.entities.Diary;
 import com.cg.spc.repositories.IDiaryRepository;
 
+@Service
 public class DiaryServiceImpl implements IDiaryService{
 	
 	@Autowired
-	IDiaryRepository diaryRepository;
+	private IDiaryRepository diaryRepository;
 
 	@Override
 	public Diary addDiary(Diary diary) {

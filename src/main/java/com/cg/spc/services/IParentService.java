@@ -10,6 +10,7 @@ public interface IParentService {
 	public Parent addParentDetails(Parent parent);
 	public Parent deleteParentDetails(int id);
 	public Parent updateParentDetails(Parent parent);
+//	public Parent updateParentDetails(List<Integer> studentId, Parent parent);
 	
 	
 }

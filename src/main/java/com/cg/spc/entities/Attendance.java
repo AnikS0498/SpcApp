@@ -2,6 +2,7 @@ package com.cg.spc.entities;
 
 import java.time.LocalDate;
 import javax.persistence.Entity;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,11 +16,11 @@ public class Attendance {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@OneToOne(mappedBy = "attendance")
+	@OneToOne(mappedBy = "attendance",cascade = CascadeType.ALL)
 	private Student student;
 	
 	@Column
-	private LocalDate date;
+	private LocalDate attendanceDate;
 	
 	@Column(length = 5)
 	private boolean isPresent;
@@ -28,11 +29,11 @@ public class Attendance {
 		super();
 		
 	}
-	
-	public Attendance(Student student, LocalDate date, boolean isPresent) {
+
+	public Attendance(Student student, LocalDate attendanceDate, boolean isPresent) {
 		super();
 		this.student = student;
-		this.date = date;
+		this.attendanceDate = attendanceDate;
 		this.isPresent = isPresent;
 	}
 
@@ -47,27 +48,31 @@ public class Attendance {
 	public Student getStudent() {
 		return student;
 	}
+
 	public void setStudent(Student student) {
 		this.student = student;
 	}
-	public LocalDate getDate() {
-		return date;
+
+	public LocalDate getAttendanceDate() {
+		return attendanceDate;
 	}
-	public void setDate(LocalDate date) {
-		this.date = date;
+
+	public void setAttendanceDate(LocalDate attendanceDate) {
+		this.attendanceDate = attendanceDate;
 	}
+
 	public boolean isPresent() {
 		return isPresent;
 	}
+
 	public void setPresent(boolean isPresent) {
 		this.isPresent = isPresent;
 	}
 
 	@Override
 	public String toString() {
-		return "Attendance [id=" + id + ", student=" + student + ", date=" + date + ", isPresent=" + isPresent + "]";
+		return "Attendance [id=" + id + ", student=" + student + ", attendanceDate=" + attendanceDate + ", isPresent="
+				+ isPresent + "]";
 	}
-
-	
 	
 }

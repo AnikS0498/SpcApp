@@ -25,6 +25,7 @@ public class Teacher {
 	
 	@OneToOne
 	private Standard standard;
+	
 	@ManyToMany
 	private List<Standard> standardList;
 	

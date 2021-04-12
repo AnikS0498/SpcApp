@@ -1,6 +1,8 @@
 package com.cg.spc.entities;
 
 import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,10 +25,10 @@ public class Standard {
 	@OneToMany
 	private List<Student> studentList; 
 	
-	@OneToOne(mappedBy = "standard")
+	@OneToOne(mappedBy = "standard",cascade = CascadeType.ALL)
 	private Teacher classTeacher;
 	
-	@ManyToMany(mappedBy = "standardList")
+	@ManyToMany(mappedBy = "standardList",cascade = CascadeType.ALL)
 	private List<Teacher> subjectTeachers;
 	
 	@ManyToMany
