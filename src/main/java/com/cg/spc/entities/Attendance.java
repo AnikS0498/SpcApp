@@ -1,3 +1,8 @@
+package com.cg.spc.entities;
+
+import java.time.LocalDate;
+
+import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -15,7 +20,7 @@ public class Attendance {
 
 	public Attendance() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	public Attendance(Student student, LocalDate date, boolean isPresent) {

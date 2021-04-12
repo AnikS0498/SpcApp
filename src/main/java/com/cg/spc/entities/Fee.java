@@ -1,8 +1,5 @@
 package com.cg.spc.entities;
 
-import java.time.LocalDate;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,11 +9,6 @@ import javax.persistence.OneToOne;
 @Entity
 public class Fee {
 	
-	/*id : int
-	-student : Student (OneToOne) uni
-	-feeDue : double
-	-feePaid : double
-	-totalFee : Final double*/
 	@Id
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	private int id;
