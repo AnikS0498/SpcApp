@@ -8,28 +8,26 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Fee {
-	
-	/*id : int
-	-student : Student (OneToOne) uni
-	-feeDue : double
-	-feePaid : double
-	-totalFee : Final double*/
+
 	@Id
-	@GeneratedValue (strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@OneToOne
+
+	@OneToOne(mappedBy = "fee")
 	private Student student;
-	private double feeDue;
-	private double feePaid;
-	private final double totalFee = 10000;
 	
+	private double feeDue;
+	
+	private double feePaid;
+	
+	private final double totalFee = 24000;
+
 	public Fee() {
 		super();
 	}
-	
-	public Fee(int id, Student student, double feeDue, double feePaid) {
+
+	public Fee(Student student, double feeDue, double feePaid) {
 		super();
-		this.id = id;
 		this.student = student;
 		this.feeDue = feeDue;
 		this.feePaid = feePaid;
@@ -76,6 +74,5 @@ public class Fee {
 		return "Fee [id=" + id + ", student=" + student + ", feeDue=" + feeDue + ", feePaid=" + feePaid + ", totalFee="
 				+ totalFee + "]";
 	}
-	
 
 }

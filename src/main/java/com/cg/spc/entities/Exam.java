@@ -1,27 +1,33 @@
 package com.cg.spc.entities;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Exam {
-	
+
 	private LocalDate date;
-	@Enumerated
+
+	@Enumerated(EnumType.STRING)
 	private Subject subject;
-	@Enumerated
-	private Standard standard;
+
+	@ManyToMany(mappedBy = "examList")
+	private List<Standard> standard;
+
 	private String duration;
+
 	private int marks;
-	
+
 	public Exam() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-	
-	public Exam(LocalDate date, Subject subject, Standard standard, String duration, int marks) {
+
+	public Exam(LocalDate date, Subject subject, List<Standard> standard, String duration, int marks) {
 		super();
 		this.date = date;
 		this.subject = subject;
@@ -46,11 +52,11 @@ public class Exam {
 		this.subject = subject;
 	}
 
-	public Standard getStandard() {
+	public List<Standard> getStandard() {
 		return standard;
 	}
 
-	public void setStandard(Standard standard) {
+	public void setStandard(List<Standard> standard) {
 		this.standard = standard;
 	}
 
@@ -75,6 +81,5 @@ public class Exam {
 		return "Exam [date=" + date + ", subject=" + subject + ", standard=" + standard + ", duration=" + duration
 				+ ", marks=" + marks + "]";
 	}
-	
 
 }

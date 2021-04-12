@@ -11,26 +11,24 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Diary {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
-	@OneToOne
+
+	@OneToOne(mappedBy = "diary")
 	private Student student;
-	
+
 	@Column
 	private LocalDate generatedDate;
-	
+
 	@Column
 	private String remark;
 
 	public Diary() {
 		super();
-		
-	}
 
-	
+	}
 
 	public Diary(Student student, LocalDate generatedDate, String remark) {
 		super();
@@ -38,65 +36,43 @@ public class Diary {
 		this.generatedDate = generatedDate;
 		this.remark = remark;
 	}
-	
-	
-
-
 
 	public int getId() {
 		return id;
 	}
 
-
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
 
 	public Student getStudent() {
 		return student;
 	}
 
-
-
 	public void setStudent(Student student) {
 		this.student = student;
 	}
-
-
 
 	public LocalDate getGeneratedDate() {
 		return generatedDate;
 	}
 
-
-
 	public void setGeneratedDate(LocalDate generatedDate) {
 		this.generatedDate = generatedDate;
 	}
-
-
 
 	public String getRemark() {
 		return remark;
 	}
 
-
-
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-
-
 
 	@Override
 	public String toString() {
 		return "Diary [id=" + id + ", student=" + student + ", generatedDate=" + generatedDate + ", remark=" + remark
 				+ "]";
 	}
-	
-	
-	
+
 }

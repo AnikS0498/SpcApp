@@ -1,25 +1,32 @@
 package com.cg.spc.entities;
-import java.time.LocalDate;
 
+import java.time.LocalDate;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
 public class Attendance {
 	
-	/*
-	 * Attendance : -student : Student -date : LocalDate -isPresent : boolean
-	 */
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
 	
-	@OneToOne
+	@OneToOne(mappedBy = "attendance")
 	private Student student;
+	
+	@Column
 	private LocalDate date;
+	
+	@Column(length = 5)
 	private boolean isPresent;
-
 
 	public Attendance() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	public Attendance(Student student, LocalDate date, boolean isPresent) {
@@ -27,6 +34,14 @@ public class Attendance {
 		this.student = student;
 		this.date = date;
 		this.isPresent = isPresent;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public Student getStudent() {
@@ -50,8 +65,9 @@ public class Attendance {
 
 	@Override
 	public String toString() {
-		return "Attendance [date=" + date + ", isPresent=" + isPresent + "]";
+		return "Attendance [id=" + id + ", student=" + student + ", date=" + date + ", isPresent=" + isPresent + "]";
 	}
+
 	
 	
 }

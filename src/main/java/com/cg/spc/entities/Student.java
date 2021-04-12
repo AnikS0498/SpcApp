@@ -20,24 +20,31 @@ public class Student {
 	
 	@ManyToOne
 	private Parent parent;
-
+	
+	@OneToOne
+	private Diary diary;
+	
 	@OneToOne
 	private Standard standard;
 	
 	@OneToOne
 	private Attendance attendance;
-
+	
+	@OneToOne
+	private Fee fee;
 	public Student() {
 		super();
 		
 	}
-
-	public Student(String name, Parent parent, Standard standard, Attendance attendance) {
+	
+	public Student(String name, Parent parent, Diary diary, Standard standard, Attendance attendance, Fee fee) {
 		super();
 		this.name = name;
 		this.parent = parent;
+		this.diary = diary;
 		this.standard = standard;
 		this.attendance = attendance;
+		this.fee = fee;
 	}
 
 	public int getId() {
@@ -64,6 +71,14 @@ public class Student {
 		this.parent = parent;
 	}
 
+	public Diary getDiary() {
+		return diary;
+	}
+
+	public void setDiary(Diary diary) {
+		this.diary = diary;
+	}
+
 	public Standard getStandard() {
 		return standard;
 	}
@@ -80,11 +95,19 @@ public class Student {
 		this.attendance = attendance;
 	}
 
+	public Fee getFee() {
+		return fee;
+	}
+
+	public void setFee(Fee fee) {
+		this.fee = fee;
+	}
+
 	@Override
 	public String toString() {
-		return "Student [id=" + id + ", name=" + name + "]";
+		return "Student [id=" + id + ", name=" + name + ", parent=" + parent + ", diary=" + diary + ", standard="
+				+ standard + ", attendance=" + attendance + ", fee=" + fee + "]";
 	}
-	
-	
+
 	
 }
