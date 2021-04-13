@@ -4,7 +4,9 @@ package com.cg.spc.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cg.spc.entities.ReportCard;
+import com.cg.spc.entities.Student;
 import com.cg.spc.repositories.IReportCardRepository;
+import com.cg.spc.repositories.IStudentRepository;
 
 @Service
 public class ReportCardServiceImpl  implements IReportCardService{
@@ -12,8 +14,13 @@ public class ReportCardServiceImpl  implements IReportCardService{
 	@Autowired
 	private IReportCardRepository reportCardRepository;
 	
+	@Autowired
+	private IStudentRepository studentRepository;
+	
 	@Override
-	public ReportCard addDetails(ReportCard reportCard) {
+	public ReportCard addDetails(ReportCard reportCard,int studentId) {
+		Student student = studentRepository.findById(studentId).get();
+		reportCard.setStudent(student);
 		return reportCardRepository.save(reportCard);
 	}
 
@@ -24,7 +31,9 @@ public class ReportCardServiceImpl  implements IReportCardService{
 	}
 
 	@Override
-	public ReportCard updateDetails(ReportCard reportCard) {
+	public ReportCard updateDetails(ReportCard reportCard,int studentId) {
+		Student student = studentRepository.findById(studentId).get();
+		reportCard.setStudent(student);
 		return reportCardRepository.save(reportCard);
 	}
 

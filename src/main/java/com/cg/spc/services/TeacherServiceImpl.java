@@ -21,8 +21,9 @@ public class TeacherServiceImpl implements ITeacherService{
 	private IStandardRepository standardRepository;
 	
 	@Override
-	public List<Teacher> getAllTeachers() {
-		return teacherRepository.findAll();
+	public List<String> getAllTeachers() {
+		//return teacherRepository.findAll();
+		return teacherRepository.findAllTeacher();
 	}
 
 	@Override

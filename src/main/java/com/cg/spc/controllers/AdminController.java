@@ -3,6 +3,8 @@ package com.cg.spc.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +19,8 @@ import com.cg.spc.services.IParentService;
 import com.cg.spc.services.IStandardService;
 import com.cg.spc.services.IStudentService;
 import com.cg.spc.services.ITeacherService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @RestController
@@ -46,6 +50,11 @@ public class AdminController {
 		return parentService.updateParentDetails(parent);
 	}
 	
+	@GetMapping("/parent/getParents")
+	public List<Parent> getAllParent()
+	{
+		return parentService.getAllParent();
+	}
 	@PostMapping("/student/add")
 	public Student addStudentDetails(@RequestBody Student student)
 	{
@@ -68,6 +77,23 @@ public class AdminController {
 	public Teacher updateTeacherDetails(@RequestBody Teacher teacher,@RequestParam List<Integer> standardIdList,@RequestParam int standardId) {
 		
 		return teacherService.updateTeacher(teacher, standardIdList, standardId);
+	}
+	
+	@GetMapping("/teacher/getTeachers")
+	public List<String> getAllTeacher()
+	{
+		return teacherService.getAllTeachers();
+	}
+	
+	@GetMapping("/teacher/getById/{tId}")
+	public String getTeacherById(@PathVariable("tId") int tId) throws JsonProcessingException
+	{
+		ObjectMapper mapper = new ObjectMapper();
+			String teacherJson = mapper.writeValueAsString(teacherService.getTeacherById(tId));
+			return teacherJson;
+//		Gson gson = new Gson();
+//		String teacherGson = gson.toJson(teacherService.getTeacherById(tId));
+//		return teacherGson;
 	}
 	
 	@PostMapping("/standard/add")

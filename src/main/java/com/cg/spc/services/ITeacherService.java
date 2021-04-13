@@ -6,7 +6,7 @@ import com.cg.spc.entities.Teacher;
 
 public interface ITeacherService {
 
-	public List<Teacher> getAllTeachers();
+	public List<String> getAllTeachers();
 	public Teacher getTeacherById(int id);
 	public Teacher deleteTeacherById(int id);
 	public Teacher updateTeacher(Teacher teacher,List<Integer> standardIdList,int standardId);
