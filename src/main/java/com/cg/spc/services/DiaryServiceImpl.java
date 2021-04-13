@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.spc.entities.Diary;
+import com.cg.spc.entities.Student;
 import com.cg.spc.repositories.IDiaryRepository;
+import com.cg.spc.repositories.IStudentRepository;
 
 @Service
 public class DiaryServiceImpl implements IDiaryService{
@@ -14,15 +16,20 @@ public class DiaryServiceImpl implements IDiaryService{
 	@Autowired
 	private IDiaryRepository diaryRepository;
 
-	@Override
-	public Diary addDiary(Diary diary) {
+	@Autowired
+	private IStudentRepository studentRepository;
 	
+	@Override
+	public Diary addDiary(Diary diary, int studentId) {
+		Student student = studentRepository.findById(studentId).get();
+		diary.setStudent(student);
 		return diaryRepository.save(diary);
 	}
 
 	@Override
-	public Diary updateDiary(Diary diary) {
-		
+	public Diary updateDiary(Diary diary, int studentId) {
+		Student student = studentRepository.findById(studentId).get();
+		diary.setStudent(student);
 		return diaryRepository.save(diary);
 	}
 
