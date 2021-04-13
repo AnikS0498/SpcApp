@@ -23,6 +23,7 @@ public class DiaryServiceImpl implements IDiaryService{
 	public Diary addDiary(Diary diary, int studentId) {
 		Student student = studentRepository.findById(studentId).get();
 		diary.setStudent(student);
+		student.setDiary(diary);
 		return diaryRepository.save(diary);
 	}
 
@@ -30,6 +31,7 @@ public class DiaryServiceImpl implements IDiaryService{
 	public Diary updateDiary(Diary diary, int studentId) {
 		Student student = studentRepository.findById(studentId).get();
 		diary.setStudent(student);
+		student.setDiary(diary);
 		return diaryRepository.save(diary);
 	}
 
