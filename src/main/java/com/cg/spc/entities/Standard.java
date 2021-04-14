@@ -24,7 +24,6 @@ public class Standard {
 	private String grade;
 	
 	@OneToMany
-	@JsonBackReference
 	private List<Student> studentList; 
 	
 	@OneToOne(mappedBy = "standard",cascade = CascadeType.ALL)

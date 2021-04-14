@@ -31,6 +31,7 @@ public class Student {
 	private Standard standard;
 	
 	@OneToOne
+	@JsonManagedReference
 	private Attendance attendance;
 	
 	@OneToOne

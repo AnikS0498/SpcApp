@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Attendance {
 	
@@ -17,24 +19,25 @@ public class Attendance {
 	private int id;
 	
 	@OneToOne(mappedBy = "attendance",cascade = CascadeType.ALL)
+	@JsonBackReference
 	private Student student;
 	
 	@Column
 	private LocalDate attendanceDate;
 	
 	@Column(length = 5)
-	private boolean isPresent;
+	private boolean present;
 
 	public Attendance() {
 		super();
 		
 	}
 
-	public Attendance(Student student, LocalDate attendanceDate, boolean isPresent) {
+	public Attendance(Student student, LocalDate attendanceDate, boolean present) {
 		super();
 		this.student = student;
 		this.attendanceDate = attendanceDate;
-		this.isPresent = isPresent;
+		this.present = present;
 	}
 
 	public int getId() {
@@ -62,17 +65,18 @@ public class Attendance {
 	}
 
 	public boolean isPresent() {
-		return isPresent;
+		return present;
 	}
 
-	public void setPresent(boolean isPresent) {
-		this.isPresent = isPresent;
+	public void setPresent(boolean present) {
+		this.present = present;
 	}
 
 	@Override
 	public String toString() {
-		return "Attendance [id=" + id + ", student=" + student + ", attendanceDate=" + attendanceDate + ", isPresent="
-				+ isPresent + "]";
+		return "Attendance [id=" + id + ", student=" + student + ", attendanceDate=" + attendanceDate + ", present="
+				+ present + "]";
 	}
+
 	
 }

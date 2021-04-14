@@ -85,9 +85,8 @@ public class AdminController {
 	}
 
 	@PutMapping("/standard/update")
-	public ResponseEntity<Standard> updateStandardDetails(@RequestBody Standard standard, @RequestParam List<Integer> examIdList,
-			@RequestParam List<Integer> studentIdList) {
-		return new ResponseEntity<Standard>(standardService.updateDetails(standard, examIdList, studentIdList),HttpStatus.OK);
+	public ResponseEntity<Standard> updateStandardDetails(@RequestBody Standard standard,@RequestParam List<Integer> studentIdList) {
+		return new ResponseEntity<Standard>(standardService.updateDetails(standard, studentIdList),HttpStatus.OK);
 	}
 
 }

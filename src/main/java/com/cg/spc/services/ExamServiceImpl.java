@@ -1,12 +1,13 @@
 package com.cg.spc.services;
 
+import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.cg.spc.entities.Exam;
+import com.cg.spc.entities.Standard;
 import com.cg.spc.repositories.IExamRepository;
+import com.cg.spc.repositories.IStandardRepository;
 
 @Service
 public class ExamServiceImpl implements IExamService {
@@ -14,9 +15,17 @@ public class ExamServiceImpl implements IExamService {
 	@Autowired
 	private IExamRepository examRepository;
 	
+	@Autowired
+	private IStandardRepository standardRepository;
+	
 	@Override
-	public Exam addExam(Exam exam) {
-		
+	public Exam addExam(Exam exam,List<Integer> standardIdList) {
+		List<Standard> standardList = new ArrayList<Standard>();
+		for (Integer standardId : standardIdList) {
+			Standard standard = standardRepository.findById(standardId).get();
+			standardList.add(standard);
+		}
+		exam.setStandard(standardList);
 		return examRepository.save(exam);
 	}
 
@@ -31,8 +40,13 @@ public class ExamServiceImpl implements IExamService {
 	}
 
 	@Override
-	public Exam updateExam(Exam exam) {
-		
+	public Exam updateExam(Exam exam,List<Integer> standardIdList) {
+		List<Standard> standardList = new ArrayList<Standard>();
+		for (Integer standardId : standardIdList) {
+			Standard standard = standardRepository.findById(standardId).get();
+			standardList.add(standard);
+		}
+		exam.setStandard(standardList);
 		return examRepository.save(exam);
 	}
 
