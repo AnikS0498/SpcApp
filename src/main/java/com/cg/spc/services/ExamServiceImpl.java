@@ -25,6 +25,7 @@ public class ExamServiceImpl implements IExamService {
 		List<Standard> standardList = new ArrayList<Standard>();
 		for (Integer standardId : standardIdList) {
 			Standard standard = standardRepository.findById(standardId).orElseThrow(() -> new StandardNotFoundException());
+			standard.setExamList(getAllExamDetails());
 			standardList.add(standard);
 		}
 		exam.setStandard(standardList);
