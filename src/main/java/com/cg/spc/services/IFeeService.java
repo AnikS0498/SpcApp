@@ -7,9 +7,9 @@ import java.util.List;
 public interface IFeeService {
 
 	public Fee getFeeById(int id);
-	public Fee updateFeeDetails(Fee fee);
+	public Fee updateFeeDetails(Fee fee, int studentId);
 	public Fee deleteFeeDetails(int id);
 	public List<Fee> getAllFee();
-	public Fee addFeeDetails(Fee fee);
+	public Fee addFeeDetails(Fee fee, int studentId);
 	
 }

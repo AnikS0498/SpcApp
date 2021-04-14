@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.spc.entities.Fee;
+import com.cg.spc.entities.Student;
 import com.cg.spc.repositories.IFeeRepository;
+import com.cg.spc.repositories.IStudentRepository;
 
 @Service
 public class FeeServiceImpl implements IFeeService{
@@ -14,13 +16,19 @@ public class FeeServiceImpl implements IFeeService{
 	@Autowired
 	private IFeeRepository feeRepository;
 	
+	@Autowired
+	private IStudentRepository studentRepo;
+	
 	@Override
 	public Fee getFeeById(int id) {
 		return feeRepository.findById(id).get();
 	}
 
 	@Override
-	public Fee updateFeeDetails(Fee fee) {
+	public Fee updateFeeDetails(Fee fee, int studentId) {
+		Student student = studentRepo.findById(studentId).get();
+		fee.setStudent(student);
+		student.setFee(fee);
 		return feeRepository.save(fee);
 	}
 
@@ -37,7 +45,10 @@ public class FeeServiceImpl implements IFeeService{
 	}
 
 	@Override
-	public Fee addFeeDetails(Fee fee) {
+	public Fee addFeeDetails(Fee fee, int studentId) {
+		Student student = studentRepo.findById(studentId).get();
+		fee.setStudent(student);
+		student.setFee(fee);
 		return feeRepository.save(fee);
 	}
 
