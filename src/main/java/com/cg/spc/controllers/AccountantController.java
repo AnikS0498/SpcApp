@@ -17,18 +17,18 @@ import com.cg.spc.services.IFeeService;
 @RestController
 @RequestMapping("/accountant")
 public class AccountantController {
-	
+
 	@Autowired
 	private IFeeService feeService;
-	
+
 	@PostMapping("/fee/add")
-	public ResponseEntity<Fee> addFeeDetails(@RequestBody Fee fee,@RequestParam int studentId) {
-		return new ResponseEntity<Fee>(feeService.addFeeDetails(fee,studentId),HttpStatus.OK);
+	public ResponseEntity<Fee> addFeeDetails(@RequestBody Fee fee, @RequestParam int studentId) {
+		return new ResponseEntity<Fee>(feeService.addFeeDetails(fee, studentId), HttpStatus.OK);
 	}
+
 	@PutMapping("/fee/update")
-	public ResponseEntity<Fee> updateFeeDetails(@RequestBody Fee fee,@RequestParam int studentId) {
-		return new ResponseEntity<Fee>(feeService.updateFeeDetails(fee,studentId),HttpStatus.OK);
+	public ResponseEntity<Fee> updateFeeDetails(@RequestBody Fee fee, @RequestParam int studentId) {
+		return new ResponseEntity<Fee>(feeService.updateFeeDetails(fee, studentId), HttpStatus.OK);
 	}
-	
 
 }
