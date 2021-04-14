@@ -23,11 +23,6 @@ public class ParentServiceImpl implements IParentService{
 	
 	@Override
 	public List<Parent> getAllParent() {
-//		System.out.println("service");
-//		Iterable<Parent> itr = parentRepository.findAll();
-//		List<Parent> parentList = new ArrayList<Parent>();
-//		itr.forEach(parentList::add);
-//		return parentList;
 		return parentRepository.findAll();
 	}
 

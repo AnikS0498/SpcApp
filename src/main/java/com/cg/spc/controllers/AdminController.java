@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,8 +20,6 @@ import com.cg.spc.services.IParentService;
 import com.cg.spc.services.IStandardService;
 import com.cg.spc.services.IStudentService;
 import com.cg.spc.services.ITeacherService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/admin")
@@ -41,64 +38,56 @@ public class AdminController {
 	private IStandardService standardService;
 
 	@PostMapping("/parent/add")
-	public Parent addParentDetails(@RequestBody Parent parent) {
-		return parentService.addParentDetails(parent);
+	public ResponseEntity<Parent> addParentDetails(@RequestBody Parent parent) {
+		return new ResponseEntity<Parent>(parentService.addParentDetails(parent),HttpStatus.CREATED) ;
 	}
 
 	@PutMapping("/parent/update")
-	public int updateParentDetails(@RequestBody Parent parent, @RequestParam List<Integer> studentIdList) {
-		return parentService.updateParentDetails(parent, studentIdList);
+	public ResponseEntity<Integer> updateParentDetails(@RequestBody Parent parent, @RequestParam List<Integer> studentIdList) {
+		return new ResponseEntity<Integer>(parentService.updateParentDetails(parent, studentIdList),HttpStatus.OK);
 	}
 
 	@GetMapping("/parent/getParents")
-	public List<Parent> getAllParent() {
-		//System.out.println("controller");
-		return parentService.getAllParent();
+	public ResponseEntity<List<Parent>>  getAllParent() {
+		return new ResponseEntity<List<Parent>>(parentService.getAllParent(),HttpStatus.OK);
 	}
 
 	@PostMapping("/student/add")
-	public Student addStudentDetails(@RequestBody Student student) {
-		return studentService.addStudent(student);
+	public ResponseEntity<Student> addStudentDetails(@RequestBody Student student) {
+		return new ResponseEntity<Student>(studentService.addStudent(student),HttpStatus.CREATED);
 	}
 
 	@PutMapping("/student/update")
-	public int updateStudentDetails(@RequestBody Student student) {
-		return studentService.updateStudent(student);
+	public ResponseEntity<Integer> updateStudentDetails(@RequestBody Student student) {
+		return new ResponseEntity<Integer>(studentService.updateStudent(student),HttpStatus.OK);
 	}
 
 	@PostMapping("/teacher/add")
-	public Teacher addTeacherDetails(@RequestBody Teacher teacher) {
-		return teacherService.addTeacher(teacher);
+	public ResponseEntity<Teacher> addTeacherDetails(@RequestBody Teacher teacher) {
+		return new ResponseEntity<Teacher> (teacherService.addTeacher(teacher),HttpStatus.CREATED);
 	}
 
 	@PutMapping("/teacher/update")
-	public Teacher updateTeacherDetails(@RequestBody Teacher teacher, @RequestParam List<Integer> standardIdList,
+	public ResponseEntity<Teacher> updateTeacherDetails(@RequestBody Teacher teacher, @RequestParam List<Integer> standardIdList,
 			@RequestParam int standardId) {
 
-		return teacherService.updateTeacher(teacher, standardIdList, standardId);
+		return new ResponseEntity<Teacher>(teacherService.updateTeacher(teacher, standardIdList, standardId),HttpStatus.OK);
 	}
 
 	@GetMapping("/teacher/getTeachers")
-	public List<String> getAllTeacher() {
-		return teacherService.getAllTeachers();
-	}
-
-	@GetMapping("/teacher/getById/{tId}")
-	public String getTeacherById(@PathVariable("tId") int tId) throws JsonProcessingException {
-		ObjectMapper mapper = new ObjectMapper();
-		String teacherJson = mapper.writeValueAsString(teacherService.getTeacherById(tId));
-		return teacherJson;
+	public ResponseEntity<List<Teacher>> getAllTeacher() {
+		return new ResponseEntity<List<Teacher>>(teacherService.getAllTeachers(),HttpStatus.OK);
 	}
 
 	@PostMapping("/standard/add")
 	public ResponseEntity<Standard> addStandardDetails(@RequestBody Standard standard) {
-		return new ResponseEntity<Standard>(standardService.addDetails(standard), HttpStatus.OK);
+		return new ResponseEntity<Standard>(standardService.addDetails(standard), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/standard/update")
-	public Standard updateStandardDetails(@RequestBody Standard standard, @RequestParam List<Integer> examIdList,
+	public ResponseEntity<Standard> updateStandardDetails(@RequestBody Standard standard, @RequestParam List<Integer> examIdList,
 			@RequestParam List<Integer> studentIdList) {
-		return standardService.updateDetails(standard, examIdList, studentIdList);
+		return new ResponseEntity<Standard>(standardService.updateDetails(standard, examIdList, studentIdList),HttpStatus.OK);
 	}
 
 }

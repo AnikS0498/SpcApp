@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class Standard {
@@ -23,15 +24,19 @@ public class Standard {
 	private String grade;
 	
 	@OneToMany
+	@JsonBackReference
 	private List<Student> studentList; 
 	
 	@OneToOne(mappedBy = "standard",cascade = CascadeType.ALL)
+	@JsonBackReference
 	private Teacher classTeacher;
 	
 	@ManyToMany(mappedBy = "standardList",cascade = CascadeType.ALL)
+	@JsonBackReference
 	private List<Teacher> subjectTeachers;
 	
 	@ManyToMany
+	@JsonBackReference
 	private List<Exam> examList;
 	
 	@Column

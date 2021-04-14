@@ -13,6 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Exam {
 	
@@ -27,6 +29,7 @@ public class Exam {
 	private Subject subject;
 
 	@ManyToMany(mappedBy = "examList",cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private List<Standard> standard;
 	
 	@Column
