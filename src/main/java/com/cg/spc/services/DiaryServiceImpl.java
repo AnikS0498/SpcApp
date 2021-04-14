@@ -59,4 +59,9 @@ public class DiaryServiceImpl implements IDiaryService{
 		return diaryRepository.findAll();
 	}
 
+	@Override
+	public Diary getDiaryByStudentId(int id) {
+		return diaryRepository.findByStudentId(id);
+	}
+
 }

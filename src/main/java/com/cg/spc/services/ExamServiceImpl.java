@@ -1,5 +1,6 @@
 package com.cg.spc.services;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,11 @@ public class ExamServiceImpl implements IExamService {
 	public List<Exam> getAllExamDetails() {
 		
 		return examRepository.findAll();
+	}
+
+	@Override
+	public Exam getExamByDate(LocalDate date) {
+		return examRepository.findByExamDate(date);
 	}
 
 	

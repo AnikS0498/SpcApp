@@ -9,4 +9,5 @@ public interface IReportCardService {
 	public ReportCard getDetailsById(int id);
 	public ReportCard updateDetails(ReportCard reportCard,int studentId);
 	public ReportCard deleteDetailsById(int id);
+	public ReportCard getReportCardByStudentId(int id);
 }

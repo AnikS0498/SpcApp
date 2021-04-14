@@ -52,4 +52,9 @@ public class FeeServiceImpl implements IFeeService{
 		return feeRepository.save(fee);
 	}
 
+	@Override
+	public Fee getFeeByStudentId(int id) {
+		return feeRepository.findByStudentId(id);
+	}
+
 }

@@ -41,4 +41,9 @@ public class AttendanceServiceImpl implements IAttendanceService{
 		Attendance attendance = attendanceRepository.findById(id).get();
 		attendanceRepository.deleteById(id);
 		return attendance;	}
+
+	@Override
+	public Attendance getAttendanceByStudentId(int id) {
+		return attendanceRepository.findByStudentId(id);
+	}
 }

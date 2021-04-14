@@ -43,5 +43,10 @@ public class ReportCardServiceImpl  implements IReportCardService{
 		reportCardRepository.deleteById(id);
 		return reportCard;
 	}
+
+	@Override
+	public ReportCard getReportCardByStudentId(int id) {
+		return reportCardRepository.findByStudentId(id);
+	}
 	
 }

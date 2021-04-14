@@ -12,4 +12,5 @@ public interface IDiaryService {
 	public Diary getDiaryById(int id);
 	public Diary deleteDiaryById(int id);
 	public List<Diary> getAllDiaryDetails();
+	public Diary getDiaryByStudentId(int id);
 }

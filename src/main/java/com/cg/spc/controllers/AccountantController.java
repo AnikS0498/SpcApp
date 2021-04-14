@@ -1,5 +1,6 @@
 package com.cg.spc.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import com.cg.spc.services.IFeeService;
 @RequestMapping("/accountant")
 public class AccountantController {
 	
+	@Autowired
 	private IFeeService feeService;
 	
 	@PostMapping("/fee/add")

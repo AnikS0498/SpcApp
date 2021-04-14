@@ -11,5 +11,5 @@ public interface IFeeService {
 	public Fee deleteFeeDetails(int id);
 	public List<Fee> getAllFee();
 	public Fee addFeeDetails(Fee fee, int studentId);
-	
+	public Fee getFeeByStudentId(int id);
 }
