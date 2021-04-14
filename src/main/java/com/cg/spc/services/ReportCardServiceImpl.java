@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cg.spc.entities.ReportCard;
 import com.cg.spc.entities.Student;
+import com.cg.spc.exceptions.StudentNotFoundException;
 import com.cg.spc.repositories.IReportCardRepository;
 import com.cg.spc.repositories.IStudentRepository;
 
@@ -19,7 +20,7 @@ public class ReportCardServiceImpl  implements IReportCardService{
 	
 	@Override
 	public ReportCard addDetails(ReportCard reportCard,int studentId) {
-		Student student = studentRepository.findById(studentId).get();
+		Student student = studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException());
 		reportCard.setStudent(student);
 		return reportCardRepository.save(reportCard);
 	}
@@ -32,7 +33,7 @@ public class ReportCardServiceImpl  implements IReportCardService{
 
 	@Override
 	public ReportCard updateDetails(ReportCard reportCard,int studentId) {
-		Student student = studentRepository.findById(studentId).get();
+		Student student = studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException());
 		reportCard.setStudent(student);
 		return reportCardRepository.save(reportCard);
 	}
@@ -46,6 +47,8 @@ public class ReportCardServiceImpl  implements IReportCardService{
 
 	@Override
 	public ReportCard getReportCardByStudentId(int id) {
+		@SuppressWarnings("unused")
+		Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException());
 		return reportCardRepository.findByStudentId(id);
 	}
 	

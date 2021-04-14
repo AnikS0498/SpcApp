@@ -43,4 +43,18 @@ public class SPCGlobalExceptionHandler {
 		return new ResponseEntity<Object>(response, HttpStatus.NOT_FOUND);
 	}
 	
+	@ExceptionHandler(value = StandardNotFoundException.class)
+	public ResponseEntity<Object> handleStandardNotFoundException(StandardNotFoundException ex){
+		
+		String response = "Invalid Standard";
+		return new ResponseEntity<Object>(response, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(value = DateNotFoundException.class)
+	public ResponseEntity<Object> handleDateNotFoundException(DateNotFoundException ex){
+		
+		String response = "Date not found";
+		return new ResponseEntity<Object>(response, HttpStatus.NOT_FOUND);
+	}
+	
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cg.spc.entities.Standard;
 import com.cg.spc.entities.Student;
+import com.cg.spc.exceptions.StudentNotFoundException;
 import com.cg.spc.repositories.IStandardRepository;
 import com.cg.spc.repositories.IStudentRepository;
 
@@ -34,7 +35,7 @@ public class StandardServiceImpl implements IStandardService{
 	public Standard updateDetails(Standard standard,List<Integer> studentIdList) {
 		List<Student> studentList = new ArrayList<Student>();
 		for (Integer studentId : studentIdList) {
-			Student student = studentRepository.findById(studentId).get();
+			Student student = studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException());
 			student.setStandard(standard);
 			studentList.add(student);
 		}

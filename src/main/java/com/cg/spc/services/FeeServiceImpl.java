@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.cg.spc.entities.Fee;
 import com.cg.spc.entities.Student;
+import com.cg.spc.exceptions.StudentNotFoundException;
 import com.cg.spc.repositories.IFeeRepository;
 import com.cg.spc.repositories.IStudentRepository;
 
@@ -17,7 +18,7 @@ public class FeeServiceImpl implements IFeeService{
 	private IFeeRepository feeRepository;
 	
 	@Autowired
-	private IStudentRepository studentRepo;
+	private IStudentRepository studentRepository;
 	
 	@Override
 	public Fee getFeeById(int id) {
@@ -26,7 +27,7 @@ public class FeeServiceImpl implements IFeeService{
 
 	@Override
 	public Fee updateFeeDetails(Fee fee, int studentId) {
-		Student student = studentRepo.findById(studentId).get();
+		Student student = studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException());
 		fee.setStudent(student);
 		student.setFee(fee);
 		return feeRepository.save(fee);
@@ -46,7 +47,7 @@ public class FeeServiceImpl implements IFeeService{
 
 	@Override
 	public Fee addFeeDetails(Fee fee, int studentId) {
-		Student student = studentRepo.findById(studentId).get();
+		Student student = studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException());
 		fee.setStudent(student);
 		student.setFee(fee);
 		return feeRepository.save(fee);
@@ -54,6 +55,8 @@ public class FeeServiceImpl implements IFeeService{
 
 	@Override
 	public Fee getFeeByStudentId(int id) {
+		@SuppressWarnings("unused")
+		Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException());
 		return feeRepository.findByStudentId(id);
 	}
 
