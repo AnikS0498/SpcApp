@@ -7,7 +7,7 @@ import com.cg.spc.entities.Fee;
 
 public interface IFeeRepository extends JpaRepository<Fee, Integer>{
 
-	@Query("select f from Fee f where f.student = (select s from Student s where s.id = ? )")
+	@Query("select f from Fee f where f.student.id = ?1 ")
 	public Fee findByStudentId(int sId);
 	
 }

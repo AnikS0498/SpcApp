@@ -7,7 +7,7 @@ import com.cg.spc.entities.Attendance;
 
 public interface IAttendanceRepository extends JpaRepository<Attendance, Integer>{
 
-	@Query("select a from Attendance a where a.student = (select s from Student s where s.id = ?)")
+	@Query("select a from Attendance a where a.student.id = ?1")
 	public Attendance findByStudentId(int sId);
 	
 }

@@ -7,7 +7,7 @@ import com.cg.spc.entities.ReportCard;
 
 public interface IReportCardRepository extends JpaRepository<ReportCard, Integer>{
 
-	@Query("select r from ReportCard r where r.student = (select s from Student s where s.id = ? )")
+	@Query("select r from ReportCard r where r.student.id = ?1 ")
 	public ReportCard findByStudentId(int sId);
 	
 }

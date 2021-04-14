@@ -8,6 +8,4 @@ import com.cg.spc.entities.Parent;
 public interface IParentRepository extends JpaRepository<Parent, Integer>{
 
 }
-//public interface IParentRepository extends CrudRepository<Parent, Integer>{
-//
-//}
+

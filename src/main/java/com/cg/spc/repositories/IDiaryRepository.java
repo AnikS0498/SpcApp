@@ -7,7 +7,7 @@ import com.cg.spc.entities.Diary;
 
 public interface IDiaryRepository extends JpaRepository<Diary, Integer> {
 	
-	@Query("select e from Exam e where e.student = (select s from Student s where s.id = ?)")
+	@Query("select d from Diary d where d.student.id=?1")
 	public Diary findByStudentId(int sId);
 	
 }
