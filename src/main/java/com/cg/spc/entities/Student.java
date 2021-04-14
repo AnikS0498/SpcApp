@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Student {
 	
@@ -19,6 +21,7 @@ public class Student {
 	private String name;
 	
 	@ManyToOne
+	@JsonManagedReference
 	private Parent parent;
 	
 	@OneToOne

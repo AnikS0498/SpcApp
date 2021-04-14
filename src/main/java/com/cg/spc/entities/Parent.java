@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Parent {
 
@@ -18,6 +20,7 @@ public class Parent {
 	private int id;
 	
 	@OneToMany(mappedBy = "parent",cascade = CascadeType.ALL)
+	@JsonBackReference
 	private List<Student> student;
 	
 	@Column
@@ -27,6 +30,7 @@ public class Parent {
 	private String contact;
 	
 	@OneToMany(mappedBy = "parent")
+	@JsonBackReference
 	private List<Concern> concern;
 	
 	public Parent() {
