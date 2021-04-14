@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Diary {
 
@@ -18,6 +20,7 @@ public class Diary {
 	private int id;
 
 	@OneToOne(mappedBy = "diary",cascade = CascadeType.ALL)
+	@JsonBackReference("student_diary")
 	private Student student;
 
 	@Column

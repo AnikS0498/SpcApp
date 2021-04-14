@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
@@ -25,11 +27,12 @@ public class Teacher {
 	private String name;
 	
 	@OneToOne
-	@JsonManagedReference
+	@JsonManagedReference("teacher_standard")
 	private Standard standard;
 	
 	@ManyToMany
-	@JsonManagedReference
+//	@JsonManagedReference("teacher_standardList")
+	@JsonIgnoreProperties("subjectTeachers")
 	private List<Standard> standardList;
 	
 	@Enumerated(EnumType.STRING)

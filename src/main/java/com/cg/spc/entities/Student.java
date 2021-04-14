@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -21,20 +22,23 @@ public class Student {
 	private String name;
 	
 	@ManyToOne
-	@JsonManagedReference
+	@JsonBackReference("parent_student")
 	private Parent parent;
 	
 	@OneToOne
+	@JsonManagedReference("student_diary")
 	private Diary diary;
 	
-	@OneToOne
+	@ManyToOne
+	@JsonBackReference("student_standard")
 	private Standard standard;
 	
 	@OneToOne
-	@JsonManagedReference
+	@JsonManagedReference("student_attendence")
 	private Attendance attendance;
 	
 	@OneToOne
+	@JsonManagedReference("student_fee")
 	private Fee fee;
 	
 	public Student() {

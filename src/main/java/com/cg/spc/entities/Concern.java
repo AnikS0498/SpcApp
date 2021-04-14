@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class Concern {
@@ -25,7 +25,7 @@ public class Concern {
 	private boolean isResolved;
 	
 	@ManyToOne
-	@JsonManagedReference
+	@JsonBackReference("parent_concern")
 	private Parent parent;
 	
 	@Enumerated(EnumType.STRING)
