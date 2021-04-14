@@ -19,7 +19,7 @@ public class Attendance {
 	private int id;
 	
 	@OneToOne(mappedBy = "attendance",cascade = CascadeType.ALL)
-	@JsonBackReference
+	@JsonBackReference("student_attendence")
 	private Student student;
 	
 	@Column
