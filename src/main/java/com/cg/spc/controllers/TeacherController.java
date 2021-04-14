@@ -2,6 +2,8 @@ package com.cg.spc.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,47 +37,47 @@ public class TeacherController {
 	private IDiaryService diaryService;
 	
 	@PostMapping("/exam/add")
-	public Exam addExamDetails(@RequestBody Exam exam)
+	public ResponseEntity<Exam> addExamDetails(@RequestBody Exam exam)
 	{
-		return examService.addExam(exam);
+		return new ResponseEntity<Exam> (examService.addExam(exam), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/exam/update")
-	public Exam updateExamDetails(@RequestBody Exam exam)
+	public ResponseEntity<Exam> updateExamDetails(@RequestBody Exam exam)
 	{
-		return examService.updateExam(exam);
+		return new ResponseEntity<Exam> (examService.updateExam(exam), HttpStatus.OK);
 	}
 	
 	@PostMapping("/reportCard/add")
-	public ReportCard addReportCardDetails(@RequestBody ReportCard reportCard,@RequestParam int studentId)
+	public ResponseEntity<ReportCard> addReportCardDetails(@RequestBody ReportCard reportCard,@RequestParam int studentId)
 	{
-		return reportCardService.addDetails(reportCard,studentId);
+		return new ResponseEntity<ReportCard> (reportCardService.addDetails(reportCard,studentId),HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/reportCard/update")
-	public ReportCard updateReportCardDetails(@RequestBody ReportCard reportCard,@RequestParam int studentId)
+	public ResponseEntity<ReportCard> updateReportCardDetails(@RequestBody ReportCard reportCard,@RequestParam int studentId)
 	{
-		return reportCardService.addDetails(reportCard,studentId);
+		return new ResponseEntity<ReportCard> (reportCardService.addDetails(reportCard,studentId), HttpStatus.OK);
 	}
 	
 	@PostMapping("/attendance/add")
-	public Attendance addAttendanceDetails(@RequestBody Attendance attendance, @RequestParam int studentId) {
-		return attendanceService.addAttendance(attendance, studentId);
+	public ResponseEntity<Attendance> addAttendanceDetails(@RequestBody Attendance attendance, @RequestParam int studentId) {
+		return new ResponseEntity<Attendance> (attendanceService.addAttendance(attendance, studentId), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/attendance/update")
-	public Attendance updateAttendanceDetails(@RequestBody Attendance attendance, @RequestParam int studentId) {
-		return attendanceService.updateAttendance(attendance, studentId);
+	public ResponseEntity<Attendance> updateAttendanceDetails(@RequestBody Attendance attendance, @RequestParam int studentId) {
+		return new ResponseEntity<Attendance> (attendanceService.updateAttendance(attendance, studentId), HttpStatus.OK);
 	}
 	
 	@PostMapping("/dailyDiary/add")
-	public Diary addDailyDiaryDetails(@RequestBody Diary diary, @RequestParam int studentId) {
-		return diaryService.addDiary(diary, studentId);
+	public ResponseEntity<Diary> addDailyDiaryDetails(@RequestBody Diary diary, @RequestParam int studentId) {
+		return new ResponseEntity<Diary> (diaryService.addDiary(diary, studentId), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/dailyDiary/update")
-	public Diary updateDailyDiaryDetails(@RequestBody Diary diary, @RequestParam int studentId) {
-		return diaryService.updateDiary(diary, studentId);
+	public ResponseEntity<Diary> updateDailyDiaryDetails(@RequestBody Diary diary, @RequestParam int studentId) {
+		return new ResponseEntity<Diary> (diaryService.updateDiary(diary, studentId), HttpStatus.OK);
 	}
 	
 }
