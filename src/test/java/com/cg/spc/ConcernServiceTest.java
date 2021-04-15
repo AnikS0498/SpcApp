@@ -14,7 +14,6 @@ import com.cg.spc.entities.Concern;
 import com.cg.spc.entities.ConcernType;
 import com.cg.spc.entities.Parent;
 import com.cg.spc.repositories.IConcernRepository;
-import com.cg.spc.repositories.IParentRepository;
 import com.cg.spc.services.IConcernService;
 
 @SpringBootTest
@@ -22,38 +21,39 @@ public class ConcernServiceTest {
 
 	@Autowired
 	private IConcernService concernService;
-	
-	//@Autowired
-	//private Parent parent;
 
 	@MockBean
 	private IConcernRepository concernRepository;
 	
-	@MockBean
-	private IParentRepository parentRepository;
-
-
+	
 	@Test
 	@DisplayName("positive test case for add concern")
 	public void testAddConcern() {
 		Concern concern = new Concern();
 		concern.setConcern("child getting low marks");
-		Parent parent = parentRepository.findById(21).get();
+		concern.setConcernType(ConcernType.ACADEMIC);;
+		Parent parent = new Parent();
+		parent.setId(1);
 		concern.setParent(parent);
-		concern.setConcernType(ConcernType.ACADEMIC);
 		Mockito.when(concernRepository.save(concern)).thenReturn(concern);
-		assertEquals(concern, concernService.addConcern(concern, 21));
+		assertEquals(concern, concernService.addConcern(concern, 1));
 	}
 
 	@Test
 	@DisplayName("negative test case for add concern")
 	public void testAddConcernNegative() {
 		Concern concern = new Concern();
-		concern.setConcern("child getting low marks");
-		Parent parent = parentRepository.findById(21).get();
-		concern.setParent(parent);
 		concern.setConcernType(ConcernType.ACADEMIC);
-		Mockito.when(concernRepository.save(concern)).thenReturn(concern);
-		assertNotEquals("xyzzzzzzzzz", concernService.addConcern(concern, 21));
+		concern.setConcern("child getting low marks");
+		Parent parent = new Parent();
+		parent.setId(1);
+		concern.setParent(parent);
+		Concern concern2 = new Concern();
+		concern2.setConcernType(ConcernType.ACADEMIC);
+		concern2.setConcern("child getting low marks");
+		Parent parent1 = new Parent();
+		parent1.setId(2);
+		concern2.setParent(parent1);
+		assertNotEquals(concern2, concernService.addConcern(concern, 1));
 	}
 }
