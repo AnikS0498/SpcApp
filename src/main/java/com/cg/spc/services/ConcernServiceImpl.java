@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.cg.spc.entities.Concern;
 import com.cg.spc.entities.Parent;
+import com.cg.spc.exceptions.ParentNotFoundException;
 import com.cg.spc.repositories.IConcernRepository;
 import com.cg.spc.repositories.IParentRepository;
 
@@ -38,7 +39,7 @@ public class ConcernServiceImpl implements IConcernService{
 
 	@Override
 	public Concern addConcern(Concern concern, int parentId) {
-		Parent parent = parentRepository.findById(parentId).get();
+		Parent parent = parentRepository.findById(parentId).orElseThrow(() -> new ParentNotFoundException());
 		concern.setParent(parent);
 		return concernRepository.save(concern);
 	}

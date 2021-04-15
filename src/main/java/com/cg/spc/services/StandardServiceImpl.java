@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cg.spc.entities.Standard;
 import com.cg.spc.entities.Student;
+import com.cg.spc.exceptions.StandardNotFoundException;
 import com.cg.spc.exceptions.StudentNotFoundException;
 import com.cg.spc.repositories.IStandardRepository;
 import com.cg.spc.repositories.IStudentRepository;
@@ -27,7 +28,7 @@ public class StandardServiceImpl implements IStandardService{
 
 	@Override
 	public Standard getDetailsById(int id) {
-		Standard standard = standardRepository.findById(id).get();
+		Standard standard = standardRepository.findById(id).orElseThrow(() -> new StandardNotFoundException());
 		return standard;
 	}
 
@@ -45,7 +46,7 @@ public class StandardServiceImpl implements IStandardService{
 
 	@Override
 	public Standard deleteDetailsById(int id) {
-		Standard standard = standardRepository.findById(id).get();
+		Standard standard = standardRepository.findById(id).orElseThrow(() -> new StandardNotFoundException());
 		standardRepository.deleteById(id);
 		return standard;
 	}

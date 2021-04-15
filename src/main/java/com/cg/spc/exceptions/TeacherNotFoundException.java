@@ -1,6 +1,6 @@
 package com.cg.spc.exceptions;
 
-public class ExamNotFoundException extends RuntimeException{
+public class TeacherNotFoundException extends RuntimeException{
 
 	/**
 	 * 

@@ -1,6 +1,6 @@
 package com.cg.spc.exceptions;
 
-public class DiaryNotFoundException extends RuntimeException{
+public class ParentNotFoundException extends RuntimeException{
 
 	/**
 	 * 

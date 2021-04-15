@@ -1,6 +1,6 @@
 package com.cg.spc.exceptions;
 
-public class FeeNotFoundException extends RuntimeException{
+public class ConcernResolvedException extends RuntimeException{
 
 	/**
 	 * 
