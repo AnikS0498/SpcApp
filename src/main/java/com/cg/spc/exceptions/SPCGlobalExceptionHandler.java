@@ -15,6 +15,27 @@ public class SPCGlobalExceptionHandler {
 		return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 	}
 	
+	@ExceptionHandler(value = DiaryNotFoundException.class)
+	public ResponseEntity<Object> handleDiaryNotFoundException(DiaryNotFoundException ex){
+		
+		String response = "This diary does not exist";
+		return new ResponseEntity<Object>(response, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(value = ExamNotFoundException.class)
+	public ResponseEntity<Object> handleExamNotFoundException(ExamNotFoundException ex){
+		
+		String response = "This exam does not exist";
+		return new ResponseEntity<Object>(response, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(value = FeeNotFoundException.class)
+	public ResponseEntity<Object> handleFeeNotFoundException(FeeNotFoundException ex){
+		
+		String response = "Fee details not found";
+		return new ResponseEntity<Object>(response, HttpStatus.NOT_FOUND);
+	}
+	
 	@ExceptionHandler(value = ReportCardNotFoundException.class)
 	public ResponseEntity<Object> handleReportCardNotFoundException(ReportCardNotFoundException ex){
 		
@@ -36,24 +57,18 @@ public class SPCGlobalExceptionHandler {
 		return new ResponseEntity<Object>(response, HttpStatus.NOT_FOUND);
 	}
 	
-	@ExceptionHandler(value = ConcernResolvedException.class)
-	public ResponseEntity<Object> handleConcernResolvedException(ConcernResolvedException ex){
-		
-		String response = "Concern has already been resolved";
-		return new ResponseEntity<Object>(response, HttpStatus.NOT_FOUND);
-	}
-	
-	@ExceptionHandler(value = ParentNotFoundException.class)
-	public ResponseEntity<Object> handleParentNotFoundException(ParentNotFoundException ex){
-		
-		String response = "Parent not found";
-		return new ResponseEntity<Object>(response, HttpStatus.NOT_FOUND);
-	}
-	
 	@ExceptionHandler(value = TeacherNotFoundException.class)
 	public ResponseEntity<Object> handleTeacherNotFoundException(TeacherNotFoundException ex){
 		
-		String response = "This teacher does not exist";
+		String response = "Teacher not found";
 		return new ResponseEntity<Object>(response, HttpStatus.NOT_FOUND);
 	}
+	
+	@ExceptionHandler(value = ConcernResolvedException.class)
+	public ResponseEntity<Object> handleDateNotFoundException(ConcernResolvedException ex){
+		
+		String response = "Concern has already been resolved. Thank You!";
+		return new ResponseEntity<Object>(response, HttpStatus.NOT_FOUND);
+	}
+	
 }
