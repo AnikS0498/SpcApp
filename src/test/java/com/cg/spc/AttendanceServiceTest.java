@@ -31,28 +31,39 @@ public class AttendanceServiceTest {
 	public void testAddAttendance() {
 
 		Attendance attendance = new Attendance();
-
-		attendance.setAttendanceDate(LocalDate.of(2021, 3, 19));
+		attendance.setAttendanceDate(LocalDate.of(2021, 03, 19));
 		attendance.setPresent(true);
+		
+		Student student = new Student();
+		student.setId(10);
+		attendance.setStudent(student);
 
 		Mockito.when(attendanceRepository.save(attendance)).thenReturn(attendance);
-		assertEquals(attendance, attendanceService.addAttendance(attendance,38));
+		assertEquals(attendance, attendanceService.addAttendance(attendance,10));
 	}
 
 	
 	  @Test
-	  
-	  @DisplayName("Negative test case for add attendance")
-	  
+	  @DisplayName("Negative test case for add attendance") 
 	  public void testAddAttendancetNegative() {
 	  
 	  Attendance attendance = new Attendance();
-	  
-	  attendance.setAttendanceDate(LocalDate.of(2021, 3, 19));
+	  attendance.setAttendanceDate(LocalDate.of(2021, 03, 12));
 	  attendance.setPresent(true);
 	  
-	  Mockito.when(attendanceRepository.save(attendance)).thenReturn(attendance);
-	  assertNotEquals(attendance, attendanceService.addAttendance(attendance, 36));
+	  Student student = new Student();
+	  student.setId(20);
+	  attendance.setStudent(student);
+	  
+	  Attendance attendance2 = new Attendance();
+	  attendance2.setAttendanceDate(LocalDate.of(2021, 03, 12));
+	  attendance2.setPresent(true);
+	  
+	  Student student2 = new Student();
+	  student2.setId(30);
+	  attendance2.setStudent(student2);
+	  
+	  assertNotEquals(attendance2, attendanceService.addAttendance(attendance, 20));
 	  }
 	 
 
