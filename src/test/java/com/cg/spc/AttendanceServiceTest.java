@@ -62,5 +62,20 @@ public class AttendanceServiceTest {
 		Mockito.when(attendanceRepository.save(attendance2)).thenReturn(attendance2);
 		assertNotEquals(attendance2, attendanceService.addAttendance(attendance, 9));
 	}
+	
+	@Test
+	@DisplayName("Positive test case for update attendance")
+	public void testUpdateAttendance() {
+		Mockito.when(attendanceRepository.save(attendance)).thenReturn(attendance);
+		assertEquals(attendance, attendanceService.updateAttendance(attendance, 9));
+	}
+	
+	@Test
+	@DisplayName("Negative test case for update attendance")
+	public void testUpdateAttendanceNegative() {
+		Mockito.when(attendanceRepository.save(attendance2)).thenReturn(attendance2);
+		assertNotEquals(attendance2, attendanceService.updateAttendance(attendance, 9));
+	}
+	
 
 }
