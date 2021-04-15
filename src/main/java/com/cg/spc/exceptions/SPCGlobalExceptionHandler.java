@@ -50,7 +50,7 @@ public class SPCGlobalExceptionHandler {
 		return new ResponseEntity<Object>(response, HttpStatus.NOT_FOUND);
 	}
 	
-	@ExceptionHandler(value = ParentNotFoundException.class)
+	@ExceptionHandler(value = TeacherNotFoundException.class)
 	public ResponseEntity<Object> handleTeacherNotFoundException(TeacherNotFoundException ex){
 		
 		String response = "This teacher does not exist";

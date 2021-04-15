@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class ReportCard {
 	
@@ -20,10 +22,11 @@ public class ReportCard {
 	private Map <Subject,Integer> marksheet;
 	
 	@OneToOne
+	@JsonBackReference
 	private Student student;
 	
 	@Column(length = 5)
-	private boolean isAttempted;
+	private boolean isAttempted=false;
 	
 	public ReportCard() {
 		super();

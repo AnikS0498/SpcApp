@@ -15,23 +15,23 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Parent {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
-	@OneToMany(mappedBy = "parent",cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
 	@JsonManagedReference("parent_student")
 	private List<Student> student;
-	
+
 	@Column
 	private String name;
-	
+
 	@Column
 	private String contact;
-	
+
 	@OneToMany(mappedBy = "parent")
 	@JsonManagedReference("parent_concern")
 	private List<Concern> concern;
-	
+
 	public Parent() {
 		super();
 	}

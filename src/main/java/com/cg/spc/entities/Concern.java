@@ -17,17 +17,17 @@ public class Concern {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
-	@Column(length=25)
+
+	@Column
 	private String concern;
-	
-	@Column(length=5)
-	private boolean isResolved;
-	
+
+	@Column(length = 5)
+	private boolean isResolved = false;
+
 	@ManyToOne
 	@JsonBackReference("parent_concern")
 	private Parent parent;
-	
+
 	@Enumerated(EnumType.STRING)
 	private ConcernType concernType;
 
@@ -87,7 +87,5 @@ public class Concern {
 	public String toString() {
 		return "Concern [id=" + id + ", concern=" + concern + ", isResolved=" + isResolved + ", parent=" + parent + "]";
 	}
-	
-	
-	
+
 }

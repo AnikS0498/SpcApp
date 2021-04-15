@@ -1,7 +1,6 @@
 package com.cg.spc.services;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,6 +79,4 @@ public class ExamServiceImpl implements IExamService {
             throw new DateNotFoundException();
         return examRepository.findByExamDate(date);
     }
-
-	
 }
