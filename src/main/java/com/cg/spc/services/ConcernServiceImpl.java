@@ -23,7 +23,7 @@ public class ConcernServiceImpl implements IConcernService {
 	@Override
 	public Concern updateConcern(Concern concern, int parentId) {
 		if (!concern.isResolved()) {
-			Parent parent = parentRepository.findById(parentId).get();
+			Parent parent = parentRepository.findById(parentId).orElseThrow(() -> new ParentNotFoundException());
 			concern.setParent(parent);
 			concern.setResolved(true);
 			return concernRepository.save(concern);
