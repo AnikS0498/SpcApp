@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.time.LocalDate;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -26,34 +27,55 @@ public class AttendanceServiceTest {
 	@MockBean
 	private IAttendanceRepository attendanceRepository;
 
+	Attendance attendance;
+
+	Attendance attendance2;
+
+	@BeforeEach
+	public void init() {
+		attendance = new Attendance();
+		attendance.setAttendanceDate(LocalDate.of(2021, 03, 19));
+		attendance.setPresent(true);
+		Student student = new Student();
+		student.setId(9);
+		attendance.setStudent(student);
+
+		attendance2 = new Attendance();
+		attendance2.setAttendanceDate(LocalDate.of(2021, 03, 12));
+		attendance2.setPresent(true);
+		Student student2 = new Student();
+		student2.setId(14);
+		attendance2.setStudent(student2);
+
+	}
+
 	@Test
 	@DisplayName("Positive test case for add attendance")
 	public void testAddAttendance() {
-
-		Attendance attendance = new Attendance();
-
-		attendance.setAttendanceDate(LocalDate.of(2021, 3, 19));
-		attendance.setPresent(true);
-
 		Mockito.when(attendanceRepository.save(attendance)).thenReturn(attendance);
-		assertEquals(attendance, attendanceService.addAttendance(attendance,38));
+		assertEquals(attendance, attendanceService.addAttendance(attendance, 9));
 	}
 
+	@Test
+	@DisplayName("Negative test case for add attendance")
+	public void testAddAttendancetNegative() {
+		Mockito.when(attendanceRepository.save(attendance2)).thenReturn(attendance2);
+		assertNotEquals(attendance2, attendanceService.addAttendance(attendance, 9));
+	}
 	
-	  @Test
-	  
-	  @DisplayName("Negative test case for add attendance")
-	  
-	  public void testAddAttendancetNegative() {
-	  
-	  Attendance attendance = new Attendance();
-	  
-	  attendance.setAttendanceDate(LocalDate.of(2021, 3, 19));
-	  attendance.setPresent(true);
-	  
-	  Mockito.when(attendanceRepository.save(attendance)).thenReturn(attendance);
-	  assertNotEquals(attendance, attendanceService.addAttendance(attendance, 36));
-	  }
-	 
+	@Test
+	@DisplayName("Positive test case for update attendance")
+	public void testUpdateAttendance() {
+		Mockito.when(attendanceRepository.save(attendance)).thenReturn(attendance);
+		assertEquals(attendance, attendanceService.updateAttendance(attendance, 9));
+	}
+	
+	@Test
+	@DisplayName("Negative test case for update attendance")
+	public void testUpdateAttendanceNegative() {
+		Mockito.when(attendanceRepository.save(attendance2)).thenReturn(attendance2);
+		assertNotEquals(attendance2, attendanceService.updateAttendance(attendance, 9));
+	}
+	
 
 }

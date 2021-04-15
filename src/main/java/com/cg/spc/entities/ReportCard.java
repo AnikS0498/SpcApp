@@ -60,8 +60,8 @@ public class ReportCard {
 		return student;
 	}
 
-	public void setStudent(Student student) {
-		this.student = student;
+	public void setStudent(Student student2) {
+		this.student = student2;
 	}
 
 	public boolean isAttempted() {
