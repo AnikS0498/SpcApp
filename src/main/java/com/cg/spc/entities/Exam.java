@@ -2,7 +2,6 @@ package com.cg.spc.entities;
 
 import java.time.LocalDate;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Exam {
@@ -27,7 +25,7 @@ public class Exam {
 	@Enumerated(EnumType.STRING)
 	private Subject subject;
 
-	@ManyToMany(mappedBy = "examList",cascade = CascadeType.ALL)
+	@ManyToMany
 	//@JsonManagedReference("exam_standard")
 	@JsonIgnoreProperties("examList")
 	private List<Standard> standard;

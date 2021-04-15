@@ -41,12 +41,16 @@ public class Student {
 	@JsonManagedReference("student_fee")
 	private Fee fee;
 	
+	@OneToOne(mappedBy = "student")
+	@JsonManagedReference
+	private ReportCard reportCard;
+	
 	public Student() {
 		super();
-		
 	}
-	
-	public Student(String name, Parent parent, Diary diary, Standard standard, Attendance attendance, Fee fee) {
+
+	public Student(String name, Parent parent, Diary diary, Standard standard, Attendance attendance, Fee fee,
+			ReportCard reportCard) {
 		super();
 		this.name = name;
 		this.parent = parent;
@@ -54,6 +58,7 @@ public class Student {
 		this.standard = standard;
 		this.attendance = attendance;
 		this.fee = fee;
+		this.reportCard = reportCard;
 	}
 
 	public int getId() {
@@ -112,11 +117,18 @@ public class Student {
 		this.fee = fee;
 	}
 
+	public ReportCard getReportCard() {
+		return reportCard;
+	}
+
+	public void setReportCard(ReportCard reportCard) {
+		this.reportCard = reportCard;
+	}
+
 	@Override
 	public String toString() {
 		return "Student [id=" + id + ", name=" + name + ", parent=" + parent + ", diary=" + diary + ", standard="
-				+ standard + ", attendance=" + attendance + ", fee=" + fee + "]";
+				+ standard + ", attendance=" + attendance + ", fee=" + fee + ", reportCard=" + reportCard + "]";
 	}
-
 	
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cg.spc.entities.Exam;
 import com.cg.spc.entities.Standard;
+import com.cg.spc.exceptions.DateNotFoundException;
 import com.cg.spc.exceptions.StandardNotFoundException;
 import com.cg.spc.repositories.IExamRepository;
 import com.cg.spc.repositories.IStandardRepository;
@@ -62,9 +63,20 @@ public class ExamServiceImpl implements IExamService {
 	}
 
 	@Override
-	public Exam getExamByDate(LocalDate date) {
-		return examRepository.findByExamDate(date);
-	}
-
-	
+    public Exam getExamByDate(LocalDate date) {
+        String examDate = date.toString();
+        int flag = 0;
+        List<Exam> examList = new ArrayList<Exam>();
+        examList = getAllExamDetails();
+        for(Exam exam: examList) {
+            String examString = exam.getExamDate().toString();
+            if(examString.equals(examDate)) {
+            	flag = 1;
+            	break;
+            }
+        }
+        if(flag==0)
+        	throw new DateNotFoundException();
+        return examRepository.findByExamDate(date);
+    }
 }

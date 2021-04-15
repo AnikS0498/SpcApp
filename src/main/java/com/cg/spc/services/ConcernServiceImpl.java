@@ -11,17 +11,24 @@ import com.cg.spc.repositories.IConcernRepository;
 import com.cg.spc.repositories.IParentRepository;
 
 @Service
-public class ConcernServiceImpl implements IConcernService{
+public class ConcernServiceImpl implements IConcernService {
 
 	@Autowired
 	private IConcernRepository concernRepository;
-	
+
 	@Autowired
 	private IParentRepository parentRepository;
 
 	@Override
-	public Concern updateConcern(Concern concern) {
-		return concernRepository.save(concern);
+	public Concern updateConcern(Concern concern, int parentId) {
+		if (!concern.isResolved()) {
+			Parent parent = parentRepository.findById(parentId).get();
+			concern.setParent(parent);
+			concern.setResolved(true);
+			return concernRepository.save(concern);
+		} else {
+			return null;
+		}
 	}
 
 	@Override

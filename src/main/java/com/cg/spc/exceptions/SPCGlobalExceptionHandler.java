@@ -53,7 +53,7 @@ public class SPCGlobalExceptionHandler {
 	@ExceptionHandler(value = DateNotFoundException.class)
 	public ResponseEntity<Object> handleDateNotFoundException(DateNotFoundException ex){
 		
-		String response = "Date not found";
+		String response = "No exam scheduled on this date";
 		return new ResponseEntity<Object>(response, HttpStatus.NOT_FOUND);
 	}
 	

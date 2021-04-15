@@ -1,10 +1,12 @@
 package com.cg.spc.services;
 
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cg.spc.entities.ReportCard;
 import com.cg.spc.entities.Student;
+import com.cg.spc.exceptions.ReportCardNotFoundException;
 import com.cg.spc.exceptions.StudentNotFoundException;
 import com.cg.spc.repositories.IReportCardRepository;
 import com.cg.spc.repositories.IStudentRepository;
@@ -47,9 +49,11 @@ public class ReportCardServiceImpl  implements IReportCardService{
 
 	@Override
 	public ReportCard getReportCardByStudentId(int id) {
-		@SuppressWarnings("unused")
 		Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException());
+		if(student.getReportCard()==null) {
+			throw new ReportCardNotFoundException();
+		}
 		return reportCardRepository.findByStudentId(id);
 	}
-	
+		
 }
