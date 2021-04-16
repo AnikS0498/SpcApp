@@ -89,7 +89,7 @@ public class ReportCardServiceTest {
 	}
 	
 	@Test
-	@DisplayName("Negative test case for add details")
+	@DisplayName("Negative test case for update details")
 	public void testUpdateDetailsNegative()
 	{
 		Mockito.when(reportCardRepository.save(reportCard2)).thenReturn(reportCard2);

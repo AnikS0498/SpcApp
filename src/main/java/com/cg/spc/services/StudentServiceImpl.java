@@ -42,9 +42,6 @@ public class StudentServiceImpl implements IStudentService{
 
 	@Override
 	public Student addStudent(Student student) {
-		int studentId = student.getId();
-		@SuppressWarnings("unused")
-		Student studentObj = studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException());
 		return studentRepository.save(student);
 	}
 
