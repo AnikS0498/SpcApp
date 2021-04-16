@@ -5,7 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +19,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import com.cg.spc.entities.ReportCard;
 import com.cg.spc.entities.Student;
 import com.cg.spc.entities.Subject;
+import com.cg.spc.exceptions.StudentNotFoundException;
 import com.cg.spc.repositories.IReportCardRepository;
+import com.cg.spc.repositories.IStudentRepository;
 import com.cg.spc.services.IReportCardService;
 
 @SpringBootTest
@@ -29,9 +33,12 @@ public class ReportCardServiceTest {
 	@MockBean
 	private IReportCardRepository reportCardRepository;
 	
+	@MockBean
+    private IStudentRepository studentRepository;  
+	
 	ReportCard reportCard;
 	
-	ReportCard reportCard2;
+	Student student;
 	
 	@BeforeEach
 	public void init() {
@@ -44,56 +51,47 @@ public class ReportCardServiceTest {
 		marksheet.put(Subject.SCIENCE,78);
 		marksheet.put(Subject.HISTORY_CIVICS,56);
 		marksheet.put(Subject.GEOGRAPHY,65);
-		Student student = new Student();
-		student.setId(8);
+		student = new Student();
+		student.setId(300);;
+		student.setName("Rahul");
 		reportCard.setMarksheet(marksheet);
 		reportCard.setStudent(student);
-		
-		reportCard2 = new ReportCard();
-		Map<Subject, Integer> marksheet2 = new HashMap<Subject, Integer>();
-		marksheet.put(Subject.ENGLISH,77);
-		marksheet.put(Subject.HINDI,95);
-		marksheet.put(Subject.MATHS,84);
-		marksheet.put(Subject.SOCIAL_STUDIES,74);
-		marksheet.put(Subject.SCIENCE,72);
-		marksheet.put(Subject.HISTORY_CIVICS,64);
-		marksheet.put(Subject.GEOGRAPHY,68);
-		Student student2 = new Student();
-		student2.setId(9);
-		reportCard2.setMarksheet(marksheet2);
-		reportCard2.setStudent(student2);
 		}
 	
 	@Test
 	@DisplayName("positive test case for add details")
 	public void testAddDetails()
 	{
+		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		Mockito.when(reportCardRepository.save(reportCard)).thenReturn(reportCard);
-		assertEquals(reportCard, reportCardService.addDetails(reportCard, 8));
+		assertEquals(reportCard, reportCardService.addDetails(reportCard, 300));
 	}
 	
 	@Test
 	@DisplayName("Negative test case for add details")
 	public void testAddDetailsNegative()
 	{
-		Mockito.when(reportCardRepository.save(reportCard2)).thenReturn(reportCard2);
-		assertNotEquals(reportCard2, reportCardService.addDetails(reportCard, 8));
+		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
+		Mockito.when(reportCardRepository.save(reportCard)).thenReturn(reportCard);
+		Assertions.assertThrows(StudentNotFoundException.class,()-> reportCardService.addDetails(reportCard, 19));
 	}
 	
 	@Test
 	@DisplayName("positive test case for update details")
 	public void testUpdateDetails()
 	{
+		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		Mockito.when(reportCardRepository.save(reportCard)).thenReturn(reportCard);
-		assertEquals(reportCard,reportCardService.updateDetails(reportCard, 8));
+		assertEquals(reportCard,reportCardService.updateDetails(reportCard, 300));
 	}
 	
 	@Test
 	@DisplayName("Negative test case for update details")
 	public void testUpdateDetailsNegative()
 	{
-		Mockito.when(reportCardRepository.save(reportCard2)).thenReturn(reportCard2);
-		assertNotEquals(reportCard2, reportCardService.updateDetails(reportCard, 8));
+		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
+		Mockito.when(reportCardRepository.save(reportCard)).thenReturn(reportCard);
+		Assertions.assertThrows(StudentNotFoundException.class,()-> reportCardService.updateDetails(reportCard, 101));
 	}
 	
 }
