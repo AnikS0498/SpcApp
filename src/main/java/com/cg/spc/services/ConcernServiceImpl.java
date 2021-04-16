@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.cg.spc.entities.Concern;
 import com.cg.spc.entities.Parent;
+import com.cg.spc.exceptions.ConcernResolvedException;
 import com.cg.spc.exceptions.ParentNotFoundException;
 import com.cg.spc.repositories.IConcernRepository;
 import com.cg.spc.repositories.IParentRepository;
@@ -39,7 +40,7 @@ public class ConcernServiceImpl implements IConcernService {
 
 	@Override
 	public Concern deleteById(int id) {
-		Concern concern = concernRepository.findById(id).get();
+		Concern concern = concernRepository.findById(id).orElseThrow(() -> new ConcernResolvedException());
 		concernRepository.deleteById(id);
 		return concern;
 	}
