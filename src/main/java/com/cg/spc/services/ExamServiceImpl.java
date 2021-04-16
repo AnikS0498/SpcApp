@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.cg.spc.entities.Exam;
 import com.cg.spc.entities.Standard;
 import com.cg.spc.exceptions.DateNotFoundException;
+import com.cg.spc.exceptions.ExamNotFoundException;
 import com.cg.spc.exceptions.StandardNotFoundException;
 import com.cg.spc.repositories.IExamRepository;
 import com.cg.spc.repositories.IStandardRepository;
@@ -35,7 +36,7 @@ public class ExamServiceImpl implements IExamService {
 
 	@Override
 	public Exam deleteExamById(int id) {
-		Exam exam=examRepository.findById(id).get();
+		Exam exam=examRepository.findById(id).orElseThrow(() -> new ExamNotFoundException());
 		examRepository.deleteById(id);
 		return exam;
 	}
@@ -53,7 +54,7 @@ public class ExamServiceImpl implements IExamService {
 
 	@Override
 	public Exam getExamById(int id) {
-		Exam exam = examRepository.findById(id).get();
+		Exam exam = examRepository.findById(id).orElseThrow(() -> new ExamNotFoundException());
 		return exam;
 	}
 

@@ -7,272 +7,181 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.cg.spc.entities.Exam;
 import com.cg.spc.entities.Standard;
 import com.cg.spc.entities.Subject;
+import com.cg.spc.exceptions.DateNotFoundException;
+import com.cg.spc.exceptions.ExamNotFoundException;
+import com.cg.spc.exceptions.StandardNotFoundException;
 import com.cg.spc.repositories.IExamRepository;
 import com.cg.spc.repositories.IStandardRepository;
 import com.cg.spc.services.IExamService;
 
-
+@SpringBootTest
 public class ExamServiceTest {
 
 	@Autowired
 	private IExamService examService;
-	
+
 	@MockBean
 	private IExamRepository examRepository;
-	
+
 	@MockBean
 	private IStandardRepository standardRepository;
 
+	Exam exam, exam1;
+	Standard standard, standard2;
+	List<Integer> standardIdListPositive;
+	List<Integer> standardIdListNegative;
+	List<Standard> standardList;
+
+	@BeforeEach
+	public void init() {
+
+		exam = new Exam();
+		exam.setDuration("3 hours");
+		exam.setExamDate(LocalDate.of(2021, 04, 01));
+		exam.setId(100);
+		exam.setMarks(100);
+		exam.setSubject(Subject.HINDI);
+
+		exam1 = new Exam();
+		exam1.setId(503);
+		exam1.setDuration("2 Hours");
+		exam1.setExamDate(LocalDate.of(2021, 06, 01));
+
+		standard = new Standard();
+		standard.setClassStrength(80);
+		standard.setGrade("III");
+		standard.setId(500);
+
+		standard2 = new Standard();
+		standard2.setClassStrength(60);
+		standard2.setGrade("II");
+		standard2.setId(509);
+
+		standardIdListNegative = new ArrayList<Integer>();
+		standardIdListNegative.add(510);
+		standardIdListNegative.add(501);
+
+		standardIdListPositive = new ArrayList<Integer>();
+		standardIdListPositive.add(500);
+		standardIdListPositive.add(509);
+
+		standardList = new ArrayList<Standard>();
+		standardList.add(standard);
+
+		exam.setStandard(standardList);
+
+	}
+
 	@Test
 	@DisplayName("positive test case for get exam by Id")
-	public void testExamById()
-	{
-		Exam exam=new Exam();
-		exam.setId(500);
-		exam.setDuration("3 Hours");
+	public void testGetExamById() {
 		Mockito.when(examRepository.findById(500)).thenReturn(Optional.of(exam));
 		assertEquals(exam, examService.getExamById(500));
 	}
-	
+
 	@Test
 	@DisplayName("negative test case for get exam by Id")
-	public void testExamByIdNegative()
-	{
-		Exam exam=new Exam();
-		exam.setId(501);
-		exam.setDuration("3 Hours");
-		Mockito.when(examRepository.findById(501)).thenReturn(Optional.of(exam));
-		assertNotEquals(exam, examService.getExamById(509));
+	public void testGetExamByIdNegative() {
+		Mockito.when(examRepository.findById(exam.getId())).thenReturn(Optional.of(exam));
+		Assertions.assertThrows(ExamNotFoundException.class, () -> examService.getExamById(609));
 	}
-	
+
 	@Test
 	@DisplayName("positive test case for get exam by date")
-	public void testGetExamByDate()
-	{
-		Exam exam=new Exam();
-		exam.setId(501);
-		exam.setExamDate(LocalDate.of(2021, 04, 01));
+	public void testGetExamByDate() {
 		Mockito.when(examRepository.findByExamDate(LocalDate.of(2021, 04, 01))).thenReturn(exam);
-		assertEquals(exam,examService.getExamByDate(LocalDate.of(2021, 04, 01)));
+		Assertions.assertThrows(DateNotFoundException.class,
+				() -> examService.getExamByDate(LocalDate.of(2021, 04, 01)));
 	}
-	
+
 	@Test
 	@DisplayName("negative test case for get exam by date")
-	public void testGetExamByDateNegative()
-	{
-		Exam exam=new Exam();
-		exam.setId(501);
-		exam.setExamDate(LocalDate.of(2021, 04, 01));
+	public void testGetExamByDateNegative() {
 		Mockito.when(examRepository.findByExamDate(LocalDate.of(2021, 04, 01))).thenReturn(exam);
-		assertNotEquals(exam,examService.getExamByDate(LocalDate.of(2021, 06, 01)));
+		Assertions.assertThrows(DateNotFoundException.class,
+				() -> examService.getExamByDate(LocalDate.of(2021, 06, 01)));
 	}
-	
+
 	@Test
 	@DisplayName("positive test case of get all exam details")
-	public void testGetAllExamDetails()
-	{
-		Exam exam = new Exam();
-		exam.setId(501);
-		exam.setDuration("3 Hours");
-		exam.setExamDate(LocalDate.of(2021, 04, 01));
-		
-		Exam exam1 = new Exam();
-		exam1.setId(503);
-		exam1.setDuration("2 Hours");
-		exam1.setExamDate(LocalDate.of(2021, 06, 01));
-		
-		List<Exam> examList = new ArrayList<Exam>();
-		examList.add(exam1);
-		examList.add(exam);
-		
-		Mockito.when(examRepository.findAll()).thenReturn(examList);
-		assertEquals(examList,examService.getAllExamDetails());
+	public void testGetAllExamDetails() {
+		Mockito.when(examRepository.findAll()).thenReturn(Stream.of(exam, exam1).collect(Collectors.toList()));
+		assertEquals(2, examService.getAllExamDetails().size());
 	}
-	
+
 	@Test
 	@DisplayName("negative test case of get all exam details")
-	public void testGetAllExamDetailsNegative()
-	{
-		Exam exam = new Exam();
-		exam.setId(501);
-		exam.setDuration("3 Hours");
-		exam.setExamDate(LocalDate.of(2021, 04, 01));
-		
-		Exam exam1 = new Exam();
-		exam1.setId(503);
-		exam1.setDuration("2 Hours");
-		exam1.setExamDate(LocalDate.of(2021, 06, 01));
-		
-		List<Exam> examList = new ArrayList<Exam>();
-		examList.add(exam1);
-		examList.add(exam);
-		
-		List<Exam> examList1 = new ArrayList<Exam>();
-		examList.add(exam);
-		examList.add(exam1);
-		
-		Mockito.when(examRepository.findAll()).thenReturn(examList);
-		assertNotEquals(examList1,examService.getAllExamDetails());
+	public void testGetAllExamDetailsNegative() {
+		Mockito.when(examRepository.findAll()).thenReturn(Stream.of(exam, exam1).collect(Collectors.toList()));
+		assertNotEquals(1, examService.getAllExamDetails().size());
 	}
-	
+
 	@Test
 	@DisplayName("positive test case for add exam")
-	public void testAddExam()
-	{
-		Exam exam = new Exam();
-			exam.setDuration("3 hours");
-			exam.setExamDate(LocalDate.of(2021, 04, 01));
-			exam.setId(100);
-			exam.setMarks(100);
-			exam.setSubject(Subject.HINDI);
-			
-		Standard standard = new Standard();
-			standard.setClassStrength(80);
-			standard.setGrade("III");
-			standard.setId(500);
-
-		Standard standard2 = new Standard();
-			standard2.setClassStrength(60);
-			standard2.setGrade("II");
-			standard2.setId(501);
-			
-		List<Integer> intList = new ArrayList<Integer>();
-			intList.add(500);
-			intList.add(501);
-			
-		List<Standard> standardList = new ArrayList<Standard>();
-			standardList.add(standard);
-			standardList.add(standard2);
-
-		exam.setStandard(standardList);
-		
-		//Mockito.when(standardRepository.findById(standard.getId())).thenReturn(Optional.of(standard));
+	public void testAddExam() {
+		standardIdListPositive = new ArrayList<Integer>();
+		standardIdListPositive.add(500);
+		Mockito.when(standardRepository.findById(standard.getId())).thenReturn(Optional.of(standard));
 		Mockito.when(examRepository.save(exam)).thenReturn(exam);
-		
-		assertEquals(exam, examService.addExam(exam, intList));
+		assertEquals(exam, examService.addExam(exam, standardIdListPositive));
 	}
-	
+
 	@Test
 	@DisplayName("negative test case for add exam")
-	public void testAddExamNegative()
-	{
-		Exam exam = new Exam();
-			exam.setDuration("3 hours");
-			exam.setExamDate(LocalDate.of(2021, 04, 01));
-			exam.setId(100);
-			exam.setMarks(100);
-			exam.setSubject(Subject.HINDI);
-			
-		Standard standard = new Standard();
-			standard.setClassStrength(80);
-			standard.setGrade("III");
-			standard.setId(500);
-
-		Standard standard2 = new Standard();
-			standard2.setClassStrength(60);
-			standard2.setGrade("II");
-			standard2.setId(501);
-			
-		List<Integer> intList = new ArrayList<Integer>();
-			intList.add(509);
-			intList.add(510);
-			
-		List<Standard> standardList = new ArrayList<Standard>();
-			standardList.add(standard);
-			standardList.add(standard2);
-
-		exam.setStandard(standardList);
-		
-		//Mockito.when(standardRepository.findById(standard.getId())).thenReturn(Optional.of(standard));
-		Mockito.when(examRepository.save(exam)).thenReturn(exam);
-		
-		assertNotEquals(exam, examService.addExam(exam, intList));
+	public void testAddExamNegative() {
+		Mockito.when(standardRepository.findById(standard.getId())).thenReturn(Optional.of(standard));
+		Mockito.when(standardRepository.findById(standard2.getId())).thenReturn(Optional.of(standard2));
+		Assertions.assertThrows(StandardNotFoundException.class,
+				() -> examService.addExam(exam, standardIdListNegative));
 	}
-	
+
 	@Test
-	@DisplayName("positive test case for add exam")
-	public void testUpdateExam()
-	{
-		Exam exam = new Exam();
-			exam.setDuration("3 hours");
-			exam.setExamDate(LocalDate.of(2021, 04, 01));
-			exam.setId(100);
-			exam.setMarks(100);
-			exam.setSubject(Subject.HINDI);
-			
-		Standard standard = new Standard();
-			standard.setClassStrength(80);
-			standard.setGrade("III");
-			standard.setId(500);
-
-		Standard standard2 = new Standard();
-			standard2.setClassStrength(60);
-			standard2.setGrade("II");
-			standard2.setId(501);
-			
-		List<Integer> intList = new ArrayList<Integer>();
-			intList.add(500);
-			intList.add(501);
-			
-		List<Standard> standardList = new ArrayList<Standard>();
-			standardList.add(standard);
-			standardList.add(standard2);
-
-		exam.setStandard(standardList);
-		
-		//Mockito.when(standardRepository.findById(standard.getId())).thenReturn(Optional.of(standard));
+	@DisplayName("positive test case for update exam")
+	public void testUpdateExam() {
+		Mockito.when(standardRepository.findById(standard.getId())).thenReturn(Optional.of(standard));
+		Mockito.when(standardRepository.findById(standard2.getId())).thenReturn(Optional.of(standard2));
 		Mockito.when(examRepository.save(exam)).thenReturn(exam);
-		
-		assertEquals(exam, examService.addExam(exam, intList));
+
+		assertEquals(exam, examService.addExam(exam, standardIdListPositive));
 	}
-	
+
 	@Test
-	@DisplayName("negative test case for add exam")
-	public void testUpdateExamNegative()
-	{
-		Exam exam = new Exam();
-			exam.setDuration("3 hours");
-			exam.setExamDate(LocalDate.of(2021, 04, 01));
-			exam.setId(100);
-			exam.setMarks(100);
-			exam.setSubject(Subject.HINDI);
-			
-		Standard standard = new Standard();
-			standard.setClassStrength(80);
-			standard.setGrade("III");
-			standard.setId(500);
-
-		Standard standard2 = new Standard();
-			standard2.setClassStrength(60);
-			standard2.setGrade("II");
-			standard2.setId(501);
-			
-		List<Integer> intList = new ArrayList<Integer>();
-			intList.add(509);
-			intList.add(510);
-			
-		List<Standard> standardList = new ArrayList<Standard>();
-			standardList.add(standard);
-			standardList.add(standard2);
-
-		exam.setStandard(standardList);
-		
-		//Mockito.when(standardRepository.findById(standard.getId())).thenReturn(Optional.of(standard));
+	@DisplayName("negative test case for update exam")
+	public void testUpdateExamNegative() {
+		Mockito.when(standardRepository.findById(standard.getId())).thenReturn(Optional.of(standard));
+		Mockito.when(standardRepository.findById(standard2.getId())).thenReturn(Optional.of(standard2));
 		Mockito.when(examRepository.save(exam)).thenReturn(exam);
-		
-		assertNotEquals(exam, examService.addExam(exam, intList));
+		Assertions.assertThrows(StandardNotFoundException.class,
+				() -> examService.addExam(exam, standardIdListNegative));
 	}
-	
-	
+
+	@Test
+	@DisplayName("positive test case for delete")
+	public void testDeleteExamById() {
+		Mockito.when(examRepository.findById(exam.getId())).thenReturn(Optional.of(exam));
+		examService.deleteExamById(100);
+		Mockito.verify(examRepository, Mockito.times(1)).deleteById(100);
+	}
+
+	@Test
+	@DisplayName("negative test case for delete")
+	public void testDeleteExamByIdNegative() {
+		Mockito.when(examRepository.findById(exam.getId())).thenReturn(Optional.of(exam));
+		Assertions.assertThrows(ExamNotFoundException.class, () -> examService.deleteExamById(102));
+	}
 }
