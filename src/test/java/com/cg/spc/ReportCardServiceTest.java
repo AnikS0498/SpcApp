@@ -55,8 +55,10 @@ public class ReportCardServiceTest {
 		student = new Student();
 		student.setId(300);;
 		student.setName("Rahul");
+		
 		reportCard.setMarksheet(marksheet);
 		reportCard.setStudent(student);
+		student.setReportCard(reportCard);
 		}
 	
 	@Test
@@ -116,12 +118,12 @@ public class ReportCardServiceTest {
 	public void testGetReportCardByStudentId()
 	{
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
-		Mockito.when(reportCardRepository.findById(reportCard.getId())).thenReturn(Optional.of(reportCard));
+		Mockito.when(reportCardRepository.save(reportCard)).thenReturn(reportCard);
 		assertEquals(reportCard,reportCardService.getReportCardByStudentId(300));
 	}
 	
 	@Test
-	@DisplayName("Positive test case  for getReportCardByStudentId")
+	@DisplayName("Negative test case  for getReportCardByStudentId")
 	public void testGetReportCardByStudentIdNegative()
 	{
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
