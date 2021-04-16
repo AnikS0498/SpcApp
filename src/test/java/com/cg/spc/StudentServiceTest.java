@@ -3,19 +3,21 @@ package com.cg.spc;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.cg.spc.entities.Student;
+import com.cg.spc.exceptions.StudentNotFoundException;
 import com.cg.spc.repositories.IStudentRepository;
 import com.cg.spc.services.IStudentService;
 
@@ -83,9 +85,25 @@ public class StudentServiceTest {
 	}
 	
 	@Test
+	@DisplayName("Negative test case for update Student")
+	public void testUpdateStudentNegative() {
+		student.setName("Babu Rao Ganpat Rao Apte");
+		Mockito.when(studentRepository.save(student)).thenReturn(student);
+		assertNotEquals("Babu Rao", studentService.updateStudent(student).getName());
+	}
+	
+	@Test
 	@DisplayName("Positive test case for getting student by ID")
 	public void testGetStudentById() {
-		
+		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
+		assertEquals(student, studentService.getStudentById(101));
+	}
+	
+	@Test
+	@DisplayName("Negative test case for getting student by ID")
+	public void testGetByStudentIdNegative() {
+		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
+		Assertions.assertThrows(StudentNotFoundException.class, ()->studentService.getStudentById(102));
 	}
 
 	
