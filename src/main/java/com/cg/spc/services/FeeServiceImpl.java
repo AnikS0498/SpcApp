@@ -1,6 +1,5 @@
 package com.cg.spc.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,7 @@ public class FeeServiceImpl implements IFeeService{
 	
 	@Override
 	public Fee getFeeById(int id) {
-		return feeRepository.findById(id).get();
+		return feeRepository.findById(id).orElseThrow(() -> new FeeNotFoundException());
 	}
 
 	@Override
@@ -36,7 +35,7 @@ public class FeeServiceImpl implements IFeeService{
 
 	@Override
 	public Fee deleteFeeDetails(int id) {
-		Fee fee = feeRepository.findById(id).get();
+		Fee fee = feeRepository.findById(id).orElseThrow(() -> new FeeNotFoundException());
 		feeRepository.deleteById(id);
 		return fee;
 	}
@@ -64,17 +63,20 @@ public class FeeServiceImpl implements IFeeService{
 	@Override
     public Fee getFeeByStudentId(int id) {
 		Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException());
-        int flag = 0;
-        List<Fee> feeList = new ArrayList<Fee>();
-        feeList = getAllFee();
-        for(Fee fee: feeList) {
-            if(fee.getStudent().equals(student)) {
-            	flag = 1;
-            	break;
-            }
-        }
-        if(flag==0)
-        	throw new FeeNotFoundException();
+//        int flag = 0;
+//        List<Fee> feeList = new ArrayList<Fee>();
+//        feeList = getAllFee();
+//        for(Fee fee: feeList) {
+//            if(fee.getStudent().equals(student)) {
+//            	flag = 1;
+//            	break;
+//            }
+//        }
+//        if(flag==0)
+//        	throw new FeeNotFoundException();
+		if(student.getFee() == null) {
+			throw new FeeNotFoundException();
+		}
         return feeRepository.findByStudentId(id);
     }
 }

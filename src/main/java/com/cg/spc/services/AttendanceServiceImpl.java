@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.cg.spc.entities.Attendance;
 import com.cg.spc.entities.Student;
+import com.cg.spc.exceptions.AttendanceNotFoundException;
+import com.cg.spc.exceptions.FeeNotFoundException;
 import com.cg.spc.exceptions.StudentNotFoundException;
 import com.cg.spc.repositories.IAttendanceRepository;
 import com.cg.spc.repositories.IStudentRepository;
@@ -36,12 +38,12 @@ public class AttendanceServiceImpl implements IAttendanceService{
 
 	@Override
 	public Attendance getAttendanceById(int id) {
-		return attendanceRepository.findById(id).get();
+		return attendanceRepository.findById(id).orElseThrow(() -> new AttendanceNotFoundException());
 	}
 
 	@Override
 	public Attendance deleteById(int id) {
-		Attendance attendance = attendanceRepository.findById(id).get();
+		Attendance attendance = attendanceRepository.findById(id).orElseThrow(() -> new AttendanceNotFoundException());
 		attendanceRepository.deleteById(id);
 		return attendance;	}
 
