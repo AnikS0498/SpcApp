@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.time.LocalDate;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.cg.spc.entities.Attendance;
 import com.cg.spc.entities.Student;
+import com.cg.spc.exceptions.StudentNotFoundException;
 import com.cg.spc.repositories.IAttendanceRepository;
 import com.cg.spc.services.IAttendanceService;
 
@@ -37,7 +39,7 @@ public class AttendanceServiceTest {
 		attendance.setAttendanceDate(LocalDate.of(2021, 03, 19));
 		attendance.setPresent(true);
 		Student student = new Student();
-		student.setId(9);
+		student.setId(36);
 		attendance.setStudent(student);
 
 		attendance2 = new Attendance();
@@ -53,21 +55,26 @@ public class AttendanceServiceTest {
 	@DisplayName("Positive test case for add attendance")
 	public void testAddAttendance() {
 		Mockito.when(attendanceRepository.save(attendance)).thenReturn(attendance);
-		assertEquals(attendance, attendanceService.addAttendance(attendance, 9));
+		//assertEquals(attendance, attendanceService.addAttendance(attendance, 9));
+		assertEquals(attendance, attendanceService.addAttendance(attendance, 36));
 	}
+	
+	
 
 	@Test
 	@DisplayName("Negative test case for add attendance")
 	public void testAddAttendancetNegative() {
 		Mockito.when(attendanceRepository.save(attendance2)).thenReturn(attendance2);
-		assertNotEquals(attendance2, attendanceService.addAttendance(attendance, 9));
+		//assertNotEquals(attendance2, attendanceService.addAttendance(attendance, 9));
+		Assertions.assertThrows(StudentNotFoundException.class, () -> attendanceService.addAttendance(attendance, 9));
 	}
 	
 	@Test
 	@DisplayName("Positive test case for update attendance")
 	public void testUpdateAttendance() {
 		Mockito.when(attendanceRepository.save(attendance)).thenReturn(attendance);
-		assertEquals(attendance, attendanceService.updateAttendance(attendance, 9));
+		//assertEquals(attendance, attendanceService.addAttendance(attendance, 9));
+		assertEquals(attendance, attendanceService.addAttendance(attendance, 36));
 	}
 	
 	@Test
