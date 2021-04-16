@@ -28,7 +28,7 @@ public class ReportCardServiceImpl  implements IReportCardService{
 
 	@Override
 	public ReportCard getDetailsById(int id) {
-		ReportCard reportCard = reportCardRepository.findById(id).get();
+		ReportCard reportCard = reportCardRepository.findById(id).orElseThrow(()-> new ReportCardNotFoundException());
 		return reportCard;
 	}
 
@@ -41,7 +41,7 @@ public class ReportCardServiceImpl  implements IReportCardService{
 
 	@Override
 	public ReportCard deleteDetailsById(int id) {
-		ReportCard reportCard = reportCardRepository.findById(id).get();
+		ReportCard reportCard = reportCardRepository.findById(id).orElseThrow(()-> new ReportCardNotFoundException());
 		reportCardRepository.deleteById(id);
 		return reportCard;
 	}

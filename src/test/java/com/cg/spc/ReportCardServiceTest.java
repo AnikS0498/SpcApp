@@ -18,6 +18,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import com.cg.spc.entities.ReportCard;
 import com.cg.spc.entities.Student;
 import com.cg.spc.entities.Subject;
+import com.cg.spc.exceptions.ReportCardNotFoundException;
 import com.cg.spc.exceptions.StudentNotFoundException;
 import com.cg.spc.repositories.IReportCardRepository;
 import com.cg.spc.repositories.IStudentRepository;
@@ -42,6 +43,7 @@ public class ReportCardServiceTest {
 	@BeforeEach
 	public void init() {
 		reportCard = new ReportCard();
+		reportCard.setId(200);
 		Map<Subject, Integer> marksheet = new HashMap<Subject, Integer>();
 		marksheet.put(Subject.ENGLISH,78);
 		marksheet.put(Subject.HINDI,98);
@@ -92,5 +94,56 @@ public class ReportCardServiceTest {
 		Mockito.when(reportCardRepository.save(reportCard)).thenReturn(reportCard);
 		Assertions.assertThrows(StudentNotFoundException.class,()-> reportCardService.updateDetails(reportCard, 101));
 	}
+	
+	@Test
+	@DisplayName("Positive test case for getDetailsById")
+	public void testGetDetailsById() {
+		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
+		Mockito.when(reportCardRepository.findById(reportCard.getId())).thenReturn(Optional.of(reportCard));
+		assertEquals(reportCard, reportCardService.getDetailsById(200));
+	}
+	
+	@Test
+	@DisplayName("Negetive test case for getDetailsById")
+	public void testGetDetailsByIdNegative() {
+		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
+		Mockito.when(reportCardRepository.findById(reportCard.getId())).thenReturn(Optional.of(reportCard));
+		Assertions.assertThrows(ReportCardNotFoundException.class,()-> reportCardService.getDetailsById(201));
+	}
+	
+	@Test
+	@DisplayName("Positive test case  for getReportCardByStudentId")
+	public void testGetReportCardByStudentId()
+	{
+		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
+		Mockito.when(reportCardRepository.findById(reportCard.getId())).thenReturn(Optional.of(reportCard));
+		assertEquals(reportCard,reportCardService.getReportCardByStudentId(300));
+	}
+	
+	@Test
+	@DisplayName("Positive test case  for getReportCardByStudentId")
+	public void testGetReportCardByStudentIdNegative()
+	{
+		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
+		Mockito.when(reportCardRepository.findById(reportCard.getId())).thenReturn(Optional.of(reportCard));
+		Assertions.assertThrows(StudentNotFoundException.class,()->reportCardService.getReportCardByStudentId(301));
+	}
+	
+//	@Test
+//	@DisplayName("Positive test case for deleteDetails By Id")
+//	public void testDeleteDetailsById() {
+//		//Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
+//		Mockito.when(reportCardRepository.findById(reportCard.getId())).thenReturn(Optional.of(reportCard));
+//		reportCardService.deleteDetailsById(200);
+//		verify(reportCardRepository, times(1)).deleteById(200);
+//	}
+//	
+//	@Test
+//	@DisplayName("Negetive test case for deleteDetails By Id")
+//	public void testDeleteDetailsByIdNegative() {
+//		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
+//		Mockito.when(reportCardRepository.findById(reportCard.getId())).thenReturn(Optional.of(reportCard));
+//		assertNotEquals(ReportCardNotFoundException.class, reportCardService.deleteDetailsById(201));
+//	}
 	
 }

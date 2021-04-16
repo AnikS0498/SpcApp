@@ -35,7 +35,6 @@ public class ConcernServiceTest {
 		concern = new Concern();
 		concern.setConcern("child getting low marks");
 		concern.setConcernType(ConcernType.ACADEMIC);
-		;
 		Parent parent = new Parent();
 		parent.setId(1);
 		concern.setParent(parent);
