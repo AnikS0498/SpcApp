@@ -5,7 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +18,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.cg.spc.entities.Standard;
 import com.cg.spc.entities.Student;
-
+import com.cg.spc.exceptions.StandardNotFoundException;
+import com.cg.spc.exceptions.StudentNotFoundException;
 import com.cg.spc.repositories.IStandardRepository;
 
 import com.cg.spc.services.IStandardService;
@@ -60,7 +63,10 @@ public class StandardServiceTest {
 		}
 		standard.setStudentList(studentList);
 		Mockito.when(standardRepository.save(standard)).thenReturn(standard);
-		assertEquals(standard, standardService.updateDetails(standard, studentIdList));
+		Assertions.assertThrows(StudentNotFoundException.class,
+				() -> standardService.updateDetails(standard, studentIdList));
+		// assertEquals(standard, standardService.updateDetails(standard,
+		// studentIdList));
 	}
 
 	@Test
@@ -74,7 +80,10 @@ public class StandardServiceTest {
 		}
 		standard2.setStudentList(studentList);
 		Mockito.when(standardRepository.save(standard2)).thenReturn(standard2);
-		assertNotEquals(standard2, standardService.updateDetails(standard, studentIdList));
+		Assertions.assertThrows(StudentNotFoundException.class,
+				() -> standardService.updateDetails(standard, studentIdList));
+		// assertNotEquals(standard2, standardService.updateDetails(standard,
+		// studentIdList));
 	}
 
 	@Test
@@ -89,5 +98,36 @@ public class StandardServiceTest {
 	public void testAddStandardNegative() {
 		Mockito.when(standardRepository.save(standard2)).thenReturn(standard2);
 		assertNotEquals(standard2, standardService.addDetails(standard));
+	}
+
+	@Test
+	@DisplayName("positive test case for get standard by id")
+	public void testGetStandardById() {
+		Standard standard = new Standard();
+		standard.setClassStrength(80);
+		standard.setGrade("III");
+		standard.setId(500);
+		standard.setStudentList(null);
+		standard.setSubjectTeachers(null);
+		standard.setExamList(null);
+		standard.setClassTeacher(null);
+		Mockito.when(standardRepository.findById(500)).thenReturn(Optional.of(standard));
+		assertEquals(standard, standardService.getDetailsById(500));
+	}
+
+	@Test
+	@DisplayName("negative test case for get standard by id")
+	public void testGetStandardByIdNegative() {
+		Standard standard = new Standard();
+		standard.setClassStrength(80);
+		standard.setGrade("III");
+		standard.setId(501);
+		standard.setStudentList(null);
+		standard.setSubjectTeachers(null);
+		standard.setExamList(null);
+		standard.setClassTeacher(null);
+		Mockito.when(standardRepository.findById(501)).thenReturn(Optional.of(standard));
+		Assertions.assertThrows(StandardNotFoundException.class, () -> standardService.getDetailsById(509));
+		// assertNotEquals(standard,standardService.getDetailsById(509));
 	}
 }
