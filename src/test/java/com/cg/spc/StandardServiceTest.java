@@ -130,4 +130,36 @@ public class StandardServiceTest {
 		Assertions.assertThrows(StandardNotFoundException.class, () -> standardService.getDetailsById(509));
 		// assertNotEquals(standard,standardService.getDetailsById(509));
 	}
+	
+	@Test
+	@DisplayName("positive test case for delete")
+	public void testDeleteDetailsById()
+	{
+		Standard standard = new Standard();
+		standard.setClassStrength(80);
+		standard.setGrade("III");
+		standard.setId(501);
+		Mockito.when(standardRepository.findById(501)).thenReturn(Optional.of(standard));
+		standardService.deleteDetailsById(501);
+		Mockito.verify(standardRepository, Mockito.times(1)).deleteById(501);
+	}
+	
+	@Test
+	@DisplayName("negative test case for delete")
+	public void testDeleteDetailsByIdNegative()
+	{
+		Standard standard = new Standard();
+		standard.setClassStrength(80);
+		standard.setGrade("III");
+		standard.setId(501);
+		Mockito.when(standardRepository.findById(501)).thenReturn(Optional.of(standard));
+		Assertions.assertThrows(StandardNotFoundException.class, ()->standardService.deleteDetailsById(502));
+	}
 }
+
+
+
+
+
+
+
