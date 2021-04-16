@@ -32,12 +32,9 @@ public class StudentServiceImpl implements IStudentService{
 	}
 
 	@Override
-	public int updateStudent(Student student) {
-		int studentId = student.getId();
-		@SuppressWarnings("unused")
-		Student studentObj = studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException());
+	public Student updateStudent(Student student) {
 		Student st = studentRepository.save(student);
-		return st.getId();
+		return st;
 	}
 
 	@Override

@@ -71,4 +71,11 @@ public class SPCGlobalExceptionHandler {
 		return new ResponseEntity<Object>(response, HttpStatus.NOT_FOUND);
 	}
 	
+	@ExceptionHandler(value = AttendanceNotFoundException.class)
+	public ResponseEntity<Object> handleAttendanceNotFoundException(AttendanceNotFoundException ex){
+		
+		String response = "Attendance not found";
+		return new ResponseEntity<Object>(response, HttpStatus.NOT_FOUND);
+	}
+	
 }

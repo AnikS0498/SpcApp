@@ -58,8 +58,8 @@ public class AdminController {
 	}
 
 	@PutMapping("/student/update")
-	public ResponseEntity<Integer> updateStudentDetails(@RequestBody Student student) {
-		return new ResponseEntity<Integer>(studentService.updateStudent(student),HttpStatus.OK);
+	public ResponseEntity<Student> updateStudentDetails(@RequestBody Student student) {
+		return new ResponseEntity<Student>(studentService.updateStudent(student),HttpStatus.OK);
 	}
 
 	@PostMapping("/teacher/add")
