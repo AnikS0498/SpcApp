@@ -39,13 +39,37 @@ class TeacherServiceTest {
 
 	@MockBean
 	private IStandardRepository standardRepository;
+	
+	Teacher teacher;
+	Teacher teacher1;
+	Standard standard;
+	
+	@BeforeEach
+	public void init() {
+		
+			
+			teacher = new Teacher();
+			teacher.setId(100);
+			teacher.setName("Shaw Ji");
+			teacher.setStandard(null);
+			teacher.setStandardList(null);
+			teacher.setSubject(Subject.ENGLISH);
+			
+			teacher1 = new Teacher();
+			teacher1.setId(100);
+			teacher1.setName("Shaw Ji");
+			teacher1.setStandard(null);
+			teacher1.setStandardList(null);
+			teacher1.setSubject(Subject.ENGLISH);
+			
+		
+		
+	}
 
 	@Test
 	@DisplayName("positive test case for add parent")
 	public void testAddTeacher() {
-		Teacher teacher = new Teacher();
-		teacher.setName("teacher1");
-		teacher.setSubject(Subject.ENGLISH);
+		
 		Mockito.when(teacherRepository.save(teacher)).thenReturn(teacher);
 		assertEquals(teacher, teacherService.addTeacher(teacher));
 
@@ -53,33 +77,25 @@ class TeacherServiceTest {
 
 	@Test
 	@DisplayName("negative test case for add parent")
-	public void negativeTestAddTeacher() {
-		Teacher teacher = new Teacher();
-		teacher.setName("teacher1");
-		teacher.setSubject(Subject.ENGLISH);
+	public void testAddTeacherNegative() {
+		
 		Mockito.when(teacherRepository.save(teacher)).thenReturn(teacher);
 		assertNotEquals("teacher2", teacherService.addTeacher(teacher).getName());
 
 	}
 
-	@BeforeEach
-	public void init() {
-		
-	}
+	
 
 	@Test
 	@DisplayName("positive test case for update parent")
 	public void testUpdateTeacher() {
-		Teacher teacher = new Teacher();
-		teacher.setName("teacher1");
-		teacher.setSubject(Subject.ENGLISH);
-		// Standard standard = new Standard();
+		
 		java.util.List<Standard> standardList = new ArrayList<>();
 		
 		java.util.List<Integer> intList = new ArrayList<>();
 		intList.add(101);
 		
-		Standard standard = new Standard();
+		standard = new Standard();
 		standard.setId(101);
 		standard.setGrade("I");
 		standard.setClassStrength(40);
@@ -99,11 +115,8 @@ class TeacherServiceTest {
 	
 	@Test
 	@DisplayName("negative test case for update parent")
-	public void negativeTestUpdateTeacher() {
-		Teacher teacher = new Teacher();
-		teacher.setName("teacher1");
-		teacher.setSubject(Subject.ENGLISH);
-		// Standard standard = new Standard();
+	public void testUpdateTeacherNegative() {
+		
 		java.util.List<Standard> standardList = new ArrayList<>();
 		
 		java.util.List<Integer> intList = new ArrayList<>();
@@ -131,14 +144,7 @@ class TeacherServiceTest {
 	
 	@Test
 	@DisplayName("positive test for getTeacherById")
-	public void getTeacherByIdTest() {
-		Teacher teacher = new Teacher();
-		teacher.setId(100);
-		teacher.setName("Shaw Ji");
-		teacher.setStandard(null);
-		teacher.setStandardList(null);
-		teacher.setSubject(Subject.ENGLISH);
-		
+	public void testGetTeacherById() {
 		Mockito.when(teacherRepository.findById(100)).thenReturn(Optional.of(teacher));
 		assertThat(teacherService.getTeacherById(100)).isEqualTo(teacher);
 		
@@ -147,13 +153,7 @@ class TeacherServiceTest {
 	
 	@Test
 	@DisplayName("negative test for getTeacherById")
-	public void negativeTestGetTeacherById() {
-		Teacher teacher = new Teacher();
-		teacher.setId(100);
-		teacher.setName("Shaw Ji");
-		teacher.setStandard(null);
-		teacher.setStandardList(null);
-		teacher.setSubject(Subject.ENGLISH);
+	public void testGetTeacherByIdNegative() {
 		
 		Mockito.when(teacherRepository.findById(100)).thenReturn(Optional.of(teacher));
 		Assertions.assertThrows(TeacherNotFoundException.class,()-> teacherService.getTeacherById(101));
@@ -162,20 +162,7 @@ class TeacherServiceTest {
 	
 	@Test
 	@DisplayName("positive test for getAllTeachers")
-	public void getAllTeachers() {
-		Teacher teacher = new Teacher();
-		teacher.setId(100);
-		teacher.setName("Shaw Ji");
-		teacher.setStandard(null);
-		teacher.setStandardList(null);
-		teacher.setSubject(Subject.ENGLISH);
-		
-		Teacher teacher1 = new Teacher();
-		teacher1.setId(100);
-		teacher1.setName("Shaw Ji");
-		teacher1.setStandard(null);
-		teacher1.setStandardList(null);
-		teacher1.setSubject(Subject.ENGLISH);
+	public void testGetAllTeachers() {
 		
 		java.util.List<Teacher> teacherList = new ArrayList<>();
 		teacherList.add(teacher);
@@ -184,30 +171,31 @@ class TeacherServiceTest {
 		Mockito.when(teacherRepository.findAll()).thenReturn(teacherList);
 		assertThat(teacherService.getAllTeachers()).isEqualTo(teacherList);
 	}
+	
+	
+	@Test
+	@DisplayName("negative test for getAllTeachers")
+	public void testGetAllTeachersNegative() {
+		
+		java.util.List<Teacher> teacherList = new ArrayList<>();
+		teacherList.add(teacher);
+		teacherList.add(teacher1);
+		
+		Mockito.when(teacherRepository.findAll()).thenReturn(teacherList);
+		assertNotEquals(10, teacherService.getAllTeachers().size());
+		
+	}
 
 	
-//	@Test
-//	@DisplayName("positive test for deleteTeacher")
-//	public void deleteTeacherTest() {
-//		
-//		Teacher teacher = new Teacher();
-//		teacher.setId(100);
-//		teacher.setName("Shaw Ji");
-//		teacher.setStandard(null);
-//		teacher.setStandardList(null);
-//		teacher.setSubject(Subject.ENGLISH);
-//		
-//		Teacher teacher1 = new Teacher();
-//		teacher1.setId(101);
-//		teacher1.setName("Shaw Ji");
-//		teacher1.setStandard(null);
-//		teacher1.setStandardList(null);
-//		teacher1.setSubject(Subject.ENGLISH);
-//		
-//		when(teacherRepository.findById(101)).thenReturn(Optional.of(teacher1));
-//		verify(teacherRepository, teacherService.deleteTeacherById(101));
-//		
-//	}
+	@Test
+	@DisplayName("positive test for deleteTeacher")
+	public void testDeleteTeacher() {
+		
+		Mockito.when(teacherRepository.findById(teacher.getId())).thenReturn(Optional.of(teacher));
+		teacherService.deleteTeacherById(100);
+		Mockito.verify(teacherRepository, Mockito.times(1)).deleteById(100);
+		
+	}
 
 
 }
