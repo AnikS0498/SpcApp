@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.cg.spc.entities.Diary;
 import com.cg.spc.entities.Student;
+import com.cg.spc.exceptions.DiaryNotFoundException;
 import com.cg.spc.exceptions.StudentNotFoundException;
 import com.cg.spc.repositories.IDiaryRepository;
 import com.cg.spc.repositories.IStudentRepository;
@@ -38,13 +39,13 @@ public class DiaryServiceImpl implements IDiaryService{
 
 	@Override
 	public Diary getDiaryById(int id) {
-		Diary diary = diaryRepository.findById(id).get();
+		Diary diary = diaryRepository.findById(id).orElseThrow(() -> new DiaryNotFoundException());
 		return diary;
 	}
 
 	@Override
 	public Diary deleteDiaryById(int id) {
-		Diary diary = diaryRepository.findById(id).get();
+		Diary diary = diaryRepository.findById(id).orElseThrow(() -> new DiaryNotFoundException());
 		diaryRepository.deleteById(id);
 		return diary;
 	}
@@ -56,9 +57,13 @@ public class DiaryServiceImpl implements IDiaryService{
 
 	@Override
 	public Diary getDiaryByStudentId(int id) {
-		@SuppressWarnings("unused")
+	
 		Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException());
-		return diaryRepository.findByStudentId(id);
+		if(student.getDiary()==null) {
+            throw new DiaryNotFoundException();
+        }
+        return diaryRepository.findByStudentId(id);
+		
 	}
 
 }
