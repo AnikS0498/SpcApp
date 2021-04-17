@@ -61,7 +61,7 @@ public class ConcernServiceTest {
 	}
 
 	@Test
-	@DisplayName("positive test case for add concern")
+	@DisplayName("Test case to add concern by parent ID")
 	public void testAddConcern() {
 		Mockito.when(parentRepository.findById(500)).thenReturn(Optional.of(parent));
 		Mockito.when(concernRepository.save(concern)).thenReturn(concern);
@@ -69,7 +69,7 @@ public class ConcernServiceTest {
 	}
 
 	@Test
-	@DisplayName("negative test case for add concern")
+	@DisplayName("Test case to add concern with wrong parent ID")
 	public void testAddConcernNegative() {
 		Mockito.when(parentRepository.findById(500)).thenReturn(Optional.of(parent));
 		Mockito.when(concernRepository.save(concern)).thenReturn(concern);
@@ -77,7 +77,7 @@ public class ConcernServiceTest {
 	}
 
 	@Test
-	@DisplayName("positive test case for update concern")
+	@DisplayName("Test case for update concern by parent ID")
 	public void testUpdateConcern() {
 		concern.setConcern("Wrong Fee Details");
 		concern.setConcernType(ConcernType.FEES);
@@ -87,7 +87,7 @@ public class ConcernServiceTest {
 	}
 
 	@Test
-	@DisplayName("negative test case for update concern")
+	@DisplayName("Test case for update concern with wrong parent ID")
 	public void testUpdateConcernNegative() {
 		Mockito.when(parentRepository.findById(500)).thenReturn(Optional.of(parent));
 		Mockito.when(concernRepository.save(concern)).thenReturn(concern);
@@ -95,21 +95,21 @@ public class ConcernServiceTest {
 	}
 
 	@Test
-	@DisplayName("Positive test case for getAllConcerns")
+	@DisplayName("Test case to get all concerns")
 	public void testGetAllConcerns() {
 		Mockito.when(concernRepository.findAll()).thenReturn(Stream.of(concern,concern2).collect(Collectors.toList()));
 		assertEquals(2, concernService.getAllConcerns().size());
 	}
 	
 	@Test
-	@DisplayName("Negative test case for getAllConcerns")
+	@DisplayName("Test case to get all concerns with wrong concern details")
 	public void testGetAllConcernsNegative() {
 		Mockito.when(concernRepository.findAll()).thenReturn(Stream.of(concern,concern2).collect(Collectors.toList()));
 		assertNotEquals(3, concernService.getAllConcerns().size());
 	}
 	
 	@Test
-	@DisplayName("Positive test case for deleteById")
+	@DisplayName("Test case to delete by concern ID")
 	public void testDeleteById()
 	{
 		Mockito.when(concernRepository.findById(concern.getId())).thenReturn(Optional.of(concern));
@@ -118,7 +118,7 @@ public class ConcernServiceTest {
 	}
 	
 	@Test
-	@DisplayName("Negative test case for deleteById")
+	@DisplayName("Test case to delete by wrong concern ID")
 	public void testDeleteByIdNegative()
 	{
 		Mockito.when(concernRepository.findById(concern.getId())).thenReturn(Optional.of(concern));

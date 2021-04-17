@@ -52,24 +52,22 @@ public class AttendanceServiceTest {
 	}
 
 	@Test
-	@DisplayName("Positive test case for add attendance")
+	@DisplayName("Test case to add attendance")
 	public void testAddAttendance() {
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		Mockito.when(attendanceRepository.save(attendance)).thenReturn(attendance);
 		assertEquals(attendance, attendanceService.addAttendance(attendance, 9));
 	}
 	
-	
-
 	@Test
-	@DisplayName("Negative test case for add attendance")
+	@DisplayName("Test case to add attendance with wrong student ID")
 	public void testAddAttendancetNegative() {
 		Mockito.when(attendanceRepository.save(attendance)).thenReturn(attendance);
 		Assertions.assertThrows(StudentNotFoundException.class, () -> attendanceService.addAttendance(attendance, 100));
 	}
 	
 	@Test
-	@DisplayName("Positive test case for update attendance")
+	@DisplayName("Test case to update attendance")
 	public void testUpdateAttendance() {
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		Mockito.when(attendanceRepository.save(attendance)).thenReturn(attendance);
@@ -77,14 +75,14 @@ public class AttendanceServiceTest {
 	}
 	
 	@Test
-	@DisplayName("Negative test case for update attendance")
+	@DisplayName("Test case to update attendance with wrong student ID")
 	public void testUpdateAttendanceNegative() {
 		Mockito.when(attendanceRepository.save(attendance)).thenReturn(attendance);
 		Assertions.assertThrows(StudentNotFoundException.class, () -> attendanceService.updateAttendance(attendance, 100));
 	}
 	
 	@Test
-	@DisplayName("positive test case for get attendance by ID")
+	@DisplayName("Test case to get attendance by attendance ID")
 	public void testGetAttendanceById() {
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		Mockito.when(attendanceRepository.findById(attendance.getId())).thenReturn(Optional.of(attendance));
@@ -92,7 +90,7 @@ public class AttendanceServiceTest {
 	}
 	
 	@Test
-	@DisplayName("negative test case for get attendance by ID")
+	@DisplayName("Test case to get attendance by wrong attendance ID")
 	public void testGetAttendanceByIdNegative() {
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		Mockito.when(attendanceRepository.findById(attendance.getId())).thenReturn(Optional.of(attendance));
@@ -100,7 +98,7 @@ public class AttendanceServiceTest {
 	}
 	
 	@Test
-	@DisplayName("positive test case for get attendance by student ID")
+	@DisplayName("Test case to get attendance by student ID")
 	public void testGetAttendanceByStudentId() {
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		Mockito.when(attendanceRepository.findByStudentId(9)).thenReturn(attendance);
@@ -108,7 +106,7 @@ public class AttendanceServiceTest {
 	}
 	
 	@Test
-	@DisplayName("negative test case for get attendance by student ID")
+	@DisplayName("Test case to get attendance by wrong student ID")
 	public void testGetAttendanceByStudentIdNegative() {
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		Mockito.when(attendanceRepository.findByStudentId(9)).thenReturn(attendance);
@@ -116,7 +114,7 @@ public class AttendanceServiceTest {
 	}
 	
 	@Test
-    @DisplayName("positive test case for delete attendance")
+    @DisplayName("Test case to delete attendance by attendance ID")
     public void testdeleteFeeDetails() {
         Mockito.when(attendanceRepository.findById(attendance.getId())).thenReturn(Optional.of(attendance));
         attendanceService.deleteById(301);
@@ -124,7 +122,7 @@ public class AttendanceServiceTest {
     }
 	
 	@Test
-    @DisplayName("negative test case for delete attendance")
+    @DisplayName("Test case to delete attendance with wrong attendance ID")
     public void testdeleteFeeDetailsNegative() {
         Mockito.when(attendanceRepository.findById(attendance.getId())).thenReturn(Optional.of(attendance));
         Assertions.assertThrows(AttendanceNotFoundException.class, () -> attendanceService.deleteById(1001));

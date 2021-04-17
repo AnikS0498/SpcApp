@@ -46,8 +46,6 @@ class TeacherServiceTest {
 	
 	@BeforeEach
 	public void init() {
-		
-			
 			teacher = new Teacher();
 			teacher.setId(100);
 			teacher.setName("Shaw Ji");
@@ -61,13 +59,10 @@ class TeacherServiceTest {
 			teacher1.setStandard(null);
 			teacher1.setStandardList(null);
 			teacher1.setSubject(Subject.ENGLISH);
-			
-		
-		
 	}
 
 	@Test
-	@DisplayName("positive test case for add parent")
+	@DisplayName("Test case to add teacher")
 	public void testAddTeacher() {
 		
 		Mockito.when(teacherRepository.save(teacher)).thenReturn(teacher);
@@ -76,7 +71,7 @@ class TeacherServiceTest {
 	}
 
 	@Test
-	@DisplayName("negative test case for add parent")
+	@DisplayName("Test case to add teacher and checking by wrong details")
 	public void testAddTeacherNegative() {
 		
 		Mockito.when(teacherRepository.save(teacher)).thenReturn(teacher);
@@ -87,7 +82,7 @@ class TeacherServiceTest {
 	
 
 	@Test
-	@DisplayName("positive test case for update parent")
+	@DisplayName("Test case to update teacher by standard ID")
 	public void testUpdateTeacher() {
 		
 		java.util.List<Standard> standardList = new ArrayList<>();
@@ -114,7 +109,7 @@ class TeacherServiceTest {
 	}
 	
 	@Test
-	@DisplayName("negative test case for update parent")
+	@DisplayName("Test case to update teacher by wrong standard ID")
 	public void testUpdateTeacherNegative() {
 		
 		java.util.List<Standard> standardList = new ArrayList<>();
@@ -143,7 +138,7 @@ class TeacherServiceTest {
 	
 	
 	@Test
-	@DisplayName("positive test for getTeacherById")
+	@DisplayName("Test case to get teacher by teacher ID")
 	public void testGetTeacherById() {
 		Mockito.when(teacherRepository.findById(100)).thenReturn(Optional.of(teacher));
 		assertThat(teacherService.getTeacherById(100)).isEqualTo(teacher);
@@ -152,7 +147,7 @@ class TeacherServiceTest {
 	}
 	
 	@Test
-	@DisplayName("negative test for getTeacherById")
+	@DisplayName("Test case to get teacher by wrong teacher ID")
 	public void testGetTeacherByIdNegative() {
 		
 		Mockito.when(teacherRepository.findById(100)).thenReturn(Optional.of(teacher));
@@ -161,7 +156,7 @@ class TeacherServiceTest {
 	}
 	
 	@Test
-	@DisplayName("positive test for getAllTeachers")
+	@DisplayName("Test case to get all teachers")
 	public void testGetAllTeachers() {
 		
 		java.util.List<Teacher> teacherList = new ArrayList<>();
@@ -174,7 +169,7 @@ class TeacherServiceTest {
 	
 	
 	@Test
-	@DisplayName("negative test for getAllTeachers")
+	@DisplayName("Test case to get all teachers and checking by wrong details")
 	public void testGetAllTeachersNegative() {
 		
 		java.util.List<Teacher> teacherList = new ArrayList<>();
@@ -188,13 +183,20 @@ class TeacherServiceTest {
 
 	
 	@Test
-	@DisplayName("positive test for deleteTeacher")
+	@DisplayName("Test case to delete teacher by teacher ID")
 	public void testDeleteTeacher() {
 		
 		Mockito.when(teacherRepository.findById(teacher.getId())).thenReturn(Optional.of(teacher));
 		teacherService.deleteTeacherById(100);
 		Mockito.verify(teacherRepository, Mockito.times(1)).deleteById(100);
 		
+	}
+	
+	@Test
+	@DisplayName("Test case to delete teacher by wrong teacher ID")
+	public void testDeleteTeacherNegative() {
+		Mockito.when(teacherRepository.findById(teacher.getId())).thenReturn(Optional.of(teacher));
+		Assertions.assertThrows(TeacherNotFoundException.class, () -> teacherService.deleteTeacherById(101));
 	}
 
 

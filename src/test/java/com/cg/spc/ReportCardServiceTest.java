@@ -72,7 +72,7 @@ public class ReportCardServiceTest {
 	}
 
 	@Test
-	@DisplayName("positive test case for add details")
+	@DisplayName("Test case to add details by student ID")
 	public void testAddDetails() {
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		Mockito.when(reportCardRepository.save(reportCard)).thenReturn(reportCard);
@@ -80,7 +80,7 @@ public class ReportCardServiceTest {
 	}
 
 	@Test
-	@DisplayName("Negative test case for add details")
+	@DisplayName("Test case to add details with wrong student ID")
 	public void testAddDetailsNegative() {
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		Mockito.when(reportCardRepository.save(reportCard)).thenReturn(reportCard);
@@ -88,7 +88,7 @@ public class ReportCardServiceTest {
 	}
 
 	@Test
-	@DisplayName("positive test case for update details")
+	@DisplayName("Test case to update details by student ID")
 	public void testUpdateDetails() {
 		reportCard.setMarksheet(marksheet2);
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
@@ -97,7 +97,7 @@ public class ReportCardServiceTest {
 	}
 
 	@Test
-	@DisplayName("Negative test case for update details")
+	@DisplayName("Test case to update details with wrong student ID")
 	public void testUpdateDetailsNegative() {
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		Mockito.when(reportCardRepository.save(reportCard)).thenReturn(reportCard);
@@ -105,7 +105,7 @@ public class ReportCardServiceTest {
 	}
 
 	@Test
-	@DisplayName("Positive test case for getDetailsById")
+	@DisplayName("Test case to get Details by report card ID")
 	public void testGetDetailsById() {
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		Mockito.when(reportCardRepository.findById(reportCard.getId())).thenReturn(Optional.of(reportCard));
@@ -113,7 +113,7 @@ public class ReportCardServiceTest {
 	}
 
 	@Test
-	@DisplayName("Negetive test case for getDetailsById")
+	@DisplayName("Test case to get Details with wrong report card ID")
 	public void testGetDetailsByIdNegative() {
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		Mockito.when(reportCardRepository.findById(reportCard.getId())).thenReturn(Optional.of(reportCard));
@@ -121,7 +121,7 @@ public class ReportCardServiceTest {
 	}
 
 	@Test
-	@DisplayName("Positive test case  for getReportCardByStudentId")
+	@DisplayName("Test case to get ReportCard by student ID")
 	public void testGetReportCardByStudentId() {
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		Mockito.when(reportCardRepository.findByStudentId(300)).thenReturn(reportCard);
@@ -129,7 +129,7 @@ public class ReportCardServiceTest {
 	}
 
 	@Test
-	@DisplayName("Student not found for getReportCardByStudentId")
+	@DisplayName("Test case to get ReportCard with wrong student ID")
 	public void testGetReportCardByStudentIdNegative() {
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		Mockito.when(reportCardRepository.findByStudentId(reportCard.getId())).thenReturn(reportCard);
@@ -137,7 +137,7 @@ public class ReportCardServiceTest {
 	}
 	
 	@Test
-	@DisplayName("ReportCard Not Found for the test case")
+	@DisplayName("Test case to find if report card has been generated for valid student ID")
 	public void testGetReportCardByStudentIdException() {
 		Student testStudent = new Student();
 		testStudent.setId(301);
@@ -148,7 +148,7 @@ public class ReportCardServiceTest {
 	}
 
 	@Test
-	@DisplayName("Positive test case for deleteDetails By Id")
+	@DisplayName("Test case to delete report card details by report card ID")
 	public void testDeleteDetailsById() {
 		Mockito.when(reportCardRepository.findById(reportCard.getId())).thenReturn(Optional.of(reportCard));
 		reportCardService.deleteDetailsById(200);
@@ -156,7 +156,7 @@ public class ReportCardServiceTest {
 	}
 
 	@Test
-	@DisplayName("Negetive test case for deleteDetails By Id")
+	@DisplayName("Test case to delete report card details with wrong report card ID")
 	public void testDeleteDetailsByIdNegative() {
 		Mockito.when(reportCardRepository.findById(reportCard.getId())).thenReturn(Optional.of(reportCard));
 		Assertions.assertThrows(ReportCardNotFoundException.class, () -> reportCardService.deleteDetailsById(201));

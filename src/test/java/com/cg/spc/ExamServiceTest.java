@@ -61,7 +61,7 @@ public class ExamServiceTest {
 		exam1.setId(503);
 		exam1.setDuration("2 Hours");
 		exam1.setExamDate(LocalDate.of(2021, 06, 01));
-
+		
 		standard = new Standard();
 		standard.setClassStrength(80);
 		standard.setGrade("III");
@@ -88,51 +88,51 @@ public class ExamServiceTest {
 	}
 
 	@Test
-	@DisplayName("positive test case for get exam by Id")
+	@DisplayName("Test case to get exam by Exam ID")
 	public void testGetExamById() {
 		Mockito.when(examRepository.findById(500)).thenReturn(Optional.of(exam));
 		assertEquals(exam, examService.getExamById(500));
 	}
 
 	@Test
-	@DisplayName("negative test case for get exam by Id")
+	@DisplayName("Test case to get exam by wrong Exam Id")
 	public void testGetExamByIdNegative() {
 		Mockito.when(examRepository.findById(exam.getId())).thenReturn(Optional.of(exam));
 		Assertions.assertThrows(ExamNotFoundException.class, () -> examService.getExamById(609));
 	}
 
 	@Test
-	@DisplayName("positive test case for get exam by date")
+	@DisplayName("Test case to get exam by date")
 	public void testGetExamByDate() {
-		Mockito.when(examRepository.findByExamDate(LocalDate.of(2021, 04, 01))).thenReturn(exam);
-		Assertions.assertThrows(DateNotFoundException.class,
-				() -> examService.getExamByDate(LocalDate.of(2021, 04, 01)));
+		Mockito.when(examRepository.findAll()).thenReturn(Stream.of(exam, exam1).collect(Collectors.toList()));
+		Mockito.when(examRepository.findByExamDate(exam.getExamDate())).thenReturn(exam);
+		assertEquals(exam, examService.getExamByDate(LocalDate.of(2021, 04, 01)));
 	}
 
 	@Test
-	@DisplayName("negative test case for get exam by date")
+	@DisplayName("Test case to get exam by wrong date")
 	public void testGetExamByDateNegative() {
-		Mockito.when(examRepository.findByExamDate(LocalDate.of(2021, 04, 01))).thenReturn(exam);
+		Mockito.when(examRepository.findByExamDate(exam.getExamDate())).thenReturn(exam);
 		Assertions.assertThrows(DateNotFoundException.class,
 				() -> examService.getExamByDate(LocalDate.of(2021, 06, 01)));
 	}
 
 	@Test
-	@DisplayName("positive test case of get all exam details")
+	@DisplayName("Test case to get all exam details")
 	public void testGetAllExamDetails() {
 		Mockito.when(examRepository.findAll()).thenReturn(Stream.of(exam, exam1).collect(Collectors.toList()));
 		assertEquals(2, examService.getAllExamDetails().size());
 	}
 
 	@Test
-	@DisplayName("negative test case of get all exam details")
+	@DisplayName("Test case of get all exam with wrong exam details")
 	public void testGetAllExamDetailsNegative() {
 		Mockito.when(examRepository.findAll()).thenReturn(Stream.of(exam, exam1).collect(Collectors.toList()));
 		assertNotEquals(1, examService.getAllExamDetails().size());
 	}
 
 	@Test
-	@DisplayName("positive test case for add exam")
+	@DisplayName("Test case to add exam by standard ID")
 	public void testAddExam() {
 		standardIdListPositive = new ArrayList<Integer>();
 		standardIdListPositive.add(500);
@@ -142,7 +142,7 @@ public class ExamServiceTest {
 	}
 
 	@Test
-	@DisplayName("negative test case for add exam")
+	@DisplayName("Test case to add exam with wrong standard ID")
 	public void testAddExamNegative() {
 		Mockito.when(standardRepository.findById(standard.getId())).thenReturn(Optional.of(standard));
 		Mockito.when(standardRepository.findById(standard2.getId())).thenReturn(Optional.of(standard2));
@@ -151,7 +151,7 @@ public class ExamServiceTest {
 	}
 
 	@Test
-	@DisplayName("positive test case for update exam")
+	@DisplayName("Test case to update exam by standard ID list")
 	public void testUpdateExam() {
 		Mockito.when(standardRepository.findById(standard.getId())).thenReturn(Optional.of(standard));
 		Mockito.when(standardRepository.findById(standard2.getId())).thenReturn(Optional.of(standard2));
@@ -161,7 +161,7 @@ public class ExamServiceTest {
 	}
 
 	@Test
-	@DisplayName("negative test case for update exam")
+	@DisplayName("Test case to update exam by wrong standard ID list")
 	public void testUpdateExamNegative() {
 		Mockito.when(standardRepository.findById(standard.getId())).thenReturn(Optional.of(standard));
 		Mockito.when(standardRepository.findById(standard2.getId())).thenReturn(Optional.of(standard2));
@@ -171,7 +171,7 @@ public class ExamServiceTest {
 	}
 
 	@Test
-	@DisplayName("positive test case for delete")
+	@DisplayName("Test case to delete by exam ID")
 	public void testDeleteExamById() {
 		Mockito.when(examRepository.findById(exam.getId())).thenReturn(Optional.of(exam));
 		examService.deleteExamById(100);
@@ -179,7 +179,7 @@ public class ExamServiceTest {
 	}
 
 	@Test
-	@DisplayName("negative test case for delete")
+	@DisplayName("Test case to delete with wrong exam ID")
 	public void testDeleteExamByIdNegative() {
 		Mockito.when(examRepository.findById(exam.getId())).thenReturn(Optional.of(exam));
 		Assertions.assertThrows(ExamNotFoundException.class, () -> examService.deleteExamById(102));

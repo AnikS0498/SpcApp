@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import com.cg.spc.entities.Attendance;
 import com.cg.spc.entities.Student;
 import com.cg.spc.exceptions.AttendanceNotFoundException;
-import com.cg.spc.exceptions.FeeNotFoundException;
 import com.cg.spc.exceptions.StudentNotFoundException;
 import com.cg.spc.repositories.IAttendanceRepository;
 import com.cg.spc.repositories.IStudentRepository;

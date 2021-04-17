@@ -60,21 +60,21 @@ public class ParentServiceTest {
 	}
 
 	@Test
-	@DisplayName("positive test case for add parent")
+	@DisplayName("Test case to add parent")
 	public void testAddParent() {
 		Mockito.when(parentRepository.save(parent)).thenReturn(parent);
 		assertEquals("Elon Musk", parentService.addParentDetails(parent).getName());
 	}
 
 	@Test
-	@DisplayName("negative test case for add parent")
+	@DisplayName("Test case to add parent with wrong details")
 	public void negativeTestAddParent() {
 		Mockito.when(parentRepository.save(parent)).thenReturn(parent);
 		assertNotEquals("Elon", parentService.addParentDetails(parent).getName());
 	}
 
 	@Test
-	@DisplayName("positive test case for update parent")
+	@DisplayName("Test case to update parent by student ID")
 	public void testUpdateParentDetails() {
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		Mockito.when(parentRepository.save(parent)).thenReturn(parent);
@@ -82,7 +82,7 @@ public class ParentServiceTest {
 	}
 	
 	@Test
-	@DisplayName("test case if studentId for update parent is wrong")
+	@DisplayName("Test case to update parent with wrong student ID")
 	public void testUpdateParentDetailsNegative() {
 		studentIdList.add(402);
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
@@ -91,35 +91,35 @@ public class ParentServiceTest {
 	}
 
 	@Test
-	@DisplayName("Positive test case for get all parent")
+	@DisplayName("Test case to get all parent details")
 	public void testGetAllParent() {
 		Mockito.when(parentRepository.findAll()).thenReturn(Stream.of(parent).collect(Collectors.toList()));
 		assertEquals(1, parentService.getAllParent().size());
 	}
 	
 	@Test
-	@DisplayName("Negative test case for get all parent")
+	@DisplayName("Test case to get all parent with wrong details")
 	public void testGetAllParentNegative() {
 		Mockito.when(parentRepository.findAll()).thenReturn(Stream.of(parent).collect(Collectors.toList()));
 		assertNotEquals(2, parentService.getAllParent().size());
 	}
 	
 	@Test
-	@DisplayName("Positive test case for getting parent by parentID")
+	@DisplayName("Test case to get parent by parent ID")
 	public void testGetParentById() {
 		Mockito.when(parentRepository.findById(parent.getId())).thenReturn(Optional.of(parent));
 		assertEquals(parent, parentService.getParentById(101));
 	}
 	
 	@Test
-	@DisplayName("Negative test case for getting parent by parentID")
+	@DisplayName("Test case to get parent with wrong parent ID")
 	public void testGetParentByIdNegative() {
 		Mockito.when(parentRepository.findById(parent.getId())).thenReturn(Optional.of(parent));
 		Assertions.assertThrows(ParentNotFoundException.class, () -> parentService.getParentById(102));
 	}
 	
 	@Test
-	@DisplayName("positive test case for delete parent details")
+	@DisplayName("Test case to delete parent details by parent ID")
 	public void testDeleteParentDetails() {
 		Mockito.when(parentRepository.findById(parent.getId())).thenReturn(Optional.of(parent));
 		parentService.deleteParentDetails(101);
@@ -127,7 +127,7 @@ public class ParentServiceTest {
 	}
 	
 	@Test
-	@DisplayName("negative test case for delete parent details")
+	@DisplayName("Test case to delete parent details with wrong parent ID")
 	public void testDeleteParentDetailsNegative() {
 		Mockito.when(parentRepository.findById(parent.getId())).thenReturn(Optional.of(parent));
 		Assertions.assertThrows(ParentNotFoundException.class, () -> parentService.deleteParentDetails(102));

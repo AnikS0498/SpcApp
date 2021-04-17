@@ -21,7 +21,7 @@ import com.cg.spc.entities.Student;
 import com.cg.spc.exceptions.StandardNotFoundException;
 import com.cg.spc.exceptions.StudentNotFoundException;
 import com.cg.spc.repositories.IStandardRepository;
-
+import com.cg.spc.repositories.IStudentRepository;
 import com.cg.spc.services.IStandardService;
 
 @SpringBootTest
@@ -32,134 +32,99 @@ public class StandardServiceTest {
 
 	@MockBean
 	private IStandardRepository standardRepository;
+	
+	@MockBean
+	private IStudentRepository studentRepository;
 
 	Standard standard;
 	Standard standard2;
+	Student student;
 	List<Integer> studentIdList;
-
+	List<Student> studentList;
+	
 	@BeforeEach
 	public void init() {
 		standard = new Standard();
 		standard.setGrade("I");
 		standard.setClassStrength(65);
+		standard.setId(500);
 
 		standard2 = new Standard();
 		standard2.setGrade("III");
 		standard2.setClassStrength(80);
 
+		student = new Student();
+		student.setId(101);
+		student.setName("Venu Gopal Rao");
+		
 		studentIdList = new ArrayList<Integer>();
-		studentIdList.add(7);
-		studentIdList.add(8);
+		studentIdList.add(101);
+		
+		studentList = new ArrayList<Student>();
+		studentList.add(student);
+		standard.setStudentList(studentList);
 	}
 
 	@Test
-	@DisplayName("positive test case for update standard")
+	@DisplayName("Test case to update standard by student ID")
 	public void testUpdateStandard() {
-		List<Student> studentList = new ArrayList<Student>();
-		for (Integer integer : studentIdList) {
-			Student student = new Student();
-			student.setId(integer);
-			studentList.add(student);
-		}
-		standard.setStudentList(studentList);
+		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
+		Mockito.when(standardRepository.save(standard)).thenReturn(standard);
+		assertEquals(standard, standardService.updateDetails(standard,studentIdList));
+	}
+
+	@Test
+	@DisplayName("Test case to update standard with wrong student ID")
+	public void testUpdateStandardNegative() {
+		studentIdList.add(102);
+		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		Mockito.when(standardRepository.save(standard)).thenReturn(standard);
 		Assertions.assertThrows(StudentNotFoundException.class,
 				() -> standardService.updateDetails(standard, studentIdList));
-		// assertEquals(standard, standardService.updateDetails(standard,
-		// studentIdList));
 	}
 
 	@Test
-	@DisplayName("negative test case for update standard")
-	public void testUpdateStandardNegative() {
-		List<Student> studentList = new ArrayList<Student>();
-		for (Integer integer : studentIdList) {
-			Student student = new Student();
-			student.setId(integer);
-			studentList.add(student);
-		}
-		standard2.setStudentList(studentList);
-		Mockito.when(standardRepository.save(standard2)).thenReturn(standard2);
-		Assertions.assertThrows(StudentNotFoundException.class,
-				() -> standardService.updateDetails(standard, studentIdList));
-		// assertNotEquals(standard2, standardService.updateDetails(standard,
-		// studentIdList));
-	}
-
-	@Test
-	@DisplayName("positive test case for add standard")
+	@DisplayName("Test case to add standard")
 	public void testAddStandard() {
 		Mockito.when(standardRepository.save(standard)).thenReturn(standard);
 		assertEquals(standard, standardService.addDetails(standard));
 	}
 
 	@Test
-	@DisplayName("negative test case for add standard")
+	@DisplayName("Test case to add standard with wrong details")
 	public void testAddStandardNegative() {
 		Mockito.when(standardRepository.save(standard2)).thenReturn(standard2);
 		assertNotEquals(standard2, standardService.addDetails(standard));
 	}
 
 	@Test
-	@DisplayName("positive test case for get standard by id")
+	@DisplayName("Test case to get standard by standard ID")
 	public void testGetStandardById() {
-		Standard standard = new Standard();
-		standard.setClassStrength(80);
-		standard.setGrade("III");
-		standard.setId(500);
-		standard.setStudentList(null);
-		standard.setSubjectTeachers(null);
-		standard.setExamList(null);
-		standard.setClassTeacher(null);
-		Mockito.when(standardRepository.findById(500)).thenReturn(Optional.of(standard));
+		Mockito.when(standardRepository.findById(standard.getId())).thenReturn(Optional.of(standard));
 		assertEquals(standard, standardService.getDetailsById(500));
 	}
 
 	@Test
-	@DisplayName("negative test case for get standard by id")
+	@DisplayName("Test case to get standard by wrng standard ID")
 	public void testGetStandardByIdNegative() {
-		Standard standard = new Standard();
-		standard.setClassStrength(80);
-		standard.setGrade("III");
-		standard.setId(501);
-		standard.setStudentList(null);
-		standard.setSubjectTeachers(null);
-		standard.setExamList(null);
-		standard.setClassTeacher(null);
-		Mockito.when(standardRepository.findById(501)).thenReturn(Optional.of(standard));
-		Assertions.assertThrows(StandardNotFoundException.class, () -> standardService.getDetailsById(509));
-		// assertNotEquals(standard,standardService.getDetailsById(509));
+		Mockito.when(standardRepository.findById(standard.getId())).thenReturn(Optional.of(standard));
+		Assertions.assertThrows(StandardNotFoundException.class, () -> standardService.getDetailsById(501));
 	}
 	
 	@Test
-	@DisplayName("positive test case for delete")
+	@DisplayName("Test case to delete standard details by standard ID")
 	public void testDeleteDetailsById()
 	{
-		Standard standard = new Standard();
-		standard.setClassStrength(80);
-		standard.setGrade("III");
-		standard.setId(501);
-		Mockito.when(standardRepository.findById(501)).thenReturn(Optional.of(standard));
-		standardService.deleteDetailsById(501);
-		Mockito.verify(standardRepository, Mockito.times(1)).deleteById(501);
+		Mockito.when(standardRepository.findById(standard.getId())).thenReturn(Optional.of(standard));
+		standardService.deleteDetailsById(500);
+		Mockito.verify(standardRepository, Mockito.times(1)).deleteById(500);
 	}
 	
 	@Test
-	@DisplayName("negative test case for delete")
+	@DisplayName("Test case to delete standard details with wrong standard ID")
 	public void testDeleteDetailsByIdNegative()
 	{
-		Standard standard = new Standard();
-		standard.setClassStrength(80);
-		standard.setGrade("III");
-		standard.setId(501);
-		Mockito.when(standardRepository.findById(501)).thenReturn(Optional.of(standard));
-		Assertions.assertThrows(StandardNotFoundException.class, ()->standardService.deleteDetailsById(502));
+		Mockito.when(standardRepository.findById(standard.getId())).thenReturn(Optional.of(standard));
+		Assertions.assertThrows(StandardNotFoundException.class, ()->standardService.deleteDetailsById(501));
 	}
 }
-
-
-
-
-
-
-

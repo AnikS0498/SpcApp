@@ -45,35 +45,35 @@ public class StudentServiceTest {
 	}
 
 	@Test
-	@DisplayName("Positive test case for add student")
+	@DisplayName("Test case to add student")
 	public void testAddStudent() {
 		Mockito.when(studentRepository.save(student)).thenReturn(student);
 		assertEquals("Babu Rao", studentService.addStudent(student).getName());
 	}
 
 	@Test
-	@DisplayName("Negative test case for add student")
+	@DisplayName("Test case to add student and check with wrong details")
 	public void testAddStudentNegative() {
 		Mockito.when(studentRepository.save(student)).thenReturn(student);
 		assertNotEquals("Shyam", studentService.addStudent(student).getName());
 	}
 
 	@Test
-	@DisplayName("Positive test case for getting all students")
+	@DisplayName("Test case to get all students")
 	public void testGetAllStudents() {
 		Mockito.when(studentRepository.findAll()).thenReturn(Stream.of(student).collect(Collectors.toList()));
 		assertEquals(1, studentService.getAllStudents().size());
 	}
 
 	@Test
-	@DisplayName("Negative test case for getting all students")
+	@DisplayName("Test case to get all students and checking with wrong details")
 	public void testGetAllStudentsNegative() {
 		Mockito.when(studentRepository.findAll()).thenReturn(Stream.of(student).collect(Collectors.toList()));
 		assertNotEquals(2, studentService.getAllStudents().size());
 	}
 
 	@Test
-	@DisplayName("Positive test case for update Student")
+	@DisplayName("Test case to update Student")
 	public void testUpdateStudent() {
 		student.setName("Babu Rao Ganpat Rao Apte");
 		Mockito.when(studentRepository.save(student)).thenReturn(student);
@@ -81,7 +81,7 @@ public class StudentServiceTest {
 	}
 
 	@Test
-	@DisplayName("Negative test case for update Student")
+	@DisplayName("Test case to update Student and checking with wrong details")
 	public void testUpdateStudentNegative() {
 		student.setName("Babu Rao Ganpat Rao Apte");
 		Mockito.when(studentRepository.save(student)).thenReturn(student);
@@ -89,21 +89,21 @@ public class StudentServiceTest {
 	}
 
 	@Test
-	@DisplayName("Positive test case for getting student by ID")
+	@DisplayName("Test case to get student by student ID")
 	public void testGetStudentById() {
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		assertEquals(student, studentService.getStudentById(101));
 	}
 
 	@Test
-	@DisplayName("Negative test case for getting student by ID")
+	@DisplayName("Test case to get student by wrong student ID")
 	public void testGetByStudentIdNegative() {
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		Assertions.assertThrows(StudentNotFoundException.class, () -> studentService.getStudentById(102));
 	}
 
 	@Test
-	@DisplayName("Positive test case for delete student")
+	@DisplayName("Test case to delete student by student ID")
 	public void testDeleteStudent() {
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		studentService.deleteStudentById(101);
@@ -111,7 +111,7 @@ public class StudentServiceTest {
 	}
 
 	@Test
-	@DisplayName("Negative test case for delete student")
+	@DisplayName("Test case to delete student with wrong student ID")
 	public void testDeleteStudentNegative() {
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		Assertions.assertThrows(StudentNotFoundException.class, () -> studentService.deleteStudentById(102));

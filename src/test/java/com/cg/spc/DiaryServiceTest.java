@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,20 +32,19 @@ public class DiaryServiceTest {
 
 	@Autowired
 	private IDiaryService diaryService;
-	
-	
+
 	@MockBean
 	private IDiaryRepository diaryRepository;
-	
+
 	@MockBean
 	private IStudentRepository studentRepository;
-	
+
 	Diary diary;
 	Diary diary2;
-	
+
 	Student student;
 	Student student2;
-	
+
 	@BeforeEach
 	public void init() {
 		diary = new Diary();
@@ -55,7 +56,7 @@ public class DiaryServiceTest {
 		student.setName("Sparsh");
 		student.setDiary(diary);
 		diary.setStudent(student);
-		
+
 		diary2 = new Diary();
 		diary2.setId(210);
 		diary2.setGeneratedDate(LocalDate.of(2021, 04, 06));
@@ -65,130 +66,100 @@ public class DiaryServiceTest {
 		student2.setName("Sky");
 		student2.setDiary(diary);
 		diary2.setStudent(student);
-		
+
 	}
-	
+
 	@Test
-	@DisplayName("Positive test case for add diary")
-	public void testAddDiary() {	
-		
+	@DisplayName("Test case to add diary by student ID")
+	public void testAddDiary() {
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		Mockito.when(diaryRepository.save(diary)).thenReturn(diary);
 		assertEquals(diary, diaryService.addDiary(diary, 9));
 	}
-	
+
 	@Test
-	@DisplayName("Negative test case for add diary")
+	@DisplayName("Test case to add diary with wrong student ID")
 	public void testAddDiaryNegative() {
-		
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		Mockito.when(diaryRepository.save(diary)).thenReturn(diary);
-		Assertions.assertThrows(StudentNotFoundException.class,()-> diaryService.addDiary(diary, 19));
-		
-	}	
-		
-	@Test
-	@DisplayName("Positive test case for update diary")
-	public void testUpdateDiary() {		
-		
-		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
-		Mockito.when(diaryRepository.save(diary)).thenReturn(diary);
-		assertEquals(diary,diaryService.updateDiary(diary, 9));
+		Assertions.assertThrows(StudentNotFoundException.class, () -> diaryService.addDiary(diary, 19));
 	}
-	
+
 	@Test
-	@DisplayName("Negative test case for update diary")
+	@DisplayName("Test case to update diary by student ID")
+	public void testUpdateDiary() {
+		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
+		Mockito.when(diaryRepository.save(diary)).thenReturn(diary);
+		assertEquals(diary, diaryService.updateDiary(diary, 9));
+	}
+
+	@Test
+	@DisplayName("Test case to update diary with wrong student ID")
 	public void testUpdateDiaryNegative() {
-		
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		Mockito.when(diaryRepository.save(diary)).thenReturn(diary);
-		Assertions.assertThrows(StudentNotFoundException.class,()-> diaryService.updateDiary(diary, 19));
+		Assertions.assertThrows(StudentNotFoundException.class, () -> diaryService.updateDiary(diary, 19));
 	}
-	
+
 	@Test
-	@DisplayName("positive test case for get diary by id")
+	@DisplayName("Test case to get diary by diary ID")
 	public void testGetDiaryById() {
-		
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		Mockito.when(diaryRepository.findById(diary.getId())).thenReturn(Optional.of(diary));
 		assertEquals(diary, diaryService.getDiaryById(200));
-				
 	}
-	
+
 	@Test
-	@DisplayName("negative test case for get diary by id")
+	@DisplayName("Test case to get diary by wrong Diary ID")
 	public void testGetDiaryByIdNegative() {
-		
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		Mockito.when(diaryRepository.findById(diary.getId())).thenReturn(Optional.of(diary));
-		Assertions.assertThrows(DiaryNotFoundException.class,() ->diaryService.getDiaryById(201));
-				
+		Assertions.assertThrows(DiaryNotFoundException.class, () -> diaryService.getDiaryById(201));
 	}
-	
+
 	@Test
-	@DisplayName("positive test case for get all diary")
+	@DisplayName("Test case to get all diary")
 	public void testGetAllDiary() {
-		
-		List<Diary> diaryList = new ArrayList<Diary>();
-		
-		diaryList.add(diary);
-		diaryList.add(diary2);
-		
-		Mockito.when(diaryRepository.findAll()).thenReturn(diaryList);
-		assertEquals(diaryList.size(), 2);
-		
+		Mockito.when(diaryRepository.findAll()).thenReturn(Stream.of(diary, diary2).collect(Collectors.toList()));
+		assertEquals(2, diaryService.getAllDiaryDetails().size());
 	}
-	
+
 	@Test
-	@DisplayName("negative test case for get all diary")
+	@DisplayName("Test case for get all diary with wrong diary details")
 	public void testGetAllDiaryNegative() {
-		
-		List<Diary> diaryList = new ArrayList<Diary>();
-		
-		diaryList.add(diary);
-		diaryList.add(diary2);
-		
-		Mockito.when(diaryRepository.findAll()).thenReturn(diaryList);
-		assertNotEquals(diaryList.size(), 3);
-		
+		Mockito.when(diaryRepository.findAll()).thenReturn(Stream.of(diary, diary2).collect(Collectors.toList()));
+		assertNotEquals(3, diaryService.getAllDiaryDetails().size());
 	}
-	
+
 	@Test
-	@DisplayName("positive test case for get diary by student")
+	@DisplayName("Test case to get diary by student ID")
 	public void testGetDiaryByStudent() {
-		
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		Mockito.when(diaryRepository.findByStudentId(9)).thenReturn(diary);
-		assertEquals(diary,diaryService.getDiaryByStudentId(9));
-	
+		assertEquals(diary, diaryService.getDiaryByStudentId(9));
 	}
-	
+
 	@Test
-	@DisplayName("negative test case for get diary by student")
+	@DisplayName("Test case to get diary with wrong student ID")
 	public void testGetDiaryByStudentNegative() {
-		
 		Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
 		Mockito.when(diaryRepository.findByStudentId(9)).thenReturn(diary);
-		Assertions.assertThrows(StudentNotFoundException.class,() ->diaryService.getDiaryByStudentId(12));
-	
+		Assertions.assertThrows(StudentNotFoundException.class, () -> diaryService.getDiaryByStudentId(12));
 	}
-	
+
 	@Test
-	@DisplayName("positive test case for delete details by id")
+	@DisplayName("Test case to delete details by diary ID")
 	public void testDeleteDetailsById() {
-		
 		Mockito.when(diaryRepository.findById(diary.getId())).thenReturn(Optional.of(diary));
 		diaryService.deleteDiaryById(200);
 		Mockito.verify(diaryRepository, Mockito.times(1)).deleteById(200);
 	}
-	
+
 	@Test
-	@DisplayName("negative test case for delete details by id")
+	@DisplayName("Test case for delete details by wrong diary ID")
 	public void testDeleteDetailsByIdNegative() {
-		
 		Mockito.when(diaryRepository.findById(diary.getId())).thenReturn(Optional.of(diary));
 		Assertions.assertThrows(DiaryNotFoundException.class, () -> diaryService.deleteDiaryById(201));
-		
 	}
-	
+
 }
