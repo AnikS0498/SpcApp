@@ -47,7 +47,7 @@ public class ParentServiceImpl implements IParentService{
 
 	
 	@Override
-	public int updateParentDetails(Parent parent,List<Integer> studentIdList)
+	public Parent updateParentDetails(Parent parent,List<Integer> studentIdList)
 	{
 		List<Student> studentList = new ArrayList<Student>();
 		for (Integer studentId : studentIdList) {
@@ -55,8 +55,7 @@ public class ParentServiceImpl implements IParentService{
 			student.setParent(parent);
 			studentList.add(student);
 		}
-		Parent pt = parentRepository.save(parent);
-		return pt.getId();
+		return parentRepository.save(parent);
 	}
 
 }

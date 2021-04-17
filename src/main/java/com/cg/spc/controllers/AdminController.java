@@ -43,8 +43,8 @@ public class AdminController {
 	}
 
 	@PutMapping("/parent/update")
-	public ResponseEntity<Integer> updateParentDetails(@RequestBody Parent parent, @RequestParam List<Integer> studentIdList) {
-		return new ResponseEntity<Integer>(parentService.updateParentDetails(parent, studentIdList),HttpStatus.OK);
+	public ResponseEntity<Parent> updateParentDetails(@RequestBody Parent parent, @RequestParam List<Integer> studentIdList) {
+		return new ResponseEntity<Parent>(parentService.updateParentDetails(parent, studentIdList),HttpStatus.OK);
 	}
 
 	@GetMapping("/parent/getParents")
