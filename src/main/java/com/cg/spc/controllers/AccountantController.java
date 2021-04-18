@@ -20,11 +20,24 @@ public class AccountantController {
 
 	@Autowired
 	private IFeeService feeService;
+	
+
+	/**
+	 * 
+	 * adding fee details by using PostMapping
+	 * 
+	 */
 
 	@PostMapping("/fee/add")
 	public ResponseEntity<Fee> addFeeDetails(@RequestBody Fee fee, @RequestParam int studentId) {
 		return new ResponseEntity<Fee>(feeService.addFeeDetails(fee, studentId), HttpStatus.OK);
 	}
+	
+	/**
+	 * 
+	 * updating fee details by using PutMapping
+	 * 
+	 */
 
 	@PutMapping("/fee/update")
 	public ResponseEntity<Fee> updateFeeDetails(@RequestBody Fee fee, @RequestParam int studentId) {

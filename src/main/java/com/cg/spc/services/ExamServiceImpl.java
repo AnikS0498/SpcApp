@@ -13,6 +13,12 @@ import com.cg.spc.exceptions.StandardNotFoundException;
 import com.cg.spc.repositories.IExamRepository;
 import com.cg.spc.repositories.IStandardRepository;
 
+/**
+ * 
+ * 
+ * Implementation class for ExamService
+ *
+ */
 @Service
 public class ExamServiceImpl implements IExamService {
 
@@ -21,7 +27,14 @@ public class ExamServiceImpl implements IExamService {
 	
 	@Autowired
 	private IStandardRepository standardRepository;
-	
+	 
+	/**
+	 * @param exam, standardIdList
+	 * 
+	 * @return exam
+	 * 
+	 * 	- Exam details will be added besed on the standardId.
+	 */
 	@Override
 	public Exam addExam(Exam exam,List<Integer> standardIdList) {
 		List<Standard> standardList = new ArrayList<Standard>();
@@ -34,13 +47,29 @@ public class ExamServiceImpl implements IExamService {
 		return examRepository.save(exam);
 	}
 
+	/**
+	 * @param id
+	 * 
+	 * @return diary
+	 * 
+	 * 	- if the exam id matches then Exam details will be deleted.
+	 */
 	@Override
 	public Exam deleteExamById(int id) {
 		Exam exam=examRepository.findById(id).orElseThrow(() -> new ExamNotFoundException());
 		examRepository.deleteById(id);
 		return exam;
 	}
-
+	
+	
+	/**
+	 * @param exam, standardIdList
+	 * 
+	 * @return exam
+	 * 
+	 * 	- Exam details will be updated based on the standardId.
+	 * 
+	 */
 	@Override
 	public Exam updateExam(Exam exam,List<Integer> standardIdList) {
 		List<Standard> standardList = new ArrayList<Standard>();
@@ -52,17 +81,41 @@ public class ExamServiceImpl implements IExamService {
 		return examRepository.save(exam);
 	}
 
+	/**
+	 * @param id
+	 * 
+	 * @return exam
+	 * 
+	 * 	- if the exam id matches then Exam details will be retrieved.
+	 * 
+	 */
 	@Override
 	public Exam getExamById(int id) {
 		Exam exam = examRepository.findById(id).orElseThrow(() -> new ExamNotFoundException());
 		return exam;
 	}
 
+	/**
+	 * @param id
+	 * 
+	 * @return exam
+	 * 
+	 * 	- if the exam id matches then Exam details will be retrieved.
+	 * 
+	 */
 	@Override
 	public List<Exam> getAllExamDetails() {
 		return examRepository.findAll();
 	}
-
+	
+	/**
+	 * @param examdate
+	 * 
+	 * @return exam
+	 * 
+	 * 	- if the exam date matches then Exam details will be retrieved.
+	 * 
+	 */
 	@Override
     public Exam getExamByDate(LocalDate date) {
         String examDate = date.toString();

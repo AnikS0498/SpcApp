@@ -12,6 +12,13 @@ import com.cg.spc.exceptions.ParentNotFoundException;
 import com.cg.spc.repositories.IConcernRepository;
 import com.cg.spc.repositories.IParentRepository;
 
+/**
+ * 
+ * 
+ * Implementation class for ConcernService
+ *
+ */
+
 @Service
 public class ConcernServiceImpl implements IConcernService {
 
@@ -21,6 +28,15 @@ public class ConcernServiceImpl implements IConcernService {
 	@Autowired
 	private IParentRepository parentRepository;
 
+	
+	/**
+	 * @param concern, id
+	 * 
+	 * @return concern
+	 * 
+	 * 	- if the parentId matches then concern will be updated
+	 * 
+	 */
 	@Override
 	public Concern updateConcern(Concern concern, int parentId) {
 		if (!concern.isResolved()) {
@@ -33,11 +49,24 @@ public class ConcernServiceImpl implements IConcernService {
 		}
 	}
 
+	/**
+	 * @return concern
+	 * 
+	 * 	- getting all the concerns
+	 */
 	@Override
 	public List<Concern> getAllConcerns() {
 		return concernRepository.findAll();
 	}
 
+	/**
+	 * @param id
+	 * 
+	 * @return concern
+	 * 
+	 * 	- if the id matches then concern will be deleted
+	 * 
+	 */
 	@Override
 	public Concern deleteById(int id) {
 		Concern concern = concernRepository.findById(id).orElseThrow(() -> new ConcernResolvedException());
@@ -45,6 +74,14 @@ public class ConcernServiceImpl implements IConcernService {
 		return concern;
 	}
 
+	/**
+	 * @param concern, id
+	 * 
+	 * @return concern
+	 * 
+	 * 	- if the parentId matches then concern will be added
+	 * 
+	 */
 	@Override
 	public Concern addConcern(Concern concern, int parentId) {
 		Parent parent = parentRepository.findById(parentId).orElseThrow(() -> new ParentNotFoundException());

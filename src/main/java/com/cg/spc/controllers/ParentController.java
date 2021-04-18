@@ -48,32 +48,71 @@ public class ParentController {
 	@Autowired
 	private IConcernService concernService;
 
+
+	/**
+	 * 
+	 * 
+	 * getting student reportCard details from student id by using GetMapping
+	 * 
+	 */
+
 	@GetMapping("/student/reportCard/{sId}")
 	public ResponseEntity<ReportCard> getReportCardDetails(@PathVariable("sId") int sId) {
 		return new ResponseEntity<ReportCard>(reportCardService.getReportCardByStudentId(sId), HttpStatus.OK);
 	}
 
+
+	/**
+	 * 
+	 * getting student fee details from student id by using GetMapping
+	 * 
+	 */
 	@GetMapping("/student/fee/{sId}")
 	public ResponseEntity<Fee> getFee(@PathVariable("sId") int sId) {
 		return new ResponseEntity<Fee>(feeService.getFeeByStudentId(sId), HttpStatus.OK);
 	}
+	
 
+
+	/**
+	 * 
+	 * getting student exam details from examDate by using GetMapping
+	 * 
+	 */
 	@GetMapping("/student/exam/{date}")
 	public ResponseEntity<Exam> getExamDetails(@PathVariable("date") String date) {
 		LocalDate examDate = LocalDate.parse(date);
 		return new ResponseEntity<Exam>(examService.getExamByDate(examDate), HttpStatus.OK);
 	}
+	
 
+	/**
+	 * 
+	 * getting student diary details from studentId by using GetMapping
+	 * 
+	 */
 	@GetMapping("/student/diary/{sId}")
 	public ResponseEntity<Diary> getDailyDiary(@PathVariable("sId") int sId) {
 		return new ResponseEntity<Diary>(diaryService.getDiaryByStudentId(sId), HttpStatus.OK);
 	}
 
+
+	/**
+	 * 
+	 * getting student attendance details from studentId by using GetMapping
+	 * 
+	 */
 	@GetMapping("/student/attendance/{sId}")
 	public ResponseEntity<Attendance> getAttendance(@PathVariable("sId") int sId) {
 		return new ResponseEntity<Attendance>(attendanceService.getAttendanceByStudentId(sId), HttpStatus.OK);
 	}
 
+
+	/**
+	 * 
+	 * adding concern details by using PostMapping
+	 * 
+	 */
 	@PostMapping("/concern/add")
 	public ResponseEntity<Concern> addConcern(@RequestBody Concern concern, @RequestParam int parentId) {
 		return new ResponseEntity<Concern>(concernService.addConcern(concern, parentId), HttpStatus.OK);

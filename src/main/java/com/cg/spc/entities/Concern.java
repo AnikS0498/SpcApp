@@ -11,6 +11,11 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+/**
+ * POJO class for Concern
+ * 
+ */
+
 @Entity
 public class Concern {
 

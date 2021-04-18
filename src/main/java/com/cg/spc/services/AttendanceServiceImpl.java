@@ -10,6 +10,13 @@ import com.cg.spc.exceptions.StudentNotFoundException;
 import com.cg.spc.repositories.IAttendanceRepository;
 import com.cg.spc.repositories.IStudentRepository;
 
+
+/**
+ * 
+ * 
+ * Implementation class for AttendanceService
+ *
+ */
 @Service
 public class AttendanceServiceImpl implements IAttendanceService{
 
@@ -18,7 +25,15 @@ public class AttendanceServiceImpl implements IAttendanceService{
 
 	@Autowired
 	private IStudentRepository studentRepository;
-	
+
+ /**
+  * @param attendance, studentId
+  * 
+  * @return attendance
+  * 
+  * 	- if the studentId matches then attendance will be added
+  * 
+  */
 	@Override
 	public Attendance addAttendance(Attendance attendance, int studentId) {
 		Student student = studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException());
@@ -26,7 +41,15 @@ public class AttendanceServiceImpl implements IAttendanceService{
 		student.setAttendance(attendance);
 		return attendanceRepository.save(attendance);
 	}
-
+	
+	/**
+	 * @param attendance, studentId
+	 * 
+	 * @return attendance
+	 * 
+	 * 	- if the studentId matches then attendance will be updated
+	 * 
+	 */
 	@Override
 	public Attendance updateAttendance(Attendance attendance, int studentId) {
 		Student student = studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException());
@@ -34,18 +57,45 @@ public class AttendanceServiceImpl implements IAttendanceService{
 		student.setAttendance(attendance);
 		return attendanceRepository.save(attendance);
 	}
+	
+	/**
+	 * @param id 
+	 * 
+	 * @return attendance
+	 * 
+	 * 	- if the id matches then attendance will be retrieved
+	 * 
+	 */
+	
 
 	@Override
 	public Attendance getAttendanceById(int id) {
 		return attendanceRepository.findById(id).orElseThrow(() -> new AttendanceNotFoundException());
 	}
-
+	
+	/**
+	 * @param id
+	 * 
+	 * @return attendance
+	 * 
+	 * 	- if the studentId matches then attendance will be deleted
+	 * 
+	 */
 	@Override
 	public Attendance deleteById(int id) {
 		Attendance attendance = attendanceRepository.findById(id).orElseThrow(() -> new AttendanceNotFoundException());
 		attendanceRepository.deleteById(id);
-		return attendance;	}
-
+		return attendance;	
+		}
+	
+	/**
+	 * @param id
+	 * 
+	 * @return attendance
+	 * 
+	 * 	- if the studentId matches then attendance will be retrieved
+	 * 
+	 */
 	@Override
 	public Attendance getAttendanceByStudentId(int id) {
 		@SuppressWarnings("unused")

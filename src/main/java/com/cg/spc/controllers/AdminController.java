@@ -37,36 +37,80 @@ public class AdminController {
 	@Autowired
 	private IStandardService standardService;
 
+
+	/**
+	 * 
+	 * adding parent details by using PostMapping
+	 * 
+	 */
 	@PostMapping("/parent/add")
 	public ResponseEntity<Parent> addParentDetails(@RequestBody Parent parent) {
 		return new ResponseEntity<Parent>(parentService.addParentDetails(parent),HttpStatus.CREATED) ;
 	}
+
+
+	/**
+	 * 
+	 * updating parent details by using PutMapping
+	 * 
+	 */
 
 	@PutMapping("/parent/update")
 	public ResponseEntity<Parent> updateParentDetails(@RequestBody Parent parent, @RequestParam List<Integer> studentIdList) {
 		return new ResponseEntity<Parent>(parentService.updateParentDetails(parent, studentIdList),HttpStatus.OK);
 	}
 
+
+	/**
+	 * 
+	 * getting parent details by using GetMapping
+	 * 
+	 */
 	@GetMapping("/parent/getParents")
 	public ResponseEntity<List<Parent>>  getAllParent() {
 		return new ResponseEntity<List<Parent>>(parentService.getAllParent(),HttpStatus.OK);
 	}
 
+
+	/**
+	 * 
+	 * adding student details by using PostMapping
+	 * 
+	 */
 	@PostMapping("/student/add")
 	public ResponseEntity<Student> addStudentDetails(@RequestBody Student student) {
 		return new ResponseEntity<Student>(studentService.addStudent(student),HttpStatus.CREATED);
 	}
 
+
+	/**
+	 * 
+	 * updating student details by using PutMapping
+	 * 
+	 */
 	@PutMapping("/student/update")
 	public ResponseEntity<Student> updateStudentDetails(@RequestBody Student student) {
 		return new ResponseEntity<Student>(studentService.updateStudent(student),HttpStatus.OK);
 	}
 
+
+	/**
+	 * 
+	 * adding teacher details by using PostMapping
+	 * 
+	 */
 	@PostMapping("/teacher/add")
 	public ResponseEntity<Teacher> addTeacherDetails(@RequestBody Teacher teacher) {
 		return new ResponseEntity<Teacher> (teacherService.addTeacher(teacher),HttpStatus.CREATED);
 	}
 
+
+	/**
+	 * 
+	 *
+	 * updating teacher details by using PutMapping
+	 * 
+	 */
 	@PutMapping("/teacher/update")
 	public ResponseEntity<Teacher> updateTeacherDetails(@RequestBody Teacher teacher, @RequestParam List<Integer> standardIdList,
 			@RequestParam int standardId) {
@@ -74,16 +118,34 @@ public class AdminController {
 		return new ResponseEntity<Teacher>(teacherService.updateTeacher(teacher, standardIdList, standardId),HttpStatus.OK);
 	}
 
+
+	/**
+	 * 
+	 * getting teacher details by using GetMapping
+	 * 
+	 */
 	@GetMapping("/teacher/getTeachers")
 	public ResponseEntity<List<Teacher>> getAllTeacher() {
 		return new ResponseEntity<List<Teacher>>(teacherService.getAllTeachers(),HttpStatus.OK);
 	}
 
+
+	/**
+	 * 
+	 * adding standard details by using PostMapping
+	 * 
+	 */
 	@PostMapping("/standard/add")
 	public ResponseEntity<Standard> addStandardDetails(@RequestBody Standard standard) {
 		return new ResponseEntity<Standard>(standardService.addDetails(standard), HttpStatus.CREATED);
 	}
 
+
+	/**
+	 * 
+	 * adding standard details by using PutMapping
+	 * 
+	 */
 	@PutMapping("/standard/update")
 	public ResponseEntity<Standard> updateStandardDetails(@RequestBody Standard standard,@RequestParam List<Integer> studentIdList) {
 		return new ResponseEntity<Standard>(standardService.updateDetails(standard, studentIdList),HttpStatus.OK);

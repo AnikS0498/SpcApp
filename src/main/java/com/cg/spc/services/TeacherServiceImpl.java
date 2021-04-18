@@ -13,6 +13,13 @@ import com.cg.spc.exceptions.TeacherNotFoundException;
 import com.cg.spc.repositories.IStandardRepository;
 import com.cg.spc.repositories.ITeacherRepository;
 
+/**
+ * 
+ * 
+ * Implementation class for TeacherService
+ *
+ */
+
 @Service
 public class TeacherServiceImpl implements ITeacherService{
 
@@ -22,16 +29,39 @@ public class TeacherServiceImpl implements ITeacherService{
 	@Autowired
 	private IStandardRepository standardRepository;
 	
+
+	/**
+	 * 
+	 * @return teacher
+	 * 
+	 * 	- all the teacher details will be retrieved.
+	 */
 	@Override
 	public List<Teacher> getAllTeachers() {
 		return teacherRepository.findAll();
 	}
 
+
+	/**
+	 * @param id
+	 * 
+	 * @return teacher
+	 * 
+	 * 	- if teacher id is matched then the teacher details will be retrieved.
+	 */
 	@Override
 	public Teacher getTeacherById(int id) {
 		return teacherRepository.findById(id).orElseThrow(() -> new TeacherNotFoundException());
 	}
 
+
+	/**
+	 * @param id
+	 * 
+	 * @return teacher
+	 * 
+	 * 	- if teacher id is matched then the teacher details will be deleted.
+	 */
 	@Override
 	public Teacher deleteTeacherById(int id) {
 		Teacher teacher = teacherRepository.findById(id).orElseThrow(() -> new TeacherNotFoundException());
@@ -39,6 +69,14 @@ public class TeacherServiceImpl implements ITeacherService{
 		return teacher;
 	}
 
+
+	/**
+	 * @param teacher, standardList, standardId
+	 * 
+	 * @return teacher
+	 * 
+	 * 	- if standard id is valid then the teacher detail is updated.  
+	 */
 	@Override
 	public Teacher updateTeacher(Teacher teacher,List<Integer> standardIdList,int standardId) {
 		List<Standard> standardList = new ArrayList<Standard>();

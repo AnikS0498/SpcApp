@@ -11,6 +11,11 @@ import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+/**
+ * POJO class for ReportCard
+ * 
+ */
+
 @Entity
 public class ReportCard {
 	

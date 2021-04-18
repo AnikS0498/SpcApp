@@ -15,6 +15,10 @@ import javax.persistence.OneToOne;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+/**
+ * POJO class for Teacher
+ * 
+ */
 
 @Entity
 public class Teacher {

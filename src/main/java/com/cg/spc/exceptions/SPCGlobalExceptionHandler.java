@@ -5,6 +5,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+/**
+ * 
+ * Global exception handler will handle all the necessary exceptions.
+ *  
+ *
+ */
+
+
 @ControllerAdvice
 public class SPCGlobalExceptionHandler {
 

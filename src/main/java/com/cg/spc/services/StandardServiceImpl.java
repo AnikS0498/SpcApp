@@ -12,6 +12,13 @@ import com.cg.spc.exceptions.StudentNotFoundException;
 import com.cg.spc.repositories.IStandardRepository;
 import com.cg.spc.repositories.IStudentRepository;
 
+/**
+ * 
+ * 
+ * Implementation class for StandardService
+ *
+ */
+
 @Service
 public class StandardServiceImpl implements IStandardService{
 
@@ -21,17 +28,38 @@ public class StandardServiceImpl implements IStandardService{
 	@Autowired
 	private IStudentRepository studentRepository;
 	
+	/**
+	 * @param standard
+	 * 
+	 * @return standard
+	 * 
+	 * 	- Standard details are added.
+	 */
 	@Override
 	public Standard addDetails(Standard standard) {
 		return standardRepository.save(standard);
 	}
 
+	/**
+	 * @param id
+	 * 
+	 * @return standard
+	 * 
+	 * 	- if the  Standard id matches then the Standard details will be retrieved.
+	 */
 	@Override
 	public Standard getDetailsById(int id) {
 		Standard standard = standardRepository.findById(id).orElseThrow(() -> new StandardNotFoundException());
 		return standard;
 	}
 
+	/**
+	 * @param standard, studentIdList
+	 * 
+	 * @return standard
+	 * 
+	 * 	- Standard details will be updated for the particular standardList.
+	 */
 	@Override
 	public Standard updateDetails(Standard standard,List<Integer> studentIdList) {
 		List<Student> studentList = new ArrayList<Student>();
@@ -44,6 +72,13 @@ public class StandardServiceImpl implements IStandardService{
 		return standardRepository.save(standard);
 	}
 
+	/**
+	 * @param id
+	 * 
+	 * @return standard
+	 * 
+	 * 	- if Standard id is matched then the Standard details will be deleted.
+	 */
 	@Override
 	public Standard deleteDetailsById(int id) {
 		Standard standard = standardRepository.findById(id).orElseThrow(() -> new StandardNotFoundException());

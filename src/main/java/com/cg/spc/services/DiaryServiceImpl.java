@@ -12,6 +12,13 @@ import com.cg.spc.exceptions.StudentNotFoundException;
 import com.cg.spc.repositories.IDiaryRepository;
 import com.cg.spc.repositories.IStudentRepository;
 
+/**
+ * 
+ * 
+ * Implementation class for DiaryService
+ *
+ */
+
 @Service
 public class DiaryServiceImpl implements IDiaryService{
 	
@@ -21,6 +28,14 @@ public class DiaryServiceImpl implements IDiaryService{
 	@Autowired
 	private IStudentRepository studentRepository;
 	
+	/**
+	 * @param diary, studentId
+	 * 
+	 * @return diary
+	 * 
+	 * 	- if the studentId matches then diary details will be added 
+	 * 
+	 */
 	@Override
 	public Diary addDiary(Diary diary, int studentId) {
 		Student student = studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException());
@@ -29,6 +44,14 @@ public class DiaryServiceImpl implements IDiaryService{
 		return diaryRepository.save(diary);
 	}
 
+	/**
+	 * @param diary, studentId
+	 * 
+	 * @return diary
+	 * 
+	 * 	- if the studentId matches then diary will be updated 
+	 * 
+	 */
 	@Override
 	public Diary updateDiary(Diary diary, int studentId) {
 		Student student = studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException());
@@ -36,13 +59,29 @@ public class DiaryServiceImpl implements IDiaryService{
 		student.setDiary(diary);
 		return diaryRepository.save(diary);
 	}
-
+	
+	/**
+	 * @param id
+	 * 
+	 * @return diary
+	 * 
+	 * 	- if the diary id matches then diary details will be retrieved 
+	 * 
+	 */
 	@Override
 	public Diary getDiaryById(int id) {
 		Diary diary = diaryRepository.findById(id).orElseThrow(() -> new DiaryNotFoundException());
 		return diary;
 	}
 
+	/**
+	 * @param id
+	 * 
+	 * @return diary
+	 * 
+	 * 	- if the diary id matches then diary details will be deleted 
+	 * 
+	 */
 	@Override
 	public Diary deleteDiaryById(int id) {
 		Diary diary = diaryRepository.findById(id).orElseThrow(() -> new DiaryNotFoundException());
@@ -50,11 +89,25 @@ public class DiaryServiceImpl implements IDiaryService{
 		return diary;
 	}
 
+	
+	/**
+	 * @return diary
+	 * 
+	 * 	- all the diary details are retrieved
+	 */
 	@Override
 	public List<Diary> getAllDiaryDetails() {
 		return diaryRepository.findAll();
 	}
-
+	
+	
+	/**
+	 * @param id
+	 * 
+	 * @return diary
+	 * 
+	 * 	- if the diary id matches then the diary details will be retrieved. 
+	 */
 	@Override
 	public Diary getDiaryByStudentId(int id) {
 	

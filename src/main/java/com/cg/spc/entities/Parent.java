@@ -11,6 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+/**
+ * POJO class for Parent
+ * 
+ */
+
 @Entity
 public class Parent {
 

@@ -12,6 +12,10 @@ import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+ /**
+ * POJO class for Attendance
+ * 
+ */
 @Entity
 public class Attendance {
 	

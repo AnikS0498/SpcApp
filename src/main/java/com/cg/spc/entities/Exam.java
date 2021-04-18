@@ -12,6 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * POJO class for Exam
+ * 
+ */
+
+
 @Entity
 public class Exam {
 	

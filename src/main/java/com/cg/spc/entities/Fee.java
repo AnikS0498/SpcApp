@@ -9,6 +9,11 @@ import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+/**
+ * POJO class for Fee
+ * 
+ */
+
 @Entity
 public class Fee {
 
