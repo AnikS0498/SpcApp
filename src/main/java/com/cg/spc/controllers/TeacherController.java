@@ -131,11 +131,11 @@ public class TeacherController {
 	
 	/**
 	 * 
-	 * updating concern status by using PostMapping
+	 * updating concern status by using PutMapping
 	 * 
 	 */
 	@PutMapping("/concern/status")
-	public ResponseEntity<Concern> updateConcernDetails(@RequestBody Concern concern, int parentId) {
+	public ResponseEntity<Concern> updateConcernDetails(@RequestBody Concern concern,@RequestParam int parentId) {
 		if (concernService.updateConcern(concern, parentId) == null) {
 			return new ResponseEntity<Concern>(HttpStatus.NO_CONTENT);
 		} else {

@@ -2,6 +2,8 @@ package com.cg.spc.services;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,8 @@ public class DiaryServiceImpl implements IDiaryService{
 	@Autowired
 	private IStudentRepository studentRepository;
 	
+	Logger logger = LoggerFactory.getLogger(DiaryServiceImpl.class);
+	
 	/**
 	 * @param diary, studentId
 	 * 
@@ -38,6 +42,7 @@ public class DiaryServiceImpl implements IDiaryService{
 	 */
 	@Override
 	public Diary addDiary(Diary diary, int studentId) {
+		logger.info("Diary addDiary");
 		Student student = studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException());
 		diary.setStudent(student);
 		student.setDiary(diary);
@@ -54,6 +59,7 @@ public class DiaryServiceImpl implements IDiaryService{
 	 */
 	@Override
 	public Diary updateDiary(Diary diary, int studentId) {
+		logger.info("Diary updateDiary");
 		Student student = studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException());
 		diary.setStudent(student);
 		student.setDiary(diary);
@@ -70,6 +76,7 @@ public class DiaryServiceImpl implements IDiaryService{
 	 */
 	@Override
 	public Diary getDiaryById(int id) {
+		logger.info("Diary getDiaryById");
 		Diary diary = diaryRepository.findById(id).orElseThrow(() -> new DiaryNotFoundException());
 		return diary;
 	}
@@ -84,6 +91,7 @@ public class DiaryServiceImpl implements IDiaryService{
 	 */
 	@Override
 	public Diary deleteDiaryById(int id) {
+		logger.info("Diary deleteDiaryById");
 		Diary diary = diaryRepository.findById(id).orElseThrow(() -> new DiaryNotFoundException());
 		diaryRepository.deleteById(id);
 		return diary;
@@ -97,6 +105,7 @@ public class DiaryServiceImpl implements IDiaryService{
 	 */
 	@Override
 	public List<Diary> getAllDiaryDetails() {
+		logger.info("Diary getAllDiaryDetails");
 		return diaryRepository.findAll();
 	}
 	
@@ -110,7 +119,7 @@ public class DiaryServiceImpl implements IDiaryService{
 	 */
 	@Override
 	public Diary getDiaryByStudentId(int id) {
-	
+		logger.info("Diary getDiaryByStudentId");
 		Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException());
 		if(student.getDiary()==null) {
             throw new DiaryNotFoundException();

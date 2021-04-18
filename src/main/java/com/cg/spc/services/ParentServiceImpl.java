@@ -3,6 +3,8 @@ package com.cg.spc.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cg.spc.entities.Parent;
@@ -28,6 +30,8 @@ public class ParentServiceImpl implements IParentService{
 	@Autowired
 	private IStudentRepository studentRepository;
 	
+	Logger logger = LoggerFactory.getLogger(ParentServiceImpl.class);
+	
 	/**
 	 * 
 	 * @return parent
@@ -36,6 +40,7 @@ public class ParentServiceImpl implements IParentService{
 	 */
 	@Override
 	public List<Parent> getAllParent() {
+		logger.info("Parent getAllParent");
 		return parentRepository.findAll();
 	}
 
@@ -48,6 +53,7 @@ public class ParentServiceImpl implements IParentService{
 	 */
 	@Override
 	public Parent getParentById(int id) {
+		logger.info("Parent getParentById");
 		return parentRepository.findById(id).orElseThrow(() -> new ParentNotFoundException());
 	}
 
@@ -60,6 +66,7 @@ public class ParentServiceImpl implements IParentService{
 	 */
 	@Override
 	public Parent addParentDetails(Parent parent) {
+		logger.info("Parent addParentDetails");
 		return parentRepository.save(parent);
 	}
 
@@ -72,6 +79,7 @@ public class ParentServiceImpl implements IParentService{
 	 */
 	@Override
 	public Parent deleteParentDetails(int id) {
+		logger.info("Parent deleteParentDetails");
 		Parent parent = parentRepository.findById(id).orElseThrow(() -> new ParentNotFoundException());
 		parentRepository.deleteById(id);
 		return parent;
@@ -88,6 +96,7 @@ public class ParentServiceImpl implements IParentService{
 	@Override
 	public Parent updateParentDetails(Parent parent,List<Integer> studentIdList)
 	{
+		logger.info("Parent updateParentDetails");
 		List<Student> studentList = new ArrayList<Student>();
 		for (Integer studentId : studentIdList) {
 			Student student = studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException());

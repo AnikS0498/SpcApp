@@ -3,6 +3,8 @@ package com.cg.spc.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,7 @@ public class TeacherServiceImpl implements ITeacherService{
 	@Autowired
 	private IStandardRepository standardRepository;
 	
+	Logger logger = LoggerFactory.getLogger(TeacherServiceImpl.class);
 
 	/**
 	 * 
@@ -38,6 +41,7 @@ public class TeacherServiceImpl implements ITeacherService{
 	 */
 	@Override
 	public List<Teacher> getAllTeachers() {
+		logger.info("Teacher getAllTeachers");
 		return teacherRepository.findAll();
 	}
 
@@ -51,6 +55,7 @@ public class TeacherServiceImpl implements ITeacherService{
 	 */
 	@Override
 	public Teacher getTeacherById(int id) {
+		logger.info("Teacher getTeacherById");
 		return teacherRepository.findById(id).orElseThrow(() -> new TeacherNotFoundException());
 	}
 
@@ -64,6 +69,7 @@ public class TeacherServiceImpl implements ITeacherService{
 	 */
 	@Override
 	public Teacher deleteTeacherById(int id) {
+		logger.info("Teacher deleteTeacherById");
 		Teacher teacher = teacherRepository.findById(id).orElseThrow(() -> new TeacherNotFoundException());
 		teacherRepository.deleteById(id);
 		return teacher;
@@ -79,6 +85,7 @@ public class TeacherServiceImpl implements ITeacherService{
 	 */
 	@Override
 	public Teacher updateTeacher(Teacher teacher,List<Integer> standardIdList,int standardId) {
+		logger.info("Teacher updateTeacher");
 		List<Standard> standardList = new ArrayList<Standard>();
 		for (Integer id : standardIdList) {
 			Standard standard = standardRepository.findById(id).orElseThrow(() -> new StandardNotFoundException());
@@ -92,6 +99,7 @@ public class TeacherServiceImpl implements ITeacherService{
 
 	@Override
 	public Teacher addTeacher(Teacher teacher) {
+		logger.info("Teacher addTeacher");
 		return teacherRepository.save(teacher);
 	}
 

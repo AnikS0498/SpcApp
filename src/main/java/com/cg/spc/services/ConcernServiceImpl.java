@@ -2,6 +2,8 @@ package com.cg.spc.services;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,8 @@ import com.cg.spc.exceptions.ConcernResolvedException;
 import com.cg.spc.exceptions.ParentNotFoundException;
 import com.cg.spc.repositories.IConcernRepository;
 import com.cg.spc.repositories.IParentRepository;
+
+
 
 /**
  * 
@@ -28,6 +32,7 @@ public class ConcernServiceImpl implements IConcernService {
 	@Autowired
 	private IParentRepository parentRepository;
 
+	Logger logger = LoggerFactory.getLogger(ConcernServiceImpl.class);
 	
 	/**
 	 * @param concern, id
@@ -39,6 +44,7 @@ public class ConcernServiceImpl implements IConcernService {
 	 */
 	@Override
 	public Concern updateConcern(Concern concern, int parentId) {
+		logger.info("Concern updateConcern");
 		if (!concern.isResolved()) {
 			Parent parent = parentRepository.findById(parentId).orElseThrow(() -> new ParentNotFoundException());
 			concern.setParent(parent);
@@ -56,6 +62,7 @@ public class ConcernServiceImpl implements IConcernService {
 	 */
 	@Override
 	public List<Concern> getAllConcerns() {
+		logger.info("Concern getAllConcerns");
 		return concernRepository.findAll();
 	}
 
@@ -69,6 +76,7 @@ public class ConcernServiceImpl implements IConcernService {
 	 */
 	@Override
 	public Concern deleteById(int id) {
+		logger.info("Concern deletById");
 		Concern concern = concernRepository.findById(id).orElseThrow(() -> new ConcernResolvedException());
 		concernRepository.deleteById(id);
 		return concern;
@@ -84,6 +92,7 @@ public class ConcernServiceImpl implements IConcernService {
 	 */
 	@Override
 	public Concern addConcern(Concern concern, int parentId) {
+		logger.info("Concern addConcern");
 		Parent parent = parentRepository.findById(parentId).orElseThrow(() -> new ParentNotFoundException());
 		concern.setParent(parent);
 		return concernRepository.save(concern);

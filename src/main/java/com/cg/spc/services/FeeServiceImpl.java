@@ -2,6 +2,8 @@ package com.cg.spc.services;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cg.spc.entities.Fee;
@@ -28,6 +30,8 @@ public class FeeServiceImpl implements IFeeService{
 	@Autowired
 	private IStudentRepository studentRepository;
 	
+	Logger logger = LoggerFactory.getLogger(FeeServiceImpl.class);
+	
 	/**
 	 * @param id
 	 * 
@@ -38,6 +42,7 @@ public class FeeServiceImpl implements IFeeService{
 	 */
 	@Override
 	public Fee getFeeById(int id) {
+		logger.info("Fee getFeeById");
 		return feeRepository.findById(id).orElseThrow(() -> new FeeNotFoundException());
 	}
 
@@ -51,6 +56,7 @@ public class FeeServiceImpl implements IFeeService{
 	 */
 	@Override
 	public Fee updateFeeDetails(Fee fee, int studentId) {
+		logger.info("Fee updateFeeDetails");
 		Student student = studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException());
 		fee.setStudent(student);
 		student.setFee(fee);
@@ -67,6 +73,7 @@ public class FeeServiceImpl implements IFeeService{
 	 */
 	@Override
 	public Fee deleteFeeDetails(int id) {
+		logger.info("Fee deleteFeeDetails");
 		Fee fee = feeRepository.findById(id).orElseThrow(() -> new FeeNotFoundException());
 		feeRepository.deleteById(id);
 		return fee;
@@ -80,6 +87,7 @@ public class FeeServiceImpl implements IFeeService{
 	 */
 	@Override
 	public List<Fee> getAllFee() {
+		logger.info("Fee getAllFee");
 		return feeRepository.findAll();
 	}
 	
@@ -93,19 +101,13 @@ public class FeeServiceImpl implements IFeeService{
 	 */
 	@Override
 	public Fee addFeeDetails(Fee fee, int studentId) {
+		logger.info("Fee addFeeDetails");
 		Student student = studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException());
 		fee.setStudent(student);
 		student.setFee(fee);
 		return feeRepository.save(fee);
 	}
 
-//	@Override
-//	public Fee getFeeByStudentId(int id) {
-//		@SuppressWarnings("unused")
-//		Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException());
-//		return feeRepository.findByStudentId(id);
-//	}
-	
 	/**
 	 * @param fee, studentId
 	 * 
@@ -115,18 +117,8 @@ public class FeeServiceImpl implements IFeeService{
 	 */
 	@Override
     public Fee getFeeByStudentId(int id) {
+		logger.info("Fee getFeeByStudentId");
 		Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException());
-//        int flag = 0;
-//        List<Fee> feeList = new ArrayList<Fee>();
-//        feeList = getAllFee();
-//        for(Fee fee: feeList) {
-//            if(fee.getStudent().equals(student)) {
-//            	flag = 1;
-//            	break;
-//            }
-//        }
-//        if(flag==0)
-//        	throw new FeeNotFoundException();
 		if(student.getFee() == null) {
 			throw new FeeNotFoundException();
 		}

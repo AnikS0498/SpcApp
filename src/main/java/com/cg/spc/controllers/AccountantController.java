@@ -30,7 +30,7 @@ public class AccountantController {
 
 	@PostMapping("/fee/add")
 	public ResponseEntity<Fee> addFeeDetails(@RequestBody Fee fee, @RequestParam int studentId) {
-		return new ResponseEntity<Fee>(feeService.addFeeDetails(fee, studentId), HttpStatus.OK);
+		return new ResponseEntity<Fee>(feeService.addFeeDetails(fee, studentId), HttpStatus.CREATED);
 	}
 	
 	/**

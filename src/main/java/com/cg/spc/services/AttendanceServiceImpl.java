@@ -1,5 +1,7 @@
 package com.cg.spc.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +11,7 @@ import com.cg.spc.exceptions.AttendanceNotFoundException;
 import com.cg.spc.exceptions.StudentNotFoundException;
 import com.cg.spc.repositories.IAttendanceRepository;
 import com.cg.spc.repositories.IStudentRepository;
+
 
 
 /**
@@ -25,7 +28,8 @@ public class AttendanceServiceImpl implements IAttendanceService{
 
 	@Autowired
 	private IStudentRepository studentRepository;
-
+	
+	Logger logger = LoggerFactory.getLogger(AttendanceServiceImpl.class);
  /**
   * @param attendance, studentId
   * 
@@ -36,6 +40,7 @@ public class AttendanceServiceImpl implements IAttendanceService{
   */
 	@Override
 	public Attendance addAttendance(Attendance attendance, int studentId) {
+		logger.info("Attendance addAttendance");
 		Student student = studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException());
 		attendance.setStudent(student);
 		student.setAttendance(attendance);
@@ -52,6 +57,7 @@ public class AttendanceServiceImpl implements IAttendanceService{
 	 */
 	@Override
 	public Attendance updateAttendance(Attendance attendance, int studentId) {
+		logger.info("Attendance updateAttendance");
 		Student student = studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException());
 		attendance.setStudent(student);
 		student.setAttendance(attendance);
@@ -70,6 +76,7 @@ public class AttendanceServiceImpl implements IAttendanceService{
 
 	@Override
 	public Attendance getAttendanceById(int id) {
+		logger.info("Attendance getAttendanceById");
 		return attendanceRepository.findById(id).orElseThrow(() -> new AttendanceNotFoundException());
 	}
 	
@@ -83,6 +90,7 @@ public class AttendanceServiceImpl implements IAttendanceService{
 	 */
 	@Override
 	public Attendance deleteById(int id) {
+		logger.info("Attendance deleteById");
 		Attendance attendance = attendanceRepository.findById(id).orElseThrow(() -> new AttendanceNotFoundException());
 		attendanceRepository.deleteById(id);
 		return attendance;	
@@ -98,6 +106,7 @@ public class AttendanceServiceImpl implements IAttendanceService{
 	 */
 	@Override
 	public Attendance getAttendanceByStudentId(int id) {
+		logger.info("Attendance getAttendanceByStudentId");
 		@SuppressWarnings("unused")
 		Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException());
 		return attendanceRepository.findByStudentId(id);

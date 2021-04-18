@@ -1,5 +1,7 @@
 package com.cg.spc.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cg.spc.entities.ReportCard;
@@ -25,6 +27,8 @@ public class ReportCardServiceImpl  implements IReportCardService{
 	@Autowired
 	private IStudentRepository studentRepository;
 	
+	Logger logger = LoggerFactory.getLogger(ReportCardServiceImpl.class);
+	
 	/**
 	 * @param reportCard, studentId
 	 * 
@@ -34,6 +38,7 @@ public class ReportCardServiceImpl  implements IReportCardService{
 	 */
 	@Override
 	public ReportCard addDetails(ReportCard reportCard,int studentId) {
+		logger.info("ReportCard addDetails");
 		Student student = studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException());
 		reportCard.setStudent(student);
 		return reportCardRepository.save(reportCard);
@@ -48,6 +53,7 @@ public class ReportCardServiceImpl  implements IReportCardService{
 	 */
 	@Override
 	public ReportCard getDetailsById(int id) {
+		logger.info("ReportCard getDetailsById");
 		ReportCard reportCard = reportCardRepository.findById(id).orElseThrow(()-> new ReportCardNotFoundException());
 		return reportCard;
 	}
@@ -61,6 +67,7 @@ public class ReportCardServiceImpl  implements IReportCardService{
 	 */
 	@Override
 	public ReportCard updateDetails(ReportCard reportCard,int studentId) {
+		logger.info("ReportCard updateDetails");
 		Student student = studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException());
 		reportCard.setStudent(student);
 		return reportCardRepository.save(reportCard);
@@ -75,6 +82,7 @@ public class ReportCardServiceImpl  implements IReportCardService{
 	 */
 	@Override
 	public ReportCard deleteDetailsById(int id) {
+		logger.info("ReportCard deleteDetailsById");
 		ReportCard reportCard = reportCardRepository.findById(id).orElseThrow(()-> new ReportCardNotFoundException());
 		reportCardRepository.deleteById(id);
 		return reportCard;
@@ -89,6 +97,7 @@ public class ReportCardServiceImpl  implements IReportCardService{
 	 */
 	@Override
     public ReportCard getReportCardByStudentId(int id) {
+		logger.info("ReportCard getReportCardByStudentId");
         Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException());
         if(student.getReportCard()==null) {
             throw new ReportCardNotFoundException();

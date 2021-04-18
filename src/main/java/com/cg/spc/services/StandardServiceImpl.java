@@ -3,6 +3,8 @@ package com.cg.spc.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cg.spc.entities.Standard;
@@ -28,6 +30,8 @@ public class StandardServiceImpl implements IStandardService{
 	@Autowired
 	private IStudentRepository studentRepository;
 	
+	Logger logger = LoggerFactory.getLogger(StandardServiceImpl.class);
+	
 	/**
 	 * @param standard
 	 * 
@@ -37,6 +41,7 @@ public class StandardServiceImpl implements IStandardService{
 	 */
 	@Override
 	public Standard addDetails(Standard standard) {
+		logger.info("Standard addDetails");
 		return standardRepository.save(standard);
 	}
 
@@ -49,6 +54,7 @@ public class StandardServiceImpl implements IStandardService{
 	 */
 	@Override
 	public Standard getDetailsById(int id) {
+		logger.info("Standard getDetailsById");
 		Standard standard = standardRepository.findById(id).orElseThrow(() -> new StandardNotFoundException());
 		return standard;
 	}
@@ -62,6 +68,7 @@ public class StandardServiceImpl implements IStandardService{
 	 */
 	@Override
 	public Standard updateDetails(Standard standard,List<Integer> studentIdList) {
+		logger.info("Standard updateDetails");
 		List<Student> studentList = new ArrayList<Student>();
 		for (Integer studentId : studentIdList) {
 			Student student = studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException());
@@ -81,6 +88,7 @@ public class StandardServiceImpl implements IStandardService{
 	 */
 	@Override
 	public Standard deleteDetailsById(int id) {
+		logger.info("Standard deleteDetailsById");
 		Standard standard = standardRepository.findById(id).orElseThrow(() -> new StandardNotFoundException());
 		standardRepository.deleteById(id);
 		return standard;

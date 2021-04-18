@@ -1,6 +1,9 @@
 package com.cg.spc.services;
 
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cg.spc.entities.Student;
@@ -20,6 +23,7 @@ public class StudentServiceImpl implements IStudentService{
 	@Autowired
 	private IStudentRepository studentRepository;
 	
+	Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
 	
 	/**
 	 * @return student
@@ -28,6 +32,7 @@ public class StudentServiceImpl implements IStudentService{
 	 */
 	@Override
 	public List<Student> getAllStudents() {
+		logger.info("Student getAllStudents");
 		return studentRepository.findAll();
 	}
 
@@ -40,6 +45,7 @@ public class StudentServiceImpl implements IStudentService{
 	 */
 	@Override
 	public Student getStudentById(int id) {
+		logger.info("Student getStudentById");
 		return studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException());
 	}
 
@@ -52,6 +58,7 @@ public class StudentServiceImpl implements IStudentService{
 	 */
 	@Override
 	public Student deleteStudentById(int id) {
+		logger.info("Student deleteStudentById");
 		Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException());
 		studentRepository.deleteById(id);
 		return student;
@@ -67,6 +74,7 @@ public class StudentServiceImpl implements IStudentService{
 	 */
 	@Override
 	public Student updateStudent(Student student) {
+		logger.info("Student updateStudent");
 		Student st = studentRepository.save(student);
 		return st;
 	}
@@ -81,6 +89,7 @@ public class StudentServiceImpl implements IStudentService{
 	 */
 	@Override
 	public Student addStudent(Student student) {
+		logger.info("Student addStudent");
 		return studentRepository.save(student);
 	}
 

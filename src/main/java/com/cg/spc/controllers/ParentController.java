@@ -115,6 +115,6 @@ public class ParentController {
 	 */
 	@PostMapping("/concern/add")
 	public ResponseEntity<Concern> addConcern(@RequestBody Concern concern, @RequestParam int parentId) {
-		return new ResponseEntity<Concern>(concernService.addConcern(concern, parentId), HttpStatus.OK);
+		return new ResponseEntity<Concern>(concernService.addConcern(concern, parentId), HttpStatus.CREATED);
 	}
 }
