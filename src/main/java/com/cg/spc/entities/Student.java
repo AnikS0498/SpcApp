@@ -35,7 +35,7 @@ public class Student {
 	private Diary diary;
 	
 	@ManyToOne
-	@JsonBackReference("student_standard")
+	@JsonManagedReference("student_standard")
 	private Standard standard;
 	
 	@OneToOne
