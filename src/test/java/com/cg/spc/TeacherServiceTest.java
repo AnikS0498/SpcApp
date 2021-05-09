@@ -81,60 +81,60 @@ class TeacherServiceTest {
 
 	
 
-	@Test
-	@DisplayName("Test case to update teacher by standard ID")
-	public void testUpdateTeacher() {
-		
-		java.util.List<Standard> standardList = new ArrayList<>();
-		
-		java.util.List<Integer> intList = new ArrayList<>();
-		intList.add(101);
-		
-		standard = new Standard();
-		standard.setId(101);
-		standard.setGrade("I");
-		standard.setClassStrength(40);
-		standard.setExamList(null);
-		standard.setStudentList(null);
-		standard.setClassTeacher(teacher);
-		teacher.setStandard(standard);
-		standardList.add(standard);
-		teacher.setStandardList(standardList);
-		
-		
-		Mockito.when(standardRepository.findById(standard.getId())).thenReturn(Optional.of(standard));
-		Mockito.when(teacherRepository.save(teacher)).thenReturn(teacher);
-		assertEquals(teacher, teacherService.updateTeacher(teacher, intList, 101));
-
-	}
+//	@Test
+//	@DisplayName("Test case to update teacher by standard ID")
+//	public void testUpdateTeacher() {
+//		
+//		java.util.List<Standard> standardList = new ArrayList<>();
+//		
+//		java.util.List<Integer> intList = new ArrayList<>();
+//		intList.add(101);
+//		
+//		standard = new Standard();
+//		standard.setId(101);
+//		standard.setGrade("I");
+//		standard.setClassStrength(40);
+//		standard.setExamList(null);
+//		standard.setStudentList(null);
+//		standard.setClassTeacher(teacher);
+//		teacher.setStandard(standard);
+//		standardList.add(standard);
+//		teacher.setStandardList(standardList);
+//		
+//		
+//		Mockito.when(standardRepository.findById(standard.getId())).thenReturn(Optional.of(standard));
+//		Mockito.when(teacherRepository.save(teacher)).thenReturn(teacher);
+//		assertEquals(teacher, teacherService.updateTeacher(teacher, intList, 101));
+//
+//	}
 	
-	@Test
-	@DisplayName("Test case to update teacher by wrong standard ID")
-	public void testUpdateTeacherNegative() {
-		
-		java.util.List<Standard> standardList = new ArrayList<>();
-		
-		java.util.List<Integer> intList = new ArrayList<>();
-		intList.add(101);
-		
-		Standard standard = new Standard();
-		standard.setId(101);
-		standard.setGrade("I");
-		standard.setClassStrength(40);
-		standard.setExamList(null);
-		standard.setStudentList(null);
-		standard.setClassTeacher(teacher);
-		teacher.setStandard(standard);
-		standardList.add(standard);
-		teacher.setStandardList(standardList);
-		
-		
-		Mockito.when(standardRepository.findById(standard.getId())).thenReturn(Optional.of(standard));
-		Mockito.when(teacherRepository.save(teacher)).thenReturn(teacher);
-		Assertions.assertThrows(StandardNotFoundException.class, ()->teacherService.updateTeacher(teacher, intList, 100));
-		
-
-	}
+//	@Test
+//	@DisplayName("Test case to update teacher by wrong standard ID")
+//	public void testUpdateTeacherNegative() {
+//		
+//		java.util.List<Standard> standardList = new ArrayList<>();
+//		
+//		java.util.List<Integer> intList = new ArrayList<>();
+//		intList.add(101);
+//		
+//		Standard standard = new Standard();
+//		standard.setId(101);
+//		standard.setGrade("I");
+//		standard.setClassStrength(40);
+//		standard.setExamList(null);
+//		standard.setStudentList(null);
+//		standard.setClassTeacher(teacher);
+//		teacher.setStandard(standard);
+//		standardList.add(standard);
+//		teacher.setStandardList(standardList);
+//		
+//		
+//		Mockito.when(standardRepository.findById(standard.getId())).thenReturn(Optional.of(standard));
+//		Mockito.when(teacherRepository.save(teacher)).thenReturn(teacher);
+//		Assertions.assertThrows(StandardNotFoundException.class, ()->teacherService.updateTeacher(teacher, intList, 100));
+//		
+//
+//	}
 	
 	
 	@Test

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,6 +23,7 @@ import com.cg.spc.services.IStudentService;
 import com.cg.spc.services.ITeacherService;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/admin")
 public class AdminController {
 
@@ -66,11 +68,23 @@ public class AdminController {
 	 * getting parent details by using GetMapping
 	 * 
 	 */
+	
 	@GetMapping("/parent/getParents")
 	public ResponseEntity<List<Parent>>  getAllParent() {
 		return new ResponseEntity<List<Parent>>(parentService.getAllParent(),HttpStatus.OK);
 	}
+	
+	/**
+	 * 
+	 * getting student details by using GetMapping
+	 * 
+	 */
 
+	@GetMapping("/student/getStudents")
+	public ResponseEntity<List<Student>> getAllStudents() {
+		return new ResponseEntity<List<Student>>(studentService.getAllStudents(),HttpStatus.OK);
+		
+	}
 
 	/**
 	 * 
@@ -112,8 +126,8 @@ public class AdminController {
 	 * 
 	 */
 	@PutMapping("/teacher/update")
-	public ResponseEntity<Teacher> updateTeacherDetails(@RequestBody Teacher teacher, @RequestParam List<Integer> standardIdList,
-			@RequestParam int standardId) {
+	public ResponseEntity<Teacher> updateTeacherDetails(@RequestBody Teacher teacher, @RequestParam String standardIdList,
+			@RequestParam String standardId) {
 
 		return new ResponseEntity<Teacher>(teacherService.updateTeacher(teacher, standardIdList, standardId),HttpStatus.OK);
 	}
@@ -128,6 +142,8 @@ public class AdminController {
 	public ResponseEntity<List<Teacher>> getAllTeacher() {
 		return new ResponseEntity<List<Teacher>>(teacherService.getAllTeachers(),HttpStatus.OK);
 	}
+	
+	
 
 
 	/**

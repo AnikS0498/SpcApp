@@ -84,15 +84,21 @@ public class TeacherServiceImpl implements ITeacherService{
 	 * 	- if standard id is valid then the teacher detail is updated.  
 	 */
 	@Override
-	public Teacher updateTeacher(Teacher teacher,List<Integer> standardIdList,int standardId) {
+	public Teacher updateTeacher(Teacher teacher,String standardIdList,String standardId) {
 		logger.info("Teacher updateTeacher");
+		String sIdList[] = standardIdList.split(",");
+		int sIdListInt[]= new int[sIdList.length];
+		for (int i=0;i<sIdList.length;i++) {
+			sIdListInt[i]=Integer.parseInt(sIdList[i]);
+		}
 		List<Standard> standardList = new ArrayList<Standard>();
-		for (Integer id : standardIdList) {
+		for (Integer id : sIdListInt) {
 			Standard standard = standardRepository.findById(id).orElseThrow(() -> new StandardNotFoundException());
 			standardList.add(standard);
 		}
 		teacher.setStandardList(standardList);
-		Standard standard = standardRepository.findById(standardId).orElseThrow(() -> new StandardNotFoundException());
+		int sId = Integer.parseInt(standardId);
+		Standard standard = standardRepository.findById(sId).orElseThrow(() -> new StandardNotFoundException());
 		teacher.setStandard(standard);
 		return teacherRepository.save(teacher);
 	}
