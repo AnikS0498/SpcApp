@@ -18,6 +18,9 @@ import com.cg.spc.entities.AppUser;
 import com.cg.spc.helper.JwtUtil;
 import com.cg.spc.model.JwtRequest;
 import com.cg.spc.model.JwtResponse;
+import com.cg.spc.services.AccountantService;
+import com.cg.spc.services.ParentService;
+import com.cg.spc.services.TeacherService;
 import com.cg.spc.services.UserService;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +33,15 @@ public class JwtController {
 
 	@Autowired
 	private UserService userDetailsService;
+	
+	@Autowired
+	private ParentService parentService;
+	
+	@Autowired
+	private AccountantService accountantService;
+	
+	@Autowired
+	private TeacherService teacherService;
 
 	@Autowired
 	private JwtUtil jwtUtil;
@@ -68,6 +80,48 @@ public class JwtController {
 				&& myUser.getPassword().equals(userDetailsService.loadUserByUsername(null).getPassword())) {
 			log.info("user authenticated");
 			return jwtUtil.generateToken(userDetailsService.loadUserByUsername(myUser.getUsername()));
+		} else {
+			return "thisIsNotTheValidToken";
+		}
+
+	}
+	
+	@CrossOrigin(origins = "*")
+	@PostMapping("/login/parent") // 1
+	public String loginParent(@RequestBody AppUser myUser) {
+		log.info("login");
+		if (myUser.getUsername().equals(parentService.loadUserByUsername(myUser.getUsername()).getUsername())
+				&& myUser.getPassword().equals(parentService.loadUserByUsername(null).getPassword())) {
+			log.info("user authenticated");
+			return jwtUtil.generateToken(parentService.loadUserByUsername(myUser.getUsername()));
+		} else {
+			return "thisIsNotTheValidToken";
+		}
+
+	}
+	
+	@CrossOrigin(origins = "*")
+	@PostMapping("/login/accountant") // 1
+	public String loginAccountant(@RequestBody AppUser myUser) {
+		log.info("login");
+		if (myUser.getUsername().equals(accountantService.loadUserByUsername(myUser.getUsername()).getUsername())
+				&& myUser.getPassword().equals(accountantService.loadUserByUsername(null).getPassword())) {
+			log.info("user authenticated");
+			return jwtUtil.generateToken(accountantService.loadUserByUsername(myUser.getUsername()));
+		} else {
+			return "thisIsNotTheValidToken";
+		}
+
+	}
+	
+	@CrossOrigin(origins = "*")
+	@PostMapping("/login/teacher") // 1
+	public String loginTeacher(@RequestBody AppUser myUser) {
+		log.info("login");
+		if (myUser.getUsername().equals(teacherService.loadUserByUsername(myUser.getUsername()).getUsername())
+				&& myUser.getPassword().equals(teacherService.loadUserByUsername(null).getPassword())) {
+			log.info("user authenticated");
+			return jwtUtil.generateToken(teacherService.loadUserByUsername(myUser.getUsername()));
 		} else {
 			return "thisIsNotTheValidToken";
 		}

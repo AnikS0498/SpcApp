@@ -28,8 +28,8 @@ import com.cg.spc.services.UserService;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private final Logger log = LoggerFactory.getLogger(WebSecurityConfig.class);
 
-	@Autowired
-	private UserService myAdminDetailsService;
+//	@Autowired
+//	private UserService myAdminDetailsService;
 
 	@Autowired
 	private UserRequestFilter jwtFilter;
@@ -67,8 +67,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		httpSecurity.cors();
 		log.info("configure");
-		httpSecurity.csrf().disable().authorizeRequests().antMatchers("/token").permitAll().antMatchers("/login").permitAll().anyRequest()
-		.authenticated().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		httpSecurity.csrf().disable().authorizeRequests().antMatchers("/token").permitAll().antMatchers("/login").permitAll()
+		.antMatchers("/login/parent").permitAll().antMatchers("/login/accountant").permitAll().antMatchers("/login/teacher").permitAll()
+		.anyRequest().authenticated().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 	
