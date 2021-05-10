@@ -33,6 +33,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserRequestFilter jwtFilter;
+	
+	@Autowired
+	private TeacherRequestFilter jwtTeacherFilter;
+	
+	@Autowired
+	private ParentRequestFilter jwtParentFilter;
+	
+	@Autowired
+	private AccountantRequestFilter jwtAccountantFilter;
 //
 //	@Autowired
 //	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -71,6 +80,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/login/parent").permitAll().antMatchers("/login/accountant").permitAll().antMatchers("/login/teacher").permitAll()
 		.anyRequest().authenticated().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+		httpSecurity.addFilterBefore(jwtTeacherFilter, UsernamePasswordAuthenticationFilter.class);
+		httpSecurity.addFilterBefore(jwtParentFilter, UsernamePasswordAuthenticationFilter.class);
+		httpSecurity.addFilterBefore(jwtAccountantFilter, UsernamePasswordAuthenticationFilter.class);
+		
 	}
 	
 	@Bean
