@@ -74,57 +74,77 @@ public class JwtController {
 
 	@CrossOrigin(origins = "*")
 	@PostMapping("/login") // 1
-	public String login(@RequestBody AppUser myUser) {
+	public ResponseEntity<?> login(@RequestBody JwtRequest jwtRequest) {
+		String token="";
 		log.info("login");
-		if (myUser.getUsername().equals(userDetailsService.loadUserByUsername(myUser.getUsername()).getUsername())
-				&& myUser.getPassword().equals(userDetailsService.loadUserByUsername(null).getPassword())) {
+		if (jwtRequest.getUsername().equals(userDetailsService.loadUserByUsername(jwtRequest.getUsername()).getUsername())
+				&& jwtRequest.getPassword().equals(userDetailsService.loadUserByUsername(null).getPassword())) {
 			log.info("user authenticated");
-			return jwtUtil.generateToken(userDetailsService.loadUserByUsername(myUser.getUsername()));
-		} else {
-			return "thisIsNotTheValidToken";
-		}
+			//return jwtUtil.generateToken(userDetailsService.loadUserByUsername(myUser.getUsername()));
+			UserDetails userDetails = this.userDetailsService.loadUserByUsername(jwtRequest.getUsername());
+			token = this.jwtUtil.generateToken(userDetails);
+			//return ResponseEntity.ok(new JwtResponse(token));
+		} 
+		return ResponseEntity.ok(new JwtResponse(token));
+//		else {
+//			return "thisIsNotTheValidToken";
+//		}
 
 	}
 	
 	@CrossOrigin(origins = "*")
 	@PostMapping("/login/parent") // 1
-	public String loginParent(@RequestBody AppUser myUser) {
+	public ResponseEntity<?> loginParent(@RequestBody JwtRequest jwtRequest) {
+		String token="";
 		log.info("login");
-		if (myUser.getUsername().equals(parentService.loadUserByUsername(myUser.getUsername()).getUsername())
-				&& myUser.getPassword().equals(parentService.loadUserByUsername(null).getPassword())) {
+		if (jwtRequest.getUsername().equals(parentService.loadUserByUsername(jwtRequest.getUsername()).getUsername())
+				&& jwtRequest.getPassword().equals(parentService.loadUserByUsername(null).getPassword())) {
 			log.info("user authenticated");
-			return jwtUtil.generateToken(parentService.loadUserByUsername(myUser.getUsername()));
-		} else {
-			return "thisIsNotTheValidToken";
-		}
+			UserDetails userDetails = this.parentService.loadUserByUsername(jwtRequest.getUsername());
+			token = this.jwtUtil.generateToken(userDetails);
+		} 
+		return ResponseEntity.ok(new JwtResponse(token));
+		//else {
+//			return "thisIsNotTheValidToken";
+//		}
 
 	}
 	
 	@CrossOrigin(origins = "*")
 	@PostMapping("/login/accountant") // 1
-	public String loginAccountant(@RequestBody AppUser myUser) {
+	public ResponseEntity<?> loginAccountant(@RequestBody JwtRequest jwtRequest) {
+		String token="";
 		log.info("login");
-		if (myUser.getUsername().equals(accountantService.loadUserByUsername(myUser.getUsername()).getUsername())
-				&& myUser.getPassword().equals(accountantService.loadUserByUsername(null).getPassword())) {
+		if (jwtRequest.getUsername().equals(accountantService.loadUserByUsername(jwtRequest.getUsername()).getUsername())
+				&& jwtRequest.getPassword().equals(accountantService.loadUserByUsername(null).getPassword())) {
 			log.info("user authenticated");
-			return jwtUtil.generateToken(accountantService.loadUserByUsername(myUser.getUsername()));
-		} else {
-			return "thisIsNotTheValidToken";
-		}
+			//return jwtUtil.generateToken(accountantService.loadUserByUsername(jwtRequest.getUsername()));
+			UserDetails userDetails = this.accountantService.loadUserByUsername(jwtRequest.getUsername());
+			token = this.jwtUtil.generateToken(userDetails);
+		} 
+		return ResponseEntity.ok(new JwtResponse(token));
+//		else {
+//			return "thisIsNotTheValidToken";
+//		}
 
 	}
 	
 	@CrossOrigin(origins = "*")
 	@PostMapping("/login/teacher") // 1
-	public String loginTeacher(@RequestBody AppUser myUser) {
+	public ResponseEntity<?> loginTeacher(@RequestBody JwtRequest jwtRequest) {
+		String token="";
 		log.info("login");
-		if (myUser.getUsername().equals(teacherService.loadUserByUsername(myUser.getUsername()).getUsername())
-				&& myUser.getPassword().equals(teacherService.loadUserByUsername(null).getPassword())) {
+		if (jwtRequest.getUsername().equals(teacherService.loadUserByUsername(jwtRequest.getUsername()).getUsername())
+				&& jwtRequest.getPassword().equals(teacherService.loadUserByUsername(null).getPassword())) {
 			log.info("user authenticated");
-			return jwtUtil.generateToken(teacherService.loadUserByUsername(myUser.getUsername()));
-		} else {
-			return "thisIsNotTheValidToken";
-		}
+			//return jwtUtil.generateToken(teacherService.loadUserByUsername(jwtRequest.getUsername()));
+			UserDetails userDetails = this.teacherService.loadUserByUsername(jwtRequest.getUsername());
+			token = this.jwtUtil.generateToken(userDetails);
+		} 
+		return ResponseEntity.ok(new JwtResponse(token));
+//		else {
+//			return "thisIsNotTheValidToken";
+//		}
 
 	}
 }
